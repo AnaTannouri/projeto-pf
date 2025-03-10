@@ -1,0 +1,378 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\modelos\\basemodelos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\basemodelos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopraticaprofissional\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastroformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastroformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopraticaprofissional\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastroformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastroformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\dao\\basedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\basedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\dao\\pagamento\\formapagamentodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\pagamento\\formapagamentodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\servicos\\pagamento\\formapagamentoservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\pagamento\\formapagamentoservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\interfaces\\formconsultas\\frmconsultaformapagamento.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultaformapagamento.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\interfaces\\formconsultas\\frmconsultaformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultaformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopraticaprofissional\\projetopf\\projetopf\\interfaces\\formconsultas\\frmconsultaformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultaformapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastropai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastropai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastropai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastropai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopraticaprofissional\\projetopf\\projetopf\\interfaces\\formconsultas\\frmconsultapai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultapai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopraticaprofissional\\projetopf\\projetopf\\interfaces\\formconsultas\\frmconsultapai.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultapai.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopraticaprofissional\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastropai.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastropai.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopraticaprofissional\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastroformapagamento.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastroformapagamento.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\modelos\\pagamento\\formapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\pagamento\\formapagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\interfaces\\formconsultas\\frmconsultapai.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultapai.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\interfaces\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\interfaces\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\projetopf\\servicos\\baseservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\baseservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FrmConsultaFormaPagamento.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:17:42.149Z",
+              "IsPinned": true,
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{74946827-37a0-11d2-a273-00c04f8ef4ff}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BaseDao.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Dao\\BaseDao.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\BaseDao.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Dao\\BaseDao.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\BaseDao.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAMUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:21:14.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FormaPagamentoDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Dao\\Pagamento\\FormaPagamentoDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Pagamento\\FormaPagamentoDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Dao\\Pagamento\\FormaPagamentoDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Pagamento\\FormaPagamentoDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:25:36.306Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FrmCadastroFormaPagamento.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:17:56.369Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FrmCadastroFormaPagamento.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwC4AAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:39:36.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FrmCadastroPai.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAWwCsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T18:26:05.909Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FormaPagamentoServicos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Servicos\\Pagamento\\FormaPagamentoServicos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Pagamento\\FormaPagamentoServicos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Servicos\\Pagamento\\FormaPagamentoServicos.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\Pagamento\\FormaPagamentoServicos.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAADwvxsAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:25:50.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FrmConsultaFormaPagamento.Designer.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.Designer.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.Designer.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.Designer.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.Designer.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAUwC4AAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:17:46.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BaseModelos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Modelos\\BaseModelos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\BaseModelos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Modelos\\BaseModelos.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\BaseModelos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:25:47.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FrmConsultaFormaPagamento.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAcwIoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:18:39.278Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "FrmCadastroPai.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:20:03.555Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FrmConsultaPai.resx",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.resx",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.resx",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.resx",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-03-09T19:52:22.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FrmConsultaPai.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T19:52:24.421Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "FrmCadastroPai.Designer.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.Designer.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.Designer.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.Designer.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.Designer.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAADwv1EAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T19:00:04.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "FrmPrincipal.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FrmPrincipal.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FrmPrincipal.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FrmPrincipal.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FrmPrincipal.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:37:56.268Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "FrmCadastroFormaPagamento.Designer.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.Designer.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.Designer.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.Designer.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.Designer.cs",
+              "ViewState": "AQIAADgAAAAAAAAAAAASwE8AAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T18:58:32.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FormaPagamento.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Modelos\\Pagamento\\FormaPagamento.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pagamento\\FormaPagamento.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Modelos\\Pagamento\\FormaPagamento.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\Pagamento\\FormaPagamento.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:19:16.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "FrmConsultaPai.Designer.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.Designer.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.Designer.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.Designer.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPai.Designer.cs",
+              "ViewState": "AQIAAEUAAAAAAAAAAAASwF4AAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:56:08.739Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FrmPrincipal.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FrmPrincipal.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FrmPrincipal.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Interfaces\\FrmPrincipal.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FrmPrincipal.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAADgvx0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T18:26:16.08Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "BaseServicos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Servicos\\BaseServicos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\BaseServicos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPraticaProfissional\\ProjetoPF\\ProjetoPF\\Servicos\\BaseServicos.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\BaseServicos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T17:25:51.854Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{c9c0ae26-aa77-11d2-b3f0-0000f87570ee}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
