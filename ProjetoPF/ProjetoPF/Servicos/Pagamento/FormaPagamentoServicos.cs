@@ -9,7 +9,7 @@ public class FormaPagamentoServicos : BaseServicos<FormaPagamento>
     public void CadastrarFormaPagamento(FormaPagamento formaPagamento)
     {
         if (string.IsNullOrWhiteSpace(formaPagamento.Descricao))
-            throw new Exception("Descrição é obrigatório!");
+            throw new Exception("Descrição é obrigatória!");
 
         formaPagamento.DataCriacao = DateTime.Now;
         formaPagamento.DataAtualizacao = DateTime.Now;
@@ -19,12 +19,10 @@ public class FormaPagamentoServicos : BaseServicos<FormaPagamento>
     public void AtualizarFormaPagamento(FormaPagamento formaPagamento)
     {
         if (formaPagamento.Id == 0)
-            throw new Exception("Forma de pagamento não encontrada para atualização.");
+        {
+            throw new Exception("ID inválido. Não é possível atualizar o registro.");
+        }
 
-        if (string.IsNullOrWhiteSpace(formaPagamento.Descricao))
-            throw new Exception("Descrição é obrigatória.");
-
-        formaPagamento.DataAtualizacao = DateTime.Now;
-        AtualizarFormaPagamento(formaPagamento);
+        Atualizar(formaPagamento);
     }
 }

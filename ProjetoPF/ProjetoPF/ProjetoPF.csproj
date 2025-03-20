@@ -36,6 +36,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Transactions.Workflows, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Transactions.Workflows.0.1.2.0\lib\net40\System.Transactions.Workflows.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\BaseDao.cs" />
+    <Compile Include="Dao\Pagamento\CondicaoPagamentoDAO.cs" />
     <Compile Include="Dao\Pagamento\FormaPagamentoDAO.cs" />
+    <Compile Include="Dao\Pagamento\CondicaoPagamentoParcelasDAO.cs" />
     <Compile Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,10 +98,19 @@
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\BaseModelos.cs" />
+    <Compile Include="Modelos\Pagamento\CondicaoPagamento.cs" />
     <Compile Include="Modelos\Pagamento\FormaPagamento.cs" />
+    <Compile Include="Modelos\Pagamento\CondicaoPagamentoParcelas.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Servicos\BaseServicos.cs" />
+    <Compile Include="Servicos\Pagamento\CondicaoPagamentoParcelasServicos.cs" />
+    <Compile Include="Servicos\Pagamento\CondicaoPagamentoServicos.cs" />
     <Compile Include="Servicos\Pagamento\FormaPagamentoServicos.cs" />
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.resx">
       <DependentUpon>FrmCadastroCondPagamento.cs</DependentUpon>
@@ -120,13 +135,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -140,6 +152,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

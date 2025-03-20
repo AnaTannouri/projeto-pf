@@ -65,6 +65,7 @@
             // 
             // formaDePagamentoToolStripMenuItem
             // 
+            this.formaDePagamentoToolStripMenuItem.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.formaDePagamentoToolStripMenuItem.Name = "formaDePagamentoToolStripMenuItem";
             this.formaDePagamentoToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.formaDePagamentoToolStripMenuItem.Text = "Forma de Pagamento";
@@ -72,6 +73,7 @@
             // 
             // condiçãoDePagamentoToolStripMenuItem
             // 
+            this.condiçãoDePagamentoToolStripMenuItem.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.condiçãoDePagamentoToolStripMenuItem.Name = "condiçãoDePagamentoToolStripMenuItem";
             this.condiçãoDePagamentoToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.condiçãoDePagamentoToolStripMenuItem.Text = "Condição de Pagamento";

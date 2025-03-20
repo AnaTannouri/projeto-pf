@@ -133,6 +133,7 @@
             this.Controls.Add(this.txtPesquisa);
             this.Name = "FrmConsultaPai";
             this.Text = "Formulário consulta pai";
+            this.Load += new System.EventHandler(this.FrmConsultaPai_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

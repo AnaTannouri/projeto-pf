@@ -1,5 +1,6 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormCadastros;
+using ProjetoPF.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -9,32 +10,33 @@ namespace ProjetoPF.FormConsultas
     public partial class FrmConsultaFormaPagamento : FrmConsultaPai
     {
         private FrmCadastroFormaPagamento frmCadastroFormaPagamento;
-        private BaseDao<FormaPagamento> formaPagamentoDao;
+        private BaseServicos<FormaPagamento> formaPagamentoServices = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"));
 
         public FrmConsultaFormaPagamento()
         {
             InitializeComponent();
             frmCadastroFormaPagamento = new FrmCadastroFormaPagamento();
-            formaPagamentoDao = new BaseDao<FormaPagamento>("FormaPagamentos");
-        }
-
-        private void btnPesquisar_Click(object sender, EventArgs e)
-        {
-            string pesquisa = txtPesquisa.Text.Trim();
-            PopularListView(string.IsNullOrEmpty(pesquisa) ? string.Empty : pesquisa);
         }
 
         private void btnAdicionar_Click_1(object sender, EventArgs e)
         {
+            frmCadastroFormaPagamento.DesbloquearCampos();
             frmCadastroFormaPagamento.LimparCampos();
-            frmCadastroFormaPagamento.ShowDialog();
+            frmCadastroFormaPagamento.FormClosed += FrmCadastroFormaPagamento_FormClosed;
+            DialogResult result = frmCadastroFormaPagamento.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                FormaPagamento novaFormaPagamento = frmCadastroFormaPagamento.FormaPagamentoAtual;
+                formaPagamentoServices.Criar(novaFormaPagamento);
+                MessageBox.Show("Forma de pagamento adicionada com sucesso!");
+            }
         }
 
         private void FrmConsultaFormaPagamento_Load_1(object sender, EventArgs e)
         {
             if (listViewFormaPagamento.Columns.Count == 0)
             {
-                // Adiciona as colunas na ListView
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Descrição", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
@@ -57,7 +59,7 @@ namespace ProjetoPF.FormConsultas
         public override void PopularListView(string pesquisa)
         {
             listViewFormaPagamento.Items.Clear();
-            List<FormaPagamento> formaPagamentos = formaPagamentoDao.BuscarTodos(pesquisa);
+            List<FormaPagamento> formaPagamentos = formaPagamentoServices.BuscarTodos(pesquisa);
 
             if (formaPagamentos != null && formaPagamentos.Count > 0)
             {
@@ -86,52 +88,79 @@ namespace ProjetoPF.FormConsultas
             if (listViewFormaPagamento.SelectedItems.Count > 0)
             {
                 ListViewItem selectedItem = listViewFormaPagamento.SelectedItems[0];
-                int id = int.Parse(selectedItem.Text);
-                FormaPagamento formaPagamentoSelecionada = formaPagamentoDao.BuscarPorId(id);
 
-                frmCadastroFormaPagamento.CarregarDados(formaPagamentoSelecionada);
-
-                DialogResult result = frmCadastroFormaPagamento.ShowDialog();
-                if (result == DialogResult.OK)
+                if (!int.TryParse(selectedItem.Text, out int id))
                 {
-                    formaPagamentoDao.Atualizar(formaPagamentoSelecionada);
-                    PopularListView(txtPesquisa.Text.Trim());
+                    MessageBox.Show("ID inválido selecionado.", "Erro");
+                    return;
                 }
 
-                frmCadastroFormaPagamento.LimparCampos();
+                FormaPagamento formaPagamentoSelecionada = formaPagamentoServices.BuscarPorId(id);
+
+                if (formaPagamentoSelecionada == null)
+                {
+                    MessageBox.Show("Forma de pagamento não encontrada.", "Erro");
+                    return;
+                }
+                frmCadastroFormaPagamento.CarregarDados(formaPagamentoSelecionada, true, false);
+                frmCadastroFormaPagamento.DesbloquearCampos();
+                frmCadastroFormaPagamento.FormClosed += FrmCadastroFormaPagamento_FormClosed;
+
+                DialogResult result = frmCadastroFormaPagamento.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    FormaPagamento formaPagamentoAtualizada = frmCadastroFormaPagamento.FormaPagamentoAtual;
+
+                    if (formaPagamentoAtualizada.Id != formaPagamentoSelecionada.Id)
+                    {
+                        MessageBox.Show("Erro: ID foi alterado durante a edição.");
+                        return;
+                    }
+
+                    formaPagamentoServices.Atualizar(formaPagamentoAtualizada);
+                    MessageBox.Show("Forma de pagamento atualizada com sucesso!");
+                }
             }
             else
             {
-                MessageBox.Show("Selecione uma forma de pagamento para editar.", "Aviso");
+                MessageBox.Show("Selecione um item para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void FrmCadastroFormaPagamento_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            PopularListView(string.Empty);
+            frmCadastroFormaPagamento.FormClosed -= FrmCadastroFormaPagamento_FormClosed;
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            if (listViewFormaPagamento.SelectedItems.Count == 0)
+            if (listViewFormaPagamento.SelectedItems.Count > 0)
             {
-                MessageBox.Show("Por favor, selecione um item para excluir.");
-                return;
+                ListViewItem selectedItem = listViewFormaPagamento.SelectedItems[0];
+
+                if (!int.TryParse(selectedItem.Text, out int id))
+                {
+                    MessageBox.Show("ID inválido selecionado.", "Erro");
+                    return;
+                }
+
+                FormaPagamento formaPagamentoSelecionada = formaPagamentoServices.BuscarPorId(id);
+
+                if (formaPagamentoSelecionada == null)
+                {
+                    MessageBox.Show("Forma de pagamento não encontrada.", "Erro");
+                    return;
+                }
+                frmCadastroFormaPagamento.CarregarDados(formaPagamentoSelecionada, false, true);
+                frmCadastroFormaPagamento.BloquearCampos();
+                frmCadastroFormaPagamento.FormClosed += FrmCadastroFormaPagamento_FormClosed;
+                frmCadastroFormaPagamento.ShowDialog();             
             }
-
-            int idFormaPagamento = int.Parse(listViewFormaPagamento.SelectedItems[0].Text);
-            DialogResult result = MessageBox.Show("Tem certeza de que deseja excluir esta forma de pagamento?",
-                                           "Confirmação de Exclusão",
-                                           MessageBoxButtons.YesNo,
-                                           MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
+            else
             {
-                try
-                {
-                    formaPagamentoDao.Excluir(idFormaPagamento);
-                    listViewFormaPagamento.Items.Remove(listViewFormaPagamento.SelectedItems[0]);
-                    MessageBox.Show("Forma de pagamento excluída com sucesso!");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                }
+                MessageBox.Show("Selecione um item para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

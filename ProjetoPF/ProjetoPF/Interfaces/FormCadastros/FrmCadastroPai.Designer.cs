@@ -32,6 +32,7 @@
             this.btnVoltar = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -69,12 +70,23 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Código";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(773, 12);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // FrmCadastroPai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.btnVoltar);
@@ -88,9 +100,10 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnVoltar;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button btnSalvar;
         public System.Windows.Forms.TextBox txtCodigo;
+        public System.Windows.Forms.Button btnVoltar;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

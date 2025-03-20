@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Num Parcela");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Form Pagamento");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Prazo");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Valor %");
             this.label2 = new System.Windows.Forms.Label();
             this.txtCondPagamento = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -35,8 +39,6 @@
             this.txtCod = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.comboFormPagamento = new System.Windows.Forms.ComboBox();
-            this.txtMulta = new System.Windows.Forms.TextBox();
-            this.txtJuros = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtParcela = new System.Windows.Forms.TextBox();
@@ -49,7 +51,14 @@
             this.txtPorcentagem = new System.Windows.Forms.TextBox();
             this.txtPrazo = new System.Windows.Forms.TextBox();
             this.btnGerarParcela = new System.Windows.Forms.Button();
+            this.btnCadastrar = new System.Windows.Forms.Button();
+            this.txtJuros = new System.Windows.Forms.MaskedTextBox();
+            this.txtMulta = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
+            // 
+            // txtCodigo
+            // 
+            this.txtCodigo.Enabled = false;
             // 
             // label2
             // 
@@ -57,15 +66,15 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(9, 8);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(283, 20);
+            this.label2.Size = new System.Drawing.Size(205, 20);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Cadastro Condição de Pagamento";
+            this.label2.Text = "Condição de Pagamento";
             // 
             // txtCondPagamento
             // 
             this.txtCondPagamento.Location = new System.Drawing.Point(133, 55);
             this.txtCondPagamento.Name = "txtCondPagamento";
-            this.txtCondPagamento.Size = new System.Drawing.Size(655, 20);
+            this.txtCondPagamento.Size = new System.Drawing.Size(269, 20);
             this.txtCondPagamento.TabIndex = 5;
             // 
             // label3
@@ -88,6 +97,7 @@
             // 
             // txtCod
             // 
+            this.txtCod.Enabled = false;
             this.txtCod.Location = new System.Drawing.Point(12, 107);
             this.txtCod.Name = "txtCod";
             this.txtCod.Size = new System.Drawing.Size(100, 20);
@@ -110,37 +120,23 @@
             this.comboFormPagamento.Size = new System.Drawing.Size(353, 21);
             this.comboFormPagamento.TabIndex = 13;
             // 
-            // txtMulta
-            // 
-            this.txtMulta.Location = new System.Drawing.Point(665, 108);
-            this.txtMulta.Name = "txtMulta";
-            this.txtMulta.Size = new System.Drawing.Size(123, 20);
-            this.txtMulta.TabIndex = 14;
-            // 
-            // txtJuros
-            // 
-            this.txtJuros.Location = new System.Drawing.Point(507, 107);
-            this.txtJuros.Name = "txtJuros";
-            this.txtJuros.Size = new System.Drawing.Size(136, 20);
-            this.txtJuros.TabIndex = 15;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(504, 91);
+            this.label6.Location = new System.Drawing.Point(414, 39);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 13);
+            this.label6.Size = new System.Drawing.Size(85, 13);
             this.label6.TabIndex = 16;
-            this.label6.Text = "Taxa de Juros";
+            this.label6.Text = "Taxa de Juros %";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(662, 91);
+            this.label7.Location = new System.Drawing.Point(568, 39);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(33, 13);
+            this.label7.Size = new System.Drawing.Size(44, 13);
             this.label7.TabIndex = 17;
-            this.label7.Text = "Multa";
+            this.label7.Text = "Multa %";
             // 
             // txtParcela
             // 
@@ -195,15 +191,21 @@
             // listView1
             // 
             this.listView1.HideSelection = false;
+            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(12, 210);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(776, 190);
+            this.listView1.Size = new System.Drawing.Size(606, 228);
             this.listView1.TabIndex = 28;
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.SmallIcon;
             // 
             // txtPorcentagem
             // 
-            this.txtPorcentagem.Location = new System.Drawing.Point(309, 160);
+            this.txtPorcentagem.Location = new System.Drawing.Point(308, 160);
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(156, 20);
             this.txtPorcentagem.TabIndex = 29;
@@ -223,12 +225,42 @@
             this.btnGerarParcela.TabIndex = 31;
             this.btnGerarParcela.Text = "Gerar Parcela";
             this.btnGerarParcela.UseVisualStyleBackColor = true;
+            this.btnGerarParcela.Click += new System.EventHandler(this.btnGerarParcela_Click);
+            // 
+            // btnCadastrar
+            // 
+            this.btnCadastrar.Location = new System.Drawing.Point(494, 105);
+            this.btnCadastrar.Name = "btnCadastrar";
+            this.btnCadastrar.Size = new System.Drawing.Size(77, 23);
+            this.btnCadastrar.TabIndex = 32;
+            this.btnCadastrar.Text = "Cadastrar";
+            this.btnCadastrar.UseVisualStyleBackColor = true;
+            this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
+            // 
+            // txtJuros
+            // 
+            this.txtJuros.Location = new System.Drawing.Point(417, 55);
+            this.txtJuros.Name = "txtJuros";
+            this.txtJuros.Size = new System.Drawing.Size(139, 20);
+            this.txtJuros.TabIndex = 33;
+            this.txtJuros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtMulta
+            // 
+            this.txtMulta.Location = new System.Drawing.Point(571, 55);
+            this.txtMulta.Name = "txtMulta";
+            this.txtMulta.Size = new System.Drawing.Size(139, 20);
+            this.txtMulta.TabIndex = 34;
+            this.txtMulta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // FrmCadastroCondPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtMulta);
+            this.Controls.Add(this.txtJuros);
+            this.Controls.Add(this.btnCadastrar);
             this.Controls.Add(this.btnGerarParcela);
             this.Controls.Add(this.txtPrazo);
             this.Controls.Add(this.txtPorcentagem);
@@ -241,8 +273,6 @@
             this.Controls.Add(this.txtParcela);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtJuros);
-            this.Controls.Add(this.txtMulta);
             this.Controls.Add(this.comboFormPagamento);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtCod);
@@ -251,6 +281,8 @@
             this.Controls.Add(this.txtCondPagamento);
             this.Controls.Add(this.label2);
             this.Name = "FrmCadastroCondPagamento";
+            this.Load += new System.EventHandler(this.FrmCadastroCondPagamento_Load);
+            this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.label2, 0);
@@ -260,8 +292,6 @@
             this.Controls.SetChildIndex(this.txtCod, 0);
             this.Controls.SetChildIndex(this.label5, 0);
             this.Controls.SetChildIndex(this.comboFormPagamento, 0);
-            this.Controls.SetChildIndex(this.txtMulta, 0);
-            this.Controls.SetChildIndex(this.txtJuros, 0);
             this.Controls.SetChildIndex(this.label6, 0);
             this.Controls.SetChildIndex(this.label7, 0);
             this.Controls.SetChildIndex(this.txtParcela, 0);
@@ -274,6 +304,9 @@
             this.Controls.SetChildIndex(this.txtPorcentagem, 0);
             this.Controls.SetChildIndex(this.txtPrazo, 0);
             this.Controls.SetChildIndex(this.btnGerarParcela, 0);
+            this.Controls.SetChildIndex(this.btnCadastrar, 0);
+            this.Controls.SetChildIndex(this.txtJuros, 0);
+            this.Controls.SetChildIndex(this.txtMulta, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,8 +321,6 @@
         private System.Windows.Forms.TextBox txtCod;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboFormPagamento;
-        private System.Windows.Forms.TextBox txtMulta;
-        private System.Windows.Forms.TextBox txtJuros;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtParcela;
@@ -302,5 +333,8 @@
         private System.Windows.Forms.TextBox txtPorcentagem;
         private System.Windows.Forms.TextBox txtPrazo;
         private System.Windows.Forms.Button btnGerarParcela;
+        private System.Windows.Forms.Button btnCadastrar;
+        private System.Windows.Forms.MaskedTextBox txtJuros;
+        private System.Windows.Forms.MaskedTextBox txtMulta;
     }
 }

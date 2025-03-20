@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProjetoPF.Servicos
 {
-    public class BaseServicos<T> where T : class, new()
+    public class BaseServicos<T> where T : ProjetoPF.Model.BaseModelos, new()
     {
         protected readonly BaseDao<T> _dao;
 
@@ -17,20 +17,29 @@ namespace ProjetoPF.Servicos
             _dao.Criar(entidade);
         }
 
-
-        public List<T> ObterTodos()
+        public List<T> BuscarTodos(string filtro = null)
         {
-            return _dao.BuscarTodos();
+            return _dao.BuscarTodos(filtro);
         }
 
-        public T ObterPorId(int id)
+        public T BuscarPorId(int id)
         {
             return _dao.BuscarPorId(id);
         }
 
+        public void Atualizar(T entidade)
+        {
+            _dao.Atualizar(entidade);
+        }
+
         public void Remover(int id)
         {
-            _dao.Excluir(id);
+            _dao.Remover(id);
+        }
+
+        public bool VerificarDuplicidade(string campo, string valor, T entidade)
+        {
+            return _dao.VerificarDuplicidade(campo, valor, entidade);
         }
     }
 }

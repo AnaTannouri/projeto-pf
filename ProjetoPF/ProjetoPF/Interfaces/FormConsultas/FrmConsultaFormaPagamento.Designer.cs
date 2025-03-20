@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnAdicionar
@@ -37,11 +36,10 @@
             // 
             // txtPesquisa
             // 
-            this.txtPesquisa.Location = new System.Drawing.Point(34, 29);
+            this.txtPesquisa.Location = new System.Drawing.Point(34, 26);
             // 
             // btnPesquisar
             // 
-            this.btnPesquisar.Click += new System.EventHandler(this.btnPesquisar_Click);
             // 
             // btnEditar
             // 
@@ -51,39 +49,18 @@
             // 
             this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(30, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(266, 20);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Consulta Formas de Pagamento";
-            // 
             // FrmConsultaFormaPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
             this.Name = "FrmConsultaFormaPagamento";
             this.Load += new System.EventHandler(this.FrmConsultaFormaPagamento_Load_1);
-            this.Controls.SetChildIndex(this.btnExcluir, 0);
-            this.Controls.SetChildIndex(this.btnEditar, 0);
-            this.Controls.SetChildIndex(this.txtPesquisa, 0);
-            this.Controls.SetChildIndex(this.btnPesquisar, 0);
-            this.Controls.SetChildIndex(this.btnAdicionar, 0);
-            this.Controls.SetChildIndex(this.listViewFormaPagamento, 0);
-            this.Controls.SetChildIndex(this.btnFiltro, 0);
-            this.Controls.SetChildIndex(this.label1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
     }
 }
