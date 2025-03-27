@@ -2,25 +2,26 @@
 using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Servicos;
 using System;
+using System.Collections.Generic;
 
 public class CondicaoPagamentoServicos : BaseServicos<CondicaoPagamento>
 {
     public CondicaoPagamentoServicos() : base(new CondicaoPagamentoDAO()) { }
 
-    public void CadastrarCondicaoPagamento(CondicaoPagamento condicaoPagamento)
+    public void SalvarCondicaoComParcelas(CondicaoPagamento condicao, List<CondicaoPagamentoParcelas> parcelas)
     {
-        if (string.IsNullOrWhiteSpace(condicaoPagamento.Descricao))
-            throw new Exception("Descrição é obrigatória!");
+        var dao = (CondicaoPagamentoDAO)_dao;
+        dao.SalvarCondicaoComParcelas(condicao, parcelas);
+    }
 
-        if (condicaoPagamento.TaxaJuros < 0)
-            throw new Exception("A taxa de juros deve ser maior ou igual a 0.");
-
-        if (condicaoPagamento.Multa < 0)
-            throw new Exception("A multa deve ser maior ou igual a 0.");
-
-        condicaoPagamento.DataCriacao = DateTime.Now;
-        condicaoPagamento.DataAtualizacao = DateTime.Now;
-
-        Criar(condicaoPagamento);
+    public void RemoverComParcelas(int idCondicaoPagamento)
+    {
+        var dao = (CondicaoPagamentoDAO)_dao;
+        dao.RemoverComParcelas(idCondicaoPagamento);
+    }
+    public void AtualizarCondicaoComParcelas(CondicaoPagamento condicao, List<CondicaoPagamentoParcelas> parcelas)
+    {
+        var dao = (CondicaoPagamentoDAO)_dao;
+        dao.AtualizarCondicaoComParcelas(condicao, parcelas);
     }
 }

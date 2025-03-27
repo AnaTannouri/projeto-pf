@@ -8,7 +8,5 @@ namespace ProjetoPF.Modelos.Pagamento
         public string Descricao { get; set; }
         public decimal TaxaJuros { get; set; }
         public decimal Multa { get; set; }
-        public DateTime DataCriacao { get; set; }
-        public DateTime DataAtualizacao { get; set; }
     }
 }

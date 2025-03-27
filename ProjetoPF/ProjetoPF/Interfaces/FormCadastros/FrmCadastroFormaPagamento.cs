@@ -133,11 +133,11 @@ namespace ProjetoPF.FormCadastros
         {
             if (isExcluindo)
             {
-                btnSalvar.Text = "Remover"; // Altere o texto do botão para "Remover" no modo de exclusão
+                btnSalvar.Text = "Remover"; 
             }
             else
             {
-                btnSalvar.Text = "Salvar"; // Ou outro texto relevante no modo normal
+                btnSalvar.Text = "Salvar";
             }
         }
 

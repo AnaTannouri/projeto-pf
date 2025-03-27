@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Num Parcela");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Form Pagamento");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Prazo");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Valor %");
             this.label2 = new System.Windows.Forms.Label();
             this.txtCondPagamento = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -54,7 +50,18 @@
             this.btnCadastrar = new System.Windows.Forms.Button();
             this.txtJuros = new System.Windows.Forms.MaskedTextBox();
             this.txtMulta = new System.Windows.Forms.MaskedTextBox();
+            this.btnRemover = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // txtCodigo
             // 
@@ -73,6 +80,7 @@
             // txtCondPagamento
             // 
             this.txtCondPagamento.Location = new System.Drawing.Point(133, 55);
+            this.txtCondPagamento.MaxLength = 100;
             this.txtCondPagamento.Name = "txtCondPagamento";
             this.txtCondPagamento.Size = new System.Drawing.Size(269, 20);
             this.txtCondPagamento.TabIndex = 5;
@@ -91,9 +99,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 91);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 13);
+            this.label4.Size = new System.Drawing.Size(77, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Código";
+            this.label4.Text = "Código Formas";
             // 
             // txtCod
             // 
@@ -102,15 +110,16 @@
             this.txtCod.Name = "txtCod";
             this.txtCod.Size = new System.Drawing.Size(100, 20);
             this.txtCod.TabIndex = 8;
+            this.txtCod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(132, 91);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(108, 13);
+            this.label5.Size = new System.Drawing.Size(113, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Forma de Pagamento";
+            this.label5.Text = "Formas de Pagamento";
             // 
             // comboFormPagamento
             // 
@@ -140,17 +149,21 @@
             // 
             // txtParcela
             // 
+            this.txtParcela.Enabled = false;
             this.txtParcela.Location = new System.Drawing.Point(12, 159);
             this.txtParcela.Name = "txtParcela";
             this.txtParcela.Size = new System.Drawing.Size(77, 20);
             this.txtParcela.TabIndex = 18;
+            this.txtParcela.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtRestante
             // 
+            this.txtRestante.Enabled = false;
             this.txtRestante.Location = new System.Drawing.Point(487, 160);
             this.txtRestante.Name = "txtRestante";
             this.txtRestante.Size = new System.Drawing.Size(172, 20);
             this.txtRestante.TabIndex = 21;
+            this.txtRestante.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label8
             // 
@@ -184,24 +197,19 @@
             this.Restante.AutoSize = true;
             this.Restante.Location = new System.Drawing.Point(484, 144);
             this.Restante.Name = "Restante";
-            this.Restante.Size = new System.Drawing.Size(50, 13);
+            this.Restante.Size = new System.Drawing.Size(61, 13);
             this.Restante.TabIndex = 25;
-            this.Restante.Text = "Restante";
+            this.Restante.Text = "Restante %";
             // 
             // listView1
             // 
             this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(12, 210);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(606, 228);
             this.listView1.TabIndex = 28;
             this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.SmallIcon;
+            this.listView1.View = System.Windows.Forms.View.Details;
             // 
             // txtPorcentagem
             // 
@@ -209,6 +217,7 @@
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(156, 20);
             this.txtPorcentagem.TabIndex = 29;
+            this.txtPorcentagem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPrazo
             // 
@@ -216,10 +225,11 @@
             this.txtPrazo.Name = "txtPrazo";
             this.txtPrazo.Size = new System.Drawing.Size(156, 20);
             this.txtPrazo.TabIndex = 30;
+            this.txtPrazo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnGerarParcela
             // 
-            this.btnGerarParcela.Location = new System.Drawing.Point(665, 158);
+            this.btnGerarParcela.Location = new System.Drawing.Point(665, 148);
             this.btnGerarParcela.Name = "btnGerarParcela";
             this.btnGerarParcela.Size = new System.Drawing.Size(123, 23);
             this.btnGerarParcela.TabIndex = 31;
@@ -253,11 +263,94 @@
             this.txtMulta.TabIndex = 34;
             this.txtMulta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // btnRemover
+            // 
+            this.btnRemover.Location = new System.Drawing.Point(665, 172);
+            this.btnRemover.Name = "btnRemover";
+            this.btnRemover.Size = new System.Drawing.Size(123, 23);
+            this.btnRemover.TabIndex = 35;
+            this.btnRemover.Text = "Remover Parcela";
+            this.btnRemover.UseVisualStyleBackColor = true;
+            this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.Location = new System.Drawing.Point(254, 32);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(15, 20);
+            this.label11.TabIndex = 36;
+            this.label11.Text = "*";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(497, 34);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(15, 20);
+            this.label12.TabIndex = 37;
+            this.label12.Text = "*";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(611, 34);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(15, 20);
+            this.label13.TabIndex = 38;
+            this.label13.Text = "*";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.Red;
+            this.label14.Location = new System.Drawing.Point(241, 86);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(15, 20);
+            this.label14.TabIndex = 39;
+            this.label14.Text = "*";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Red;
+            this.label16.Location = new System.Drawing.Point(170, 139);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(15, 20);
+            this.label16.TabIndex = 40;
+            this.label16.Text = "*";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Red;
+            this.label17.Location = new System.Drawing.Point(373, 140);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(15, 20);
+            this.label17.TabIndex = 41;
+            this.label17.Text = "*";
+            // 
             // FrmCadastroCondPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.btnRemover);
             this.Controls.Add(this.txtMulta);
             this.Controls.Add(this.txtJuros);
             this.Controls.Add(this.btnCadastrar);
@@ -281,6 +374,7 @@
             this.Controls.Add(this.txtCondPagamento);
             this.Controls.Add(this.label2);
             this.Name = "FrmCadastroCondPagamento";
+            this.Text = "Cadastro Condição de Pagamento";
             this.Load += new System.EventHandler(this.FrmCadastroCondPagamento_Load);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
@@ -307,6 +401,13 @@
             this.Controls.SetChildIndex(this.btnCadastrar, 0);
             this.Controls.SetChildIndex(this.txtJuros, 0);
             this.Controls.SetChildIndex(this.txtMulta, 0);
+            this.Controls.SetChildIndex(this.btnRemover, 0);
+            this.Controls.SetChildIndex(this.label11, 0);
+            this.Controls.SetChildIndex(this.label12, 0);
+            this.Controls.SetChildIndex(this.label13, 0);
+            this.Controls.SetChildIndex(this.label14, 0);
+            this.Controls.SetChildIndex(this.label16, 0);
+            this.Controls.SetChildIndex(this.label17, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -336,5 +437,12 @@
         private System.Windows.Forms.Button btnCadastrar;
         private System.Windows.Forms.MaskedTextBox txtJuros;
         private System.Windows.Forms.MaskedTextBox txtMulta;
+        private System.Windows.Forms.Button btnRemover;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
     }
 }

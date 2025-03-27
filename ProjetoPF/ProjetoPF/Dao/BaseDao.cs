@@ -50,7 +50,12 @@ namespace ProjetoPF.Dao
                 var propriedades = typeof(T).GetProperties().Where(p => p.Name != "Id").ToList();
                 var colunas = string.Join(", ", propriedades.Select(p => p.Name));
                 var valores = string.Join(", ", propriedades.Select(p => $"@{p.Name}"));
-                var query = $"INSERT INTO {_tabela} ({colunas}) VALUES ({valores})";
+
+                var query = $@"
+            INSERT INTO {_tabela} ({colunas}) 
+            VALUES ({valores});
+            SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
                 using (var cmd = new SqlCommand(query, conn))
                 {
                     foreach (var prop in propriedades)
@@ -58,56 +63,73 @@ namespace ProjetoPF.Dao
                         var valor = prop.GetValue(entidade) ?? DBNull.Value;
                         cmd.Parameters.AddWithValue($"@{prop.Name}", valor);
                     }
-                    cmd.ExecuteNonQuery();
+
+                    var id = (int)cmd.ExecuteScalar();
+
+                    var propId = typeof(T).GetProperty("Id");
+                    if (propId != null && propId.CanWrite)
+                    {
+                        propId.SetValue(entidade, id);
+                    }
                 }
             }
         }
-
         public List<T> BuscarTodos(string filtro = null)
         {
             List<T> lista = new List<T>();
-            try
+
+            using (SqlConnection conn = CriarConexao())
             {
-                using (SqlConnection conn = CriarConexao())
+                conn.Open();
+                string query = $"SELECT * FROM {_tabela}";
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+
+                if (!string.IsNullOrEmpty(filtro))
                 {
-                    conn.Open();
-                    string query = $"SELECT * FROM {_tabela}";
-                    if (!string.IsNullOrEmpty(filtro))
+                    List<string> whereConditions = new List<string>();
+                    if (int.TryParse(filtro, out int id))
                     {
-                        query += $" WHERE Id LIKE @filtro OR Descricao LIKE @filtro";
+                        whereConditions.Add("Id = @Id");
+                        cmd.Parameters.AddWithValue("@Id", id);
                     }
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    if (!string.IsNullOrEmpty(filtro))
+                    var propsTexto = typeof(T).GetProperties()
+                                              .Where(p => p.PropertyType == typeof(string));
+
+                    int count = 0;
+                    foreach (var prop in propsTexto)
                     {
-                        cmd.Parameters.AddWithValue("@filtro", $"%{filtro}%");
+                        string paramName = $"@p{count}";
+                        whereConditions.Add($"LTRIM(RTRIM({prop.Name})) LIKE {paramName}");
+                        cmd.Parameters.AddWithValue(paramName, $"%{filtro}%");
+                        count++;
                     }
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+
+                    if (whereConditions.Count > 0)
+                        query += " WHERE " + string.Join(" OR ", whereConditions);
+                }
+
+                cmd.CommandText = query;
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    T obj = new T();
+                    foreach (var prop in typeof(T).GetProperties())
                     {
-                        T obj = Activator.CreateInstance<T>();
-                        foreach (var prop in typeof(T).GetProperties())
+                        if (reader[prop.Name] != DBNull.Value)
                         {
-                            if (reader[prop.Name] != DBNull.Value)
-                            {
-                                var value = reader[prop.Name];
-                                if (Nullable.GetUnderlyingType(prop.PropertyType) != null)
-                                {
-                                    prop.SetValue(obj, Convert.ChangeType(value, Nullable.GetUnderlyingType(prop.PropertyType)));
-                                }
-                                else
-                                {
-                                    prop.SetValue(obj, Convert.ChangeType(value, prop.PropertyType));
-                                }
-                            }
+                            var value = reader[prop.Name];
+                            if (Nullable.GetUnderlyingType(prop.PropertyType) != null)
+                                prop.SetValue(obj, Convert.ChangeType(value, Nullable.GetUnderlyingType(prop.PropertyType)));
+                            else
+                                prop.SetValue(obj, Convert.ChangeType(value, prop.PropertyType));
                         }
-                        lista.Add(obj);
                     }
+                    lista.Add(obj);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao buscar dados: {ex.Message}");
-            }
+
             return lista;
         }
 

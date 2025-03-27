@@ -52,14 +52,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\BaseDao.cs" />
+    <Compile Include="Dao\Localizacao\CidadeDAO.cs" />
+    <Compile Include="Dao\Localizacao\EstadoDAO.cs" />
+    <Compile Include="Dao\Localizacao\PaisDAO.cs" />
     <Compile Include="Dao\Pagamento\CondicaoPagamentoDAO.cs" />
     <Compile Include="Dao\Pagamento\FormaPagamentoDAO.cs" />
     <Compile Include="Dao\Pagamento\CondicaoPagamentoParcelasDAO.cs" />
+    <Compile Include="Dao\Pessoa\ClienteDAO.cs" />
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCidade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCidade.Designer.cs">
+      <DependentUpon>FrmCadastroCidade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCliente.Designer.cs">
+      <DependentUpon>FrmCadastroCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.Designer.cs">
       <DependentUpon>FrmCadastroCondPagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroEstado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroEstado.Designer.cs">
+      <DependentUpon>FrmCadastroEstado.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroFormaPagamento.cs">
       <SubType>Form</SubType>
@@ -73,11 +95,41 @@
     <Compile Include="Interfaces\FormCadastros\FrmCadastroPai.Designer.cs">
       <DependentUpon>FrmCadastroPai.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroPais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroPais.Designer.cs">
+      <DependentUpon>FrmCadastroPais.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroPessoa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroPessoa.Designer.cs">
+      <DependentUpon>FrmCadastroPessoa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCidade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCidade.Designer.cs">
+      <DependentUpon>FrmConsultaCidade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCliente.Designer.cs">
+      <DependentUpon>FrmConsultaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCondPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCondPagamento.Designer.cs">
       <DependentUpon>FrmConsultaCondPagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaEstado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaEstado.Designer.cs">
+      <DependentUpon>FrmConsultaEstado.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaFormaPagamento.cs">
       <SubType>Form</SubType>
@@ -91,6 +143,12 @@
     <Compile Include="Interfaces\FormConsultas\FrmConsultaPai.Designer.cs">
       <DependentUpon>FrmConsultaPai.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaPais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaPais.Designer.cs">
+      <DependentUpon>FrmConsultaPais.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +156,11 @@
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\BaseModelos.cs" />
+    <Compile Include="Modelos\Pessoa\Cliente.cs" />
+    <Compile Include="Modelos\Pessoa\BasePessoa.cs" />
+    <Compile Include="Modelos\Localizacao\Cidade.cs" />
+    <Compile Include="Modelos\Localizacao\Estado.cs" />
+    <Compile Include="Modelos\Localizacao\Pais.cs" />
     <Compile Include="Modelos\Pagamento\CondicaoPagamento.cs" />
     <Compile Include="Modelos\Pagamento\FormaPagamento.cs" />
     <Compile Include="Modelos\Pagamento\CondicaoPagamentoParcelas.cs" />
@@ -109,11 +172,24 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Servicos\BaseServicos.cs" />
+    <Compile Include="Servicos\Localizacao\CidadeServicos.cs" />
+    <Compile Include="Servicos\Localizacao\EstadoServicos.cs" />
+    <Compile Include="Servicos\Localizacao\PaisServicos.cs" />
     <Compile Include="Servicos\Pagamento\CondicaoPagamentoParcelasServicos.cs" />
     <Compile Include="Servicos\Pagamento\CondicaoPagamentoServicos.cs" />
     <Compile Include="Servicos\Pagamento\FormaPagamentoServicos.cs" />
+    <Compile Include="Servicos\Pessoa\ClienteServicos.cs" />
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCidade.resx">
+      <DependentUpon>FrmCadastroCidade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCliente.resx">
+      <DependentUpon>FrmCadastroCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.resx">
       <DependentUpon>FrmCadastroCondPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroEstado.resx">
+      <DependentUpon>FrmCadastroEstado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroFormaPagamento.resx">
       <DependentUpon>FrmCadastroFormaPagamento.cs</DependentUpon>
@@ -121,14 +197,32 @@
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroPai.resx">
       <DependentUpon>FrmCadastroPai.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroPais.resx">
+      <DependentUpon>FrmCadastroPais.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroPessoa.resx">
+      <DependentUpon>FrmCadastroPessoa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCidade.resx">
+      <DependentUpon>FrmConsultaCidade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCliente.resx">
+      <DependentUpon>FrmConsultaCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCondPagamento.resx">
       <DependentUpon>FrmConsultaCondPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaEstado.resx">
+      <DependentUpon>FrmConsultaEstado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaFormaPagamento.resx">
       <DependentUpon>FrmConsultaFormaPagamento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaPai.resx">
       <DependentUpon>FrmConsultaPai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaPais.resx">
+      <DependentUpon>FrmConsultaPais.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>

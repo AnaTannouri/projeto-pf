@@ -1,4 +1,4 @@
-﻿namespace ProjetoPF.Interfaces.FormConsultas
+﻿namespace ProjetoPF.FormConsultas
 {
     partial class FrmConsultaCondPagamento
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnAdicionar
@@ -38,6 +39,10 @@
             // txtPesquisa
             // 
             this.txtPesquisa.Location = new System.Drawing.Point(36, 23);
+            // 
+            // btnEditar
+            // 
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click_1);
             // 
             // btnExcluir
             // 
@@ -52,14 +57,26 @@
             this.label2.Size = new System.Drawing.Size(0, 20);
             this.label2.TabIndex = 8;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(36, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(214, 20);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Condições de Pagamento";
+            // 
             // FrmConsultaCondPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Name = "FrmConsultaCondPagamento";
-            this.Load += new System.EventHandler(this.FrmConsultaCondPagamento_Load);
+            this.Text = "Consulta Condição de Pagamento";
+            this.Load += new System.EventHandler(this.FrmConsultaCondPagamento_Load_1);
             this.Controls.SetChildIndex(this.txtPesquisa, 0);
             this.Controls.SetChildIndex(this.btnPesquisar, 0);
             this.Controls.SetChildIndex(this.btnExcluir, 0);
@@ -68,6 +85,7 @@
             this.Controls.SetChildIndex(this.listViewFormaPagamento, 0);
             this.Controls.SetChildIndex(this.btnFiltro, 0);
             this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -76,5 +94,6 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

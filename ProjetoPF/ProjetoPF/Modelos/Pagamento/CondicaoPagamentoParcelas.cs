@@ -9,6 +9,4 @@ public class CondicaoPagamentoParcelas : BaseModelos
     public int NumParcela { get; set; }
     public int Prazo { get; set; }
     public decimal Porcentagem { get; set; }
-    public DateTime DataCriacao { get; set; }
-    public DateTime DataAtualizacao { get; set; }
 }

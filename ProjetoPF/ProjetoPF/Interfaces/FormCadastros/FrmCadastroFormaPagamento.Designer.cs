@@ -31,6 +31,7 @@
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.lblFormaPagamento = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSalvar
@@ -58,9 +59,9 @@
             this.lblFormaPagamento.AutoSize = true;
             this.lblFormaPagamento.Location = new System.Drawing.Point(133, 39);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
-            this.lblFormaPagamento.Size = new System.Drawing.Size(108, 13);
+            this.lblFormaPagamento.Size = new System.Drawing.Size(111, 13);
             this.lblFormaPagamento.TabIndex = 5;
-            this.lblFormaPagamento.Text = "Forma de Pagamento";
+            this.lblFormaPagamento.Text = "Forma de Pagamento ";
             // 
             // label2
             // 
@@ -72,11 +73,23 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Forma de Pagamento";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(239, 33);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 20);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "*";
+            // 
             // FrmCadastroFormaPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblFormaPagamento);
             this.Controls.Add(this.txtDescricao);
@@ -90,6 +103,7 @@
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -100,5 +114,6 @@
         private System.Windows.Forms.TextBox txtDescricao;
         private System.Windows.Forms.Label lblFormaPagamento;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

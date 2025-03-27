@@ -3,6 +3,7 @@ using ProjetoPF.FormCadastros;
 using ProjetoPF.Servicos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ProjetoPF.FormConsultas
@@ -102,6 +103,7 @@ namespace ProjetoPF.FormConsultas
                     MessageBox.Show("Forma de pagamento não encontrada.", "Erro");
                     return;
                 }
+
                 frmCadastroFormaPagamento.CarregarDados(formaPagamentoSelecionada, true, false);
                 frmCadastroFormaPagamento.DesbloquearCampos();
                 frmCadastroFormaPagamento.FormClosed += FrmCadastroFormaPagamento_FormClosed;
@@ -153,10 +155,22 @@ namespace ProjetoPF.FormConsultas
                     MessageBox.Show("Forma de pagamento não encontrada.", "Erro");
                     return;
                 }
+
+                var daoParcelas = new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas");
+                var parcelasVinculadas = daoParcelas.BuscarTodos()
+                    .Where(p => p.IdFormaPagamento == formaPagamentoSelecionada.Id)
+                    .ToList();
+
+                if (parcelasVinculadas.Any())
+                {
+                    MessageBox.Show("Não é possível excluir esta forma de pagamento pois ela está sendo usada em condições de pagamento.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 frmCadastroFormaPagamento.CarregarDados(formaPagamentoSelecionada, false, true);
                 frmCadastroFormaPagamento.BloquearCampos();
                 frmCadastroFormaPagamento.FormClosed += FrmCadastroFormaPagamento_FormClosed;
-                frmCadastroFormaPagamento.ShowDialog();             
+                frmCadastroFormaPagamento.ShowDialog();
             }
             else
             {
