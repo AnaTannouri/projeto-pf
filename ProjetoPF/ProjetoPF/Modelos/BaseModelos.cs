@@ -2,6 +2,8 @@
 
 namespace ProjetoPF.Model
 {
+    [Serializable]
+
     public class BaseModelos
     {
         public int Id { get; set; }

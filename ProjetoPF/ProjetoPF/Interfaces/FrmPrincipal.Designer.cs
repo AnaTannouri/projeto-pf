@@ -39,8 +39,8 @@
             this.cidadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clienteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.fornecedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.funcionárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fornecedorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.funcionárioToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,9 +57,7 @@
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pagamentoToolStripMenuItem,
             this.localizaçãoToolStripMenuItem,
-            this.clienteToolStripMenuItem,
-            this.fornecedorToolStripMenuItem,
-            this.funcionárioToolStripMenuItem});
+            this.clienteToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(800, 24);
@@ -106,7 +104,7 @@
             this.paísToolStripMenuItem.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.paísToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.paísToolStripMenuItem.Name = "paísToolStripMenuItem";
-            this.paísToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paísToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.paísToolStripMenuItem.Text = "País";
             this.paísToolStripMenuItem.Click += new System.EventHandler(this.paísToolStripMenuItem_Click);
             // 
@@ -114,7 +112,7 @@
             // 
             this.estadoToolStripMenuItem.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.estadoToolStripMenuItem.Name = "estadoToolStripMenuItem";
-            this.estadoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.estadoToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.estadoToolStripMenuItem.Text = "Estado";
             this.estadoToolStripMenuItem.Click += new System.EventHandler(this.estadoToolStripMenuItem_Click);
             // 
@@ -122,36 +120,43 @@
             // 
             this.cidadeToolStripMenuItem.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.cidadeToolStripMenuItem.Name = "cidadeToolStripMenuItem";
-            this.cidadeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cidadeToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.cidadeToolStripMenuItem.Text = "Cidade";
             this.cidadeToolStripMenuItem.Click += new System.EventHandler(this.cidadeToolStripMenuItem_Click);
             // 
             // clienteToolStripMenuItem
             // 
             this.clienteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clienteToolStripMenuItem1});
+            this.clienteToolStripMenuItem1,
+            this.fornecedorToolStripMenuItem1,
+            this.funcionárioToolStripMenuItem1});
             this.clienteToolStripMenuItem.Name = "clienteToolStripMenuItem";
-            this.clienteToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.clienteToolStripMenuItem.Text = "Cliente";
+            this.clienteToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.clienteToolStripMenuItem.Text = "Pessoa";
             // 
             // clienteToolStripMenuItem1
             // 
+            this.clienteToolStripMenuItem1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.clienteToolStripMenuItem1.Name = "clienteToolStripMenuItem1";
             this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.clienteToolStripMenuItem1.Text = "Cliente";
             this.clienteToolStripMenuItem1.Click += new System.EventHandler(this.clienteToolStripMenuItem1_Click);
             // 
-            // fornecedorToolStripMenuItem
+            // fornecedorToolStripMenuItem1
             // 
-            this.fornecedorToolStripMenuItem.Name = "fornecedorToolStripMenuItem";
-            this.fornecedorToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
-            this.fornecedorToolStripMenuItem.Text = "Fornecedor";
+            this.fornecedorToolStripMenuItem1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.fornecedorToolStripMenuItem1.Name = "fornecedorToolStripMenuItem1";
+            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.fornecedorToolStripMenuItem1.Text = "Fornecedor";
+            this.fornecedorToolStripMenuItem1.Click += new System.EventHandler(this.fornecedorToolStripMenuItem1_Click);
             // 
-            // funcionárioToolStripMenuItem
+            // funcionárioToolStripMenuItem1
             // 
-            this.funcionárioToolStripMenuItem.Name = "funcionárioToolStripMenuItem";
-            this.funcionárioToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-            this.funcionárioToolStripMenuItem.Text = "Funcionário";
+            this.funcionárioToolStripMenuItem1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.funcionárioToolStripMenuItem1.Name = "funcionárioToolStripMenuItem1";
+            this.funcionárioToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.funcionárioToolStripMenuItem1.Text = "Funcionário";
+            this.funcionárioToolStripMenuItem1.Click += new System.EventHandler(this.funcionárioToolStripMenuItem1_Click);
             // 
             // FrmPrincipal
             // 
@@ -184,8 +189,8 @@
         private System.Windows.Forms.ToolStripMenuItem cidadeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem fornecedorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem funcionárioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fornecedorToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem funcionárioToolStripMenuItem1;
     }
 }
 

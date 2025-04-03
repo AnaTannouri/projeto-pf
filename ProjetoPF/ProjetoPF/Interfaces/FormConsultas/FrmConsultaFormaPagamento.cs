@@ -78,7 +78,7 @@ namespace ProjetoPF.FormConsultas
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
-            else
+            else if (!string.IsNullOrEmpty(pesquisa))
             {
                 MessageBox.Show("Nenhum resultado encontrado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

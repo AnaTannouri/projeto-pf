@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Transactions;
+using System.Windows.Forms;
 
 namespace ProjetoPF.Dao
 {
@@ -43,16 +44,33 @@ namespace ProjetoPF.Dao
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
 
-                SqlCommand deleteParcelasCmd = new SqlCommand(
-                    "DELETE FROM CondicaoPagamentoParcelas WHERE IdCondicaoPagamento = @Id", conn);
-                deleteParcelasCmd.Parameters.AddWithValue("@Id", idCondicaoPagamento);
-                deleteParcelasCmd.ExecuteNonQuery();
+                try
+                {
+                    // Deleta as parcelas
+                    using (SqlCommand deleteParcelasCmd = new SqlCommand(
+                        "DELETE FROM CondicaoPagamentoParcelas WHERE IdCondicaoPagamento = @Id", conn, transaction))
+                    {
+                        deleteParcelasCmd.Parameters.AddWithValue("@Id", idCondicaoPagamento);
+                        deleteParcelasCmd.ExecuteNonQuery();
+                    }
 
-                SqlCommand deleteCondicaoCmd = new SqlCommand(
-                    "DELETE FROM CondicaoPagamentos WHERE Id = @Id", conn);
-                deleteCondicaoCmd.Parameters.AddWithValue("@Id", idCondicaoPagamento);
-                deleteCondicaoCmd.ExecuteNonQuery();
+                    // Deleta a condição de pagamento
+                    using (SqlCommand deleteCondicaoCmd = new SqlCommand(
+                        "DELETE FROM CondicaoPagamentos WHERE Id = @Id", conn, transaction))
+                    {
+                        deleteCondicaoCmd.Parameters.AddWithValue("@Id", idCondicaoPagamento);
+                        deleteCondicaoCmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback();
+                    throw; 
+                }
             }
         }
 

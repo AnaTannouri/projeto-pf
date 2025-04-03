@@ -4,25 +4,28 @@ using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Servicos;
-using ProjetoPF.Servicos.Localizacao;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormCadastros
 {
-    public partial class FrmCadastroCliente : FrmCadastroPessoa
+    public partial class FrmCadastroFornecedor : ProjetoPF.Interfaces.FormCadastros.FrmCadastroPessoa
     {
-        private Cliente cliente = new Cliente();
-        private BaseServicos<Cliente> clienteServicos = new BaseServicos<Cliente>(new BaseDao<Cliente>("Clientes"));
+        private Fornecedor fornecedor = new Fornecedor();
+        private BaseServicos<Fornecedor> fornecedorServicos = new BaseServicos<Fornecedor>(new BaseDao<Fornecedor>("Fornecedores"));
 
         private FrmCadastroFormaPagamento frmCadastroFormaPagamento = new FrmCadastroFormaPagamento();
         private BaseServicos<FormaPagamento> formaServices = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"));
 
         private FrmCadastroCondPagamento frmCadastroCondPagamento = new FrmCadastroCondPagamento();
         private BaseServicos<CondicaoPagamento> condicacaoServices = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"));
+
         private BaseServicos<Cidade> cidadeServices = new BaseServicos<Cidade>(new BaseDao<Cidade>("Cidades"));
 
         private bool carregandoFormas = false;
@@ -31,8 +34,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private bool isEditando = false;
         private bool isExcluindo = false;
-
-        public FrmCadastroCliente()
+        public FrmCadastroFornecedor()
         {
             InitializeComponent();
         }
@@ -41,79 +43,79 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             if (string.IsNullOrWhiteSpace(txtNome_RazaoSocial.Text))
             {
-                MessageBox.Show("Informe o nome ou razão social do cliente.");
+                MessageBox.Show("Informe o nome ou razão social do fornecedor.");
                 return false;
             }
 
             if (!checkEstrangeiro.Checked && string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
             {
-                MessageBox.Show("Informe o CPF/CNPJ para clientes não estrangeiros.");
+                MessageBox.Show("Informe o CPF/CNPJ para fornecedor não estrangeiros.");
                 return false;
             }
 
             if (checkEstrangeiro.Checked && string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
             {
-                MessageBox.Show("Informe o RG ou Inscrição Estadual para clientes estrangeiros.");
+                MessageBox.Show("Informe o RG ou Inscrição Estadual para fornecedores estrangeiros.");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                MessageBox.Show("Informe o e-mail do cliente.");
+                MessageBox.Show("Informe o e-mail do fornecedor.");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtTelefone.Text))
             {
-                MessageBox.Show("Informe o telefone do cliente.");
+                MessageBox.Show("Informe o telefone do fornecedor.");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtRua.Text))
             {
-                MessageBox.Show("Informe o nome da rua do cliente.");
+                MessageBox.Show("Informe o nome da rua do fornecedor.");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtNumero.Text))
             {
-                MessageBox.Show("Informe o número da residência do cliente.");
+                MessageBox.Show("Informe o número da residência do fornecedor.");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtBairro.Text))
             {
-                MessageBox.Show("Informe o bairro do cliente.");
+                MessageBox.Show("Informe o bairro do fornecedor.");
                 return false;
             }
 
             if (comboCidade.SelectedItem == null)
             {
-                MessageBox.Show("Selecione a cidade do cliente.");
+                MessageBox.Show("Selecione a cidade do fornecedor.");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtCep.Text))
             {
-                MessageBox.Show("Informe o CEP do cliente.");
+                MessageBox.Show("Informe o CEP do fornecedor.");
                 return false;
             }
 
             if (comboClassificacao.SelectedItem == null)
             {
-                MessageBox.Show("Selecione a classificação do cliente.");
+                MessageBox.Show("Selecione a classificação do fornecedor.");
                 return false;
             }
 
             if (comboFormas.SelectedItem == null)
             {
-                MessageBox.Show("Selecione a forma de pagamento do cliente.");
+                MessageBox.Show("Selecione a forma de pagamento do fornecedor.");
                 return false;
             }
 
             if (comboCondicoes.SelectedItem == null)
             {
-                MessageBox.Show("Selecione a condição de pagamento do cliente.");
+                MessageBox.Show("Selecione a condição de pagamento do fornecedor.");
                 return false;
             }
 
@@ -121,7 +123,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 if (string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
                 {
-                    MessageBox.Show("Informe o RG do cliente estrangeiro.");
+                    MessageBox.Show("Informe o RG do fornecedor estrangeiro.");
                     return false;
                 }
             }
@@ -129,14 +131,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
                 {
-                    MessageBox.Show("Informe o CPF do cliente.");
+                    MessageBox.Show("Informe o CPF do fornecedor.");
                     return false;
                 }
             }
 
             return true;
         }
-
         public void CarregarCidades(int? idSelecionado = null)
         {
             try
@@ -267,7 +268,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 carregandoCondicoes = false;
             }
         }
-
         public void LimparFormulario()
         {
             txtCodigo.Clear();
@@ -284,6 +284,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodigoCidade.Clear();
             txtCodigoForma.Clear();
             txtCodigoCondicao.Clear();
+            txtValorMin.Clear(); 
 
             checkEstrangeiro.Checked = false;
             dateTimePicker1.Value = DateTime.Now;
@@ -298,41 +299,44 @@ namespace ProjetoPF.Interfaces.FormCadastros
             isExcluindo = false;
         }
 
-        public void CarregarDados(Cliente clienteSelecionado, bool isEditandoForm, bool isExcluindoForm)
+        public void CarregarDados(Fornecedor fornecedorSelecionado, bool isEditandoForm, bool isExcluindoForm)
         {
-            cliente = clienteSelecionado;
+            fornecedor = fornecedorSelecionado;
             isEditando = isEditandoForm;
             isExcluindo = isExcluindoForm;
 
-            txtCodigo.Text = cliente.Id.ToString();
-            txtNome_RazaoSocial.Text = cliente.NomeRazaoSocial;
-            txtApelido_NomeFantasia.Text = cliente.ApelidoNomeFantasia;
-            txtCpf_Cnpj.Text = cliente.CpfCnpj;
-            txtRg_InscricaoEstadual.Text = cliente.RgInscricaoEstadual;
-            txtEmail.Text = cliente.Email;
-            txtTelefone.Text = cliente.Telefone;
-            txtRua.Text = cliente.Rua;
-            txtNumero.Text = cliente.Numero;
-            txtBairro.Text = cliente.Bairro;
-            txtCep.Text = cliente.Cep;
-            comboPessoa.SelectedItem = cliente.TipoPessoa;
-            comboClassificacao.SelectedItem = cliente.Classificacao;
-            checkEstrangeiro.Checked = cliente.Estrangeiro;
-            dateTimePicker1.Value = cliente.DataNascimentoCriacao;
+            txtCodigo.Text = fornecedor.Id.ToString();
+            txtNome_RazaoSocial.Text = fornecedor.NomeRazaoSocial;
+            txtApelido_NomeFantasia.Text = fornecedor.ApelidoNomeFantasia;
+            txtCpf_Cnpj.Text = fornecedor.CpfCnpj;
+            txtRg_InscricaoEstadual.Text = fornecedor.RgInscricaoEstadual;
+            txtEmail.Text = fornecedor.Email;
+            txtTelefone.Text = fornecedor.Telefone;
+            txtRua.Text = fornecedor.Rua;
+            txtNumero.Text = fornecedor.Numero;
+            txtBairro.Text = fornecedor.Bairro;
+            txtCep.Text = fornecedor.Cep;
+            comboPessoa.SelectedItem = fornecedor.TipoPessoa;
+            comboClassificacao.SelectedItem = fornecedor.Classificacao;
+            checkEstrangeiro.Checked = fornecedor.Estrangeiro;
+            dateTimePicker1.Value = fornecedor.DataNascimentoCriacao;
 
+            txtValorMin.Text = fornecedor.ValorMinimoPedido.HasValue
+                ? fornecedor.ValorMinimoPedido.Value.ToString("N2")
+                : string.Empty;
 
-            CarregarCidades(cliente.IdCidade);
-            CarregarFormasPagamento(cliente.FormaPagamentoId);
-            CarregarCondicoesPagamento(cliente.CondicaoPagamentoId);
+            CarregarCidades(fornecedor.IdCidade);
+            CarregarFormasPagamento(fornecedor.FormaPagamentoId);
+            CarregarCondicoesPagamento(fornecedor.CondicaoPagamentoId);
 
-            comboCidade.SelectedValue = cliente.IdCidade;
-            txtCodigoCidade.Text = cliente.IdCidade.ToString();
+            comboCidade.SelectedValue = fornecedor.IdCidade;
+            txtCodigoCidade.Text = fornecedor.IdCidade.ToString();
 
-            comboFormas.SelectedValue = cliente.FormaPagamentoId;
-            comboCondicoes.SelectedValue = cliente.CondicaoPagamentoId;
+            comboFormas.SelectedValue = fornecedor.FormaPagamentoId;
+            comboCondicoes.SelectedValue = fornecedor.CondicaoPagamentoId;
 
-            txtCodigoForma.Text = cliente.FormaPagamentoId.ToString();
-            txtCodigoCondicao.Text = cliente.CondicaoPagamentoId.ToString();
+            txtCodigoForma.Text = fornecedor.FormaPagamentoId.ToString();
+            txtCodigoCondicao.Text = fornecedor.CondicaoPagamentoId.ToString();
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
 
@@ -341,7 +345,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             else
                 DesbloquearCampos();
         }
-
 
         public void BloquearCampos()
         {
@@ -359,6 +362,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodigoCidade.Enabled = false;
             txtCodigoForma.Enabled = false;
             txtCodigoCondicao.Enabled = false;
+            txtValorMin.Enabled = false; 
 
             comboPessoa.Enabled = false;
             comboClassificacao.Enabled = false;
@@ -373,6 +377,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             button2.Enabled = false;
             btnCadastrarCidade.Enabled = false;
         }
+
         public void DesbloquearCampos()
         {
             txtCodigo.Enabled = false;
@@ -385,9 +390,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtNumero.Enabled = true;
             txtBairro.Enabled = true;
             txtCep.Enabled = true;
+            txtValorMin.Enabled = true; 
         }
 
-        private void FrmCadastroCliente_Load_1(object sender, EventArgs e)
+        private void FrmCadastroFornecedor_Load(object sender, EventArgs e)
         {
             if (comboFormas.Items.Count == 0)
                 CarregarFormasPagamento();
@@ -401,7 +407,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
         }
 
-        private void comboFormas_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void comboFormas_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (carregandoFormas) return;
 
@@ -477,18 +483,18 @@ namespace ProjetoPF.Interfaces.FormCadastros
             frmCadastroFormaPagamento.ShowDialog();
         }
 
-        private void btnSalvar_Click_1(object sender, EventArgs e)
+        private void btnSalvar_Click(object sender, EventArgs e)
         {
             try
             {
                 if (isExcluindo)
                 {
-                    if (cliente != null && cliente.Id != 0)
+                    if (fornecedor != null && fornecedor.Id != 0)
                     {
-                        if (MessageBox.Show("Deseja realmente excluir este cliente?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        if (MessageBox.Show("Deseja realmente excluir este fornecedor?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
-                            clienteServicos.Remover(cliente.Id);
-                            MessageBox.Show("Cliente removido com sucesso!");
+                            fornecedorServicos.Remover(fornecedor.Id);
+                            MessageBox.Show("Fornecedor removido com sucesso!");
                             LimparFormulario();
                             Sair();
                         }
@@ -506,13 +512,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 if (isEditando)
                 {
                     AtualizarObjeto();
-                    clienteServicos.Atualizar(cliente);
-                    MessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    fornecedorServicos.Atualizar(fornecedor);
+                    MessageBox.Show("Fornecedor atualizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    clienteServicos.Criar(cliente);
-                    MessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    fornecedorServicos.Criar(fornecedor);
+                    MessageBox.Show("Fornecedor cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 LimparFormulario();
@@ -522,7 +528,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("REFERENCE"))
                 {
-                    MessageBox.Show("Não é possível excluir o cliente, pois ele está vinculado a outro(s) registro(s).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não é possível excluir o fornecedor, pois ele está vinculado a outro(s) registro(s).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -532,56 +538,46 @@ namespace ProjetoPF.Interfaces.FormCadastros
         }
         private void AtualizarObjeto()
         {
-            cliente.TipoPessoa = comboPessoa.Text;
-            cliente.NomeRazaoSocial = txtNome_RazaoSocial.Text.Trim();
-            cliente.ApelidoNomeFantasia = txtApelido_NomeFantasia.Text.Trim();
-            cliente.CpfCnpj = checkEstrangeiro.Checked ? null : txtCpf_Cnpj.Text.Trim();
-            cliente.RgInscricaoEstadual = txtRg_InscricaoEstadual.Text.Trim();
-            cliente.Email = txtEmail.Text.Trim();
-            cliente.Telefone = txtTelefone.Text.Trim();
-            cliente.Rua = txtRua.Text.Trim();
-            cliente.Numero = txtNumero.Text.Trim();
-            cliente.Bairro = txtBairro.Text.Trim();
-            cliente.Cep = txtCep.Text.Trim();
-            cliente.Classificacao = comboClassificacao.SelectedItem?.ToString();
-            cliente.Estrangeiro = checkEstrangeiro.Checked;
-            cliente.DataNascimentoCriacao = dateTimePicker1.Value;
+            fornecedor.TipoPessoa = comboPessoa.Text;
+            fornecedor.NomeRazaoSocial = txtNome_RazaoSocial.Text.Trim();
+            fornecedor.ApelidoNomeFantasia = txtApelido_NomeFantasia.Text.Trim();
+            fornecedor.CpfCnpj = checkEstrangeiro.Checked ? null : txtCpf_Cnpj.Text.Trim();
+            fornecedor.RgInscricaoEstadual = txtRg_InscricaoEstadual.Text.Trim();
+            fornecedor.Email = txtEmail.Text.Trim();
+            fornecedor.Telefone = txtTelefone.Text.Trim();
+            fornecedor.Rua = txtRua.Text.Trim();
+            fornecedor.Numero = txtNumero.Text.Trim();
+            fornecedor.Bairro = txtBairro.Text.Trim();
+            fornecedor.Cep = txtCep.Text.Trim();
+            fornecedor.Classificacao = comboClassificacao.SelectedItem?.ToString();
+            fornecedor.Estrangeiro = checkEstrangeiro.Checked;
+            fornecedor.DataNascimentoCriacao = dateTimePicker1.Value;
 
             if (comboCidade.SelectedItem is Cidade cidadeSelecionada)
-            {
-                cliente.IdCidade = cidadeSelecionada.Id;
-            }
+                fornecedor.IdCidade = cidadeSelecionada.Id;
             else
-            {
                 throw new Exception("Nenhuma cidade foi selecionada.");
-            }
 
             if (comboFormas.SelectedItem is FormaPagamento forma)
-            {
-                cliente.FormaPagamentoId = forma.Id;
-            }
-            else
-            {
-                cliente.FormaPagamentoId.ToString();
-            }
+                fornecedor.FormaPagamentoId = forma.Id;
 
             if (comboCondicoes.SelectedItem is CondicaoPagamento condicao)
-            {
-                cliente.CondicaoPagamentoId = condicao.Id;
-            }
+                fornecedor.CondicaoPagamentoId = condicao.Id;
+
+            fornecedor.Id = (isEditando || isExcluindo) ? int.Parse(txtCodigo.Text) : 0;
+
+            fornecedor.DataCriacao = fornecedor.DataCriacao == DateTime.MinValue ? DateTime.Now : fornecedor.DataCriacao;
+            fornecedor.DataAtualizacao = DateTime.Now;
+
+            if (decimal.TryParse(txtValorMin.Text, out var valor))
+                fornecedor.ValorMinimoPedido = valor;
             else
-            {
-                cliente.CondicaoPagamentoId.ToString();
-            }
-
-            cliente.Id = (isEditando || isExcluindo) ? int.Parse(txtCodigo.Text) : 0;
-
-            cliente.DataCriacao = cliente.DataCriacao == DateTime.MinValue ? DateTime.Now : cliente.DataCriacao;
-            cliente.DataAtualizacao = DateTime.Now;
+                fornecedor.ValorMinimoPedido = null;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnCadastrarCidade_Click(object sender, EventArgs e)
         {
+
             FrmCadastroCidade frmCadastroCidade = new FrmCadastroCidade();
             frmCadastroCidade.FormClosed += (s, args) =>
             {
@@ -602,7 +598,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             };
 
             frmCadastroCidade.ShowDialog();
-
         }
 
         private void comboCidade_SelectedIndexChanged(object sender, EventArgs e)

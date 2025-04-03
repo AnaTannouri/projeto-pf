@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ProjetoPF.Dao.Pessoa
 {
-    public class ClientesDAO : BaseDao<Cliente>
+    public class FuncionarioDAO : BaseDao<Funcionario>
     {
-        public ClientesDAO() : base("Clientes")
-        {
+        public FuncionarioDAO() : base("Funcionarios")
+        { 
         }
     }
 }

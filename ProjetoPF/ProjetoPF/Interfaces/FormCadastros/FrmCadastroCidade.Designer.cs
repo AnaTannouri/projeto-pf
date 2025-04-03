@@ -45,7 +45,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click_1);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // txtCodigo
             // 

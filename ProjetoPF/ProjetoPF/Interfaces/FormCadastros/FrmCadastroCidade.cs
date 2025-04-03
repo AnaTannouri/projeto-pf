@@ -5,6 +5,7 @@ using ProjetoPF.Servicos.Localizacao;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -35,7 +36,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                 var listaEstados = estadoServices.BuscarTodos();
 
-                comboEstados.DataSource = null;
                 comboEstados.Items.Clear();
 
                 if (listaEstados != null && listaEstados.Any())
@@ -188,8 +188,29 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             frmCadastroEstado.ShowDialog();
         }
+        private void FrmCadastroCidade_Load_1(object sender, EventArgs e)
+        {
+            if (comboEstados.Items.Count == 0)
+                CarregarEstados();
 
-        private void btnSalvar_Click_1(object sender, EventArgs e)
+            btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
+        }
+
+        private void comboEstados_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (carregandoCombo) return;
+
+            if (comboEstados.SelectedItem is Estado estado)
+            {
+                txtCodEstado.Text = estado.Id.ToString();
+            }
+            else
+            {
+                txtCodEstado.Clear();
+            }
+        }
+
+        private void btnSalvar_Click(object sender, EventArgs e)
         {
 
             try
@@ -227,31 +248,22 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 LimparCampos();
                 Sair();
             }
+            catch (SqlException ex) when (ex.Number == 547)
+            {
+                string mensagem;
+
+                if (ex.Message.Contains("FK_CidadeCliente"))
+                    mensagem = "Não é possível remover a cidade: está associada a um ou mais clientes.";
+                else if (ex.Message.Contains("FK_CidadeFornecedor"))
+                    mensagem = "Não é possível remover a cidade: está associada a um ou mais fornecedores.";
+                else
+                    mensagem = "Não é possível remover a cidade, pois ela está em uso.";
+
+                MessageBox.Show(mensagem, "Erro de integridade referencial", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro: {ex.Message}");
-            }
-        }
-
-        private void FrmCadastroCidade_Load_1(object sender, EventArgs e)
-        {
-            if (comboEstados.Items.Count == 0)
-                CarregarEstados();
-
-            btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-        }
-
-        private void comboEstados_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (carregandoCombo) return;
-
-            if (comboEstados.SelectedItem is Estado estado)
-            {
-                txtCodEstado.Text = estado.Id.ToString();
-            }
-            else
-            {
-                txtCodEstado.Clear();
+                MessageBox.Show($"Erro: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

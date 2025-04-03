@@ -35,7 +35,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                 var listaPaises = paisServices.BuscarTodos();
 
-                comboPaises.DataSource = null;
                 comboPaises.Items.Clear();
 
                 if (listaPaises != null && listaPaises.Any())

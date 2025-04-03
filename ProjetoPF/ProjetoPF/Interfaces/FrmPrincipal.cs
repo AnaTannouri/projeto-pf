@@ -9,10 +9,14 @@ namespace ProjetoPF
     {
         FrmConsultaFormaPagamento frmConsultaFormaPagamento = new FrmConsultaFormaPagamento();
         FrmConsultaCondPagamento frmConsultaCondPagamento = new FrmConsultaCondPagamento();
+
         FrmConsultaPais frmConsultaPais = new FrmConsultaPais();
         FrmConsultaEstado frmConsultaEstado = new FrmConsultaEstado();
         FrmConsultaCidade frmConsultaCidade = new FrmConsultaCidade();
+
         FrmConsultaCliente frmConsultaCliente = new FrmConsultaCliente();
+        FrmConsultaFornecedor frmConsultaFornecedor = new FrmConsultaFornecedor();
+        FrmConsultaFuncionario frmConsultaFuncionario = new FrmConsultaFuncionario();
 
         public FrmPrincipal()
         {
@@ -46,6 +50,16 @@ namespace ProjetoPF
         private void clienteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaCliente.ShowDialog();
+        }
+
+        private void fornecedorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmConsultaFornecedor.ShowDialog();
+        }
+
+        private void funcionárioToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmConsultaFuncionario.ShowDialog();
         }
     }
 }

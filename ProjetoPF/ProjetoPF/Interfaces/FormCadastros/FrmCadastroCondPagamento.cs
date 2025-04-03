@@ -4,6 +4,7 @@ using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Servicos;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -115,7 +116,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
                 else
                 {
-                    comboFormPagamento.DataSource = null;
                     comboFormPagamento.Items.Clear();
                     MessageBox.Show("Nenhuma forma de pagamento encontrada.");
                 }
@@ -287,9 +287,17 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                 LimparCampos();
             }
-            catch (Exception ex)
+            catch (SqlException ex) when (ex.Number == 547)
             {
-                MessageBox.Show($"Erro ao salvar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string mensagem;
+                if (ex.Message.Contains("FK_CondicaoPagamentoCliente"))
+                    mensagem = "Não é possível remover: está associada a um ou mais clientes.";
+                else if (ex.Message.Contains("FK_CondicaoPagamentoFornecedor"))
+                    mensagem = "Não é possível remover: está associada a um ou mais fornecedores.";
+                else
+                    mensagem = "Não é possível remover a condição de pagamento, pois ela está em uso.";
+
+                MessageBox.Show(mensagem, "Erro de integridade referencial", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public void BloquearCampos()

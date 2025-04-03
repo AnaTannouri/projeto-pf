@@ -1,19 +1,17 @@
 ﻿using ProjetoPF.Modelos.Comercial;
-using ProjetoPF.Modelos.Pagamento;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjetoPF.Modelos.Pessoa
 {
-    public class Cliente : BasePessoa
+    public class Fornecedor:BasePessoa
     {
         public int FormaPagamentoId { get; set; }
         public int CondicaoPagamentoId { get; set; }
         public int IdCidade { get; set; }
+        public decimal? ValorMinimoPedido { get; set; } 
     }
 }
-

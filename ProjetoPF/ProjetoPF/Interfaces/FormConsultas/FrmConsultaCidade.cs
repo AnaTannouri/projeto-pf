@@ -56,7 +56,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
-            else
+            else if (!string.IsNullOrEmpty(pesquisa))
             {
                 MessageBox.Show("Nenhuma cidade encontrada!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -153,6 +153,5 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 MessageBox.Show("Selecione uma cidade para excluir.");
             }
         }
-
     }
 }

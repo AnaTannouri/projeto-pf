@@ -3,6 +3,7 @@ using ProjetoPF.FormConsultas;
 using ProjetoPF.Interfaces.FormCadastros;
 using ProjetoPF.Servicos;
 using System;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace ProjetoPF.FormCadastros
@@ -62,9 +63,22 @@ namespace ProjetoPF.FormCadastros
                 }
                 LimparCampos();
             }
+            catch (SqlException ex) when (ex.Number == 547)
+            {
+                string mensagem;
+
+                if (ex.Message.Contains("FK_FormaPagamentoCliente"))
+                    mensagem = "Não é possível remover: está associada a um ou mais clientes.";
+                else if (ex.Message.Contains("FK_FormaPagamentoFornecedor"))
+                    mensagem = "Não é possível remover: está associada a um ou mais fornecedores.";
+                else
+                    mensagem = "Não é possível remover a forma de pagamento, pois ela está em uso.";
+
+                MessageBox.Show(mensagem, "Erro de integridade referencial", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao salvar ou atualizar: {ex.Message}");
+                MessageBox.Show($"Erro ao salvar ou atualizar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
