@@ -20,12 +20,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             InitializeComponent();
         }
-        private void CarregarTipoPessoa()
+        public void CarregarTipoPessoa()
         {
             comboPessoa.Items.Clear();
             comboPessoa.BindingContext = new BindingContext();
-            comboPessoa.Items.Add("Física");
-            comboPessoa.Items.Add("Jurídica");
+            comboPessoa.Items.Add("FÍSICA");
+            comboPessoa.Items.Add("JURÍDICA");
             comboPessoa.SelectedIndex = -1;
         }
 
@@ -36,25 +36,50 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void comboPessoa_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboClassificacao.DataSource = null; // desvincula o DataSource
+            comboClassificacao.DataSource = null; 
             if (comboClassificacao.Items.Count > 0)
                 comboClassificacao.Items.Clear();
 
             comboClassificacao.Text = string.Empty;
             comboClassificacao.SelectedIndex = -1;
 
-            if (comboPessoa.SelectedItem?.ToString() == "Física")
+            if (comboPessoa.SelectedItem?.ToString() == "FÍSICA")
+            {
+                label4.Text = "Nome:";
+                label5.Text = "Apelido:";
+                label16.Text = "Data de Nascimento:";
+                label3.Text = "Cpf:";
+                label6.Text = "Rg:";
+            }
+            if (comboPessoa.SelectedItem?.ToString() == "JURÍDICA")
+            {
+                label4.Text = "Razão Social:";
+                label5.Text = "Nome Fantasia:";
+                label16.Text = "Data de Criação:";
+                label3.Text = "Cnpj:";
+                label6.Text = "Inscrição Estadual:";
+            }
+            if (comboPessoa.SelectedItem?.ToString() == "FÍSICA")
             {
                 lblClassificacao.Text = "Gênero:";
-                comboClassificacao.Items.Add("Masculino");
-                comboClassificacao.Items.Add("Feminino");
+
             }
-            else if (comboPessoa.SelectedItem?.ToString() == "Jurídica")
+            if (comboPessoa.SelectedItem?.ToString() == "FÍSICA")
             {
-                lblClassificacao.Text = "Tipo de Empresa:";
-                comboClassificacao.Items.Add("MEI");
-                comboClassificacao.Items.Add("LTDA");
-                comboClassificacao.Items.Add("SA");
+                lblClassificacao.Text = "Gênero:";
+                lblClassificacao.Visible = true;
+                comboClassificacao.Visible = true;
+
+                comboClassificacao.Items.Clear();
+                comboClassificacao.Items.Add("FEMININO");
+                comboClassificacao.Items.Add("MASCULINO");
+                comboClassificacao.Items.Add("OUTROS");
+                comboClassificacao.SelectedIndex = -1;
+            }
+            else if (comboPessoa.SelectedItem?.ToString() == "JURÍDICA")
+            {
+                lblClassificacao.Visible = false;
+                comboClassificacao.Visible = false;
             }
         }
     }

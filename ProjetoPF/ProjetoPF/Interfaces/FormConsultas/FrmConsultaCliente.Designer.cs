@@ -35,8 +35,9 @@
             // 
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click_1);
             // 
-            // btnPesquisar
+            // txtPesquisa
             // 
+            this.txtPesquisa.Location = new System.Drawing.Point(38, 37);
             // 
             // btnEditar
             // 
@@ -59,7 +60,7 @@
             // FrmConsultaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1344, 729);
             this.Controls.Add(this.label2);
             this.Name = "FrmConsultaCliente";
             this.Text = "Consulta Clientes";

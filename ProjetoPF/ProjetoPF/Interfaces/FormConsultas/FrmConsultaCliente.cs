@@ -71,7 +71,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             if (listViewFormaPagamento.Columns.Count == 0)
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Tipo", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Tipo Pessoa", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Nome/Razão Social", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
@@ -140,7 +140,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 }
 
                 FrmCadastroCliente frmCadastroCliente = new FrmCadastroCliente();
-                frmCadastroCliente.CarregarDados(clienteSelecionado, false, true); // exclusão = true
+                frmCadastroCliente.CarregarDados(clienteSelecionado, false, true); 
                 frmCadastroCliente.FormClosed += FrmCadastroCliente_FormClosed;
                 frmCadastroCliente.ShowDialog();
             }

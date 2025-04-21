@@ -1,5 +1,6 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormCadastros;
+using ProjetoPF.Interfaces.FormCadastros;
 using ProjetoPF.Servicos;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace ProjetoPF.FormConsultas
     {
         private FrmCadastroFormaPagamento frmCadastroFormaPagamento;
         private BaseServicos<FormaPagamento> formaPagamentoServices = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"));
+        public FormaPagamento FormaSelecionada { get; private set; }
 
         public FrmConsultaFormaPagamento()
         {
             InitializeComponent();
             frmCadastroFormaPagamento = new FrmCadastroFormaPagamento();
+            this.listViewFormaPagamento.MouseDoubleClick += new MouseEventHandler(this.listViewFormaPagamento_MouseDoubleClick);
         }
 
         private void btnAdicionar_Click_1(object sender, EventArgs e)
@@ -27,10 +30,11 @@ namespace ProjetoPF.FormConsultas
             DialogResult result = frmCadastroFormaPagamento.ShowDialog();
 
             if (result == DialogResult.OK)
-            {
-                FormaPagamento novaFormaPagamento = frmCadastroFormaPagamento.FormaPagamentoAtual;
-                formaPagamentoServices.Criar(novaFormaPagamento);
+            {       
+                FormaPagamento novaFormaPagamento = frmCadastroFormaPagamento.FormaPagamentoAtual;    
                 MessageBox.Show("Forma de pagamento adicionada com sucesso!");
+                formaPagamentoServices.Criar(novaFormaPagamento);
+                PopularListView(string.Empty);
             }
         }
 
@@ -39,7 +43,7 @@ namespace ProjetoPF.FormConsultas
             if (listViewFormaPagamento.Columns.Count == 0)
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Descrição", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Forma de Pagamento", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
             }
@@ -68,13 +72,11 @@ namespace ProjetoPF.FormConsultas
                 {
                     ListViewItem item = new ListViewItem(formaPagamento.Id.ToString())
                     {
-                        SubItems =
-                        {
-                            formaPagamento.Descricao,
-                            formaPagamento.DataCriacao.ToString("dd/MM/yyyy"),
-                            formaPagamento.DataAtualizacao.ToString("dd/MM/yyyy")
-                        }
+                        Tag = formaPagamento  
                     };
+                    item.SubItems.Add(formaPagamento.Descricao);
+                    item.SubItems.Add(formaPagamento.DataCriacao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(formaPagamento.DataAtualizacao.ToString("dd/MM/yyyy"));
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -122,6 +124,7 @@ namespace ProjetoPF.FormConsultas
 
                     formaPagamentoServices.Atualizar(formaPagamentoAtualizada);
                     MessageBox.Show("Forma de pagamento atualizada com sucesso!");
+                    PopularListView(string.Empty);
                 }
             }
             else
@@ -175,6 +178,26 @@ namespace ProjetoPF.FormConsultas
             else
             {
                 MessageBox.Show("Selecione um item para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listViewFormaPagamento.SelectedItems.Count > 0)
+            {
+               
+                var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+
+
+                FormaPagamento formaSelecionada = (FormaPagamento)itemSelecionado.Tag;
+
+
+                if (this.Owner is FrmCadastroCondPagamento frmCadastroCondPagamento)
+                {
+
+                    frmCadastroCondPagamento.txtForma.Text = formaSelecionada.Descricao;
+                    frmCadastroCondPagamento.txtCod.Text = formaSelecionada.Id.ToString();
+                    this.Close(); 
+                }
             }
         }
     }

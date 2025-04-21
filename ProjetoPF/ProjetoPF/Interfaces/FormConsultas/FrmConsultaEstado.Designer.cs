@@ -35,6 +35,10 @@
             // 
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click_1);
             // 
+            // txtPesquisa
+            // 
+            this.txtPesquisa.Location = new System.Drawing.Point(34, 38);
+            // 
             // btnEditar
             // 
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click_1);
@@ -56,7 +60,7 @@
             // FrmConsultaEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1344, 729);
             this.Controls.Add(this.label2);
             this.Name = "FrmConsultaEstado";
             this.Text = "Consulta Estados";

@@ -1,6 +1,7 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormCadastros;
 using ProjetoPF.Interfaces.FormCadastros;
+using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Servicos;
 using System;
@@ -18,15 +19,16 @@ namespace ProjetoPF.FormConsultas
         {
             InitializeComponent();
             frmCadastroCondPagamento = new FrmCadastroCondPagamento();
+            this.listViewFormaPagamento.MouseDoubleClick += new MouseEventHandler(this.listViewFormaPagamento_MouseDoubleClick);
         }
         private void FrmConsultaCondPagamento_Load_1(object sender, EventArgs e)
         {
             if (listViewFormaPagamento.Columns.Count == 0)
             {
-                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Descrição", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Juros %", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Multa %", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Condição", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Juros %", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Multa %", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
             }
@@ -70,6 +72,7 @@ namespace ProjetoPF.FormConsultas
                             condicao.DataAtualizacao.ToString("dd/MM/yyyy")
                         }
                     };
+                    item.Tag = condicao;
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -146,6 +149,35 @@ namespace ProjetoPF.FormConsultas
             else
             {
                 MessageBox.Show("Selecione uma condição para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.Owner is FrmCadastroCliente frmCadastroCliente)
+            {
+                if (listViewFormaPagamento.SelectedItems.Count > 0)
+                {
+                    var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                    var condicaoSelecionado = (CondicaoPagamento)itemSelecionado.Tag;
+
+                    frmCadastroCliente.txtCondicao.Text = condicaoSelecionado.Descricao;
+                    frmCadastroCliente.txtCodigoCondicao.Text = condicaoSelecionado.Id.ToString();
+                    frmCadastroCliente.Tag = condicaoSelecionado;
+                    this.Close();
+                }
+            }
+            else if (this.Owner is FrmCadastroFornecedor frmCadastroFornecedor)
+            {
+                if (listViewFormaPagamento.SelectedItems.Count > 0)
+                {
+                    var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                    var condicaoSelecionado = (CondicaoPagamento)itemSelecionado.Tag;
+
+                    frmCadastroFornecedor.txtCondicao.Text = condicaoSelecionado.Descricao;
+                    frmCadastroFornecedor.txtCodigoCondicao.Text = condicaoSelecionado.Id.ToString();
+                    frmCadastroFornecedor.Tag = condicaoSelecionado;
+                    this.Close();
+                }
             }
         }
     }

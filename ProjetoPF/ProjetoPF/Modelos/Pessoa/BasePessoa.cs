@@ -12,7 +12,7 @@ namespace ProjetoPF.Modelos.Comercial
         public string TipoPessoa { get; set; } 
         public string NomeRazaoSocial { get; set; }
         public string ApelidoNomeFantasia { get; set; }
-        public DateTime DataNascimentoCriacao { get; set; }
+        public DateTime? DataNascimentoCriacao { get; set; }
         public string CpfCnpj { get; set; }
         public string RgInscricaoEstadual { get; set; }
         public string Email { get; set; }
@@ -22,6 +22,7 @@ namespace ProjetoPF.Modelos.Comercial
         public string Bairro { get; set; }
         public string Cep { get; set; }
         public string Classificacao { get; set; }
-        public bool Estrangeiro { get; set; }
+        public string Complemento { get; set; }
+
     }
 }

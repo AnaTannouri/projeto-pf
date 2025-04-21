@@ -1,4 +1,5 @@
 ﻿using ProjetoPF.Dao;
+using ProjetoPF.Interfaces.FormConsultas;
 using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Servicos;
 using ProjetoPF.Servicos.Localizacao;
@@ -28,43 +29,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             InitializeComponent();
         }
-        public void CarregarEstados(int? idSelecionado = null)
-        {
-            try
-            {
-                carregandoCombo = true;
-
-                var listaEstados = estadoServices.BuscarTodos();
-
-                comboEstados.Items.Clear();
-
-                if (listaEstados != null && listaEstados.Any())
-                {
-                    comboEstados.DataSource = listaEstados;
-                    comboEstados.DisplayMember = "Nome";
-                    comboEstados.ValueMember = "Id";
-
-                    if (idSelecionado.HasValue)
-                    {
-                        comboEstados.SelectedValue = idSelecionado.Value;
-                        comboEstados.Text = idSelecionado.Value.ToString();
-                    }
-                    else
-                    {
-                        comboEstados.SelectedIndex = -1;
-                        txtCodEstado.Clear();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar estados: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                carregandoCombo = false;
-            }
-        }
         private bool ValidarEntrada()
         {
             string Nomecidade = txtCidade.Text.Trim();
@@ -81,7 +45,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return false;
             }
 
-            if (comboEstados.SelectedItem == null)
+            if (string.IsNullOrWhiteSpace(txtCodEstado.Text))
             {
                 MessageBox.Show("Selecione um estado.");
                 return false;
@@ -95,19 +59,27 @@ namespace ProjetoPF.Interfaces.FormCadastros
             return true;
         }
 
+
         private void AtualizarObjeto()
         {
+
             cidade.Nome = txtCidade.Text.Trim();
             cidade.DDD = txtDDD.Text.Trim();
 
-            if (comboEstados.SelectedValue != null)
-            {
-                cidade.IdEstado = (int)comboEstados.SelectedValue;
-            }
+            if (!int.TryParse(txtCodEstado.Text, out int idEstado))
+                throw new Exception("Código do estado inválido.");
+
+            Estado estadoSelecionado = estadoServices.BuscarPorId(idEstado);
+
+            if (estadoSelecionado == null)
+                throw new Exception("Estado selecionado não foi encontrado.");
+
+            cidade.IdEstado = idEstado;
+
+            if (isEditando || isExcluindo)
+                cidade.Id = int.Parse(txtCodigo.Text);
             else
-            {
-                throw new Exception("Nenhum estado foi selecionado.");
-            }
+                cidade.Id = 0;
 
             cidade.Id = isEditando || isExcluindo ? int.Parse(txtCodigo.Text) : 0;
             cidade.DataCriacao = cidade.DataCriacao == DateTime.MinValue ? DateTime.Now : cidade.DataCriacao;
@@ -124,14 +96,32 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCidade.Text = cidade.Nome;
             txtDDD.Text = cidade.DDD;
 
-            CarregarEstados(cidade.IdEstado);
-            comboEstados.SelectedValue = cidade.IdEstado;
-            txtCodEstado.Text = cidade.IdEstado.ToString();
+            if (cidadeSelecionada.Id > 0)
+            {
+                Estado estado = estadoServices.BuscarPorId(cidadeSelecionada.IdEstado);
+                if (estado != null)
+                {
+                    txtCodEstado.Text = estado.Id.ToString();
+                    txtEstado.Text = estado.Nome;
+                }
+                else
+                {
+                    txtCodEstado.Text = "";
+                    txtEstado.Text = "Desconhecido";
+                }
+            }
+            else
+            {
+                txtCodEstado.Text = "";
+                txtEstado.Text = "";
+            }
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
 
             if (isExcluindo)
                 BloquearCampos();
+            else
+                DesbloquearCampos();
         }
 
         public void LimparCampos()
@@ -150,7 +140,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             txtCidade.Enabled = false;
             txtDDD.Enabled = false;
-            comboEstados.Enabled = false;
+            txtEstado.Enabled = false;
             btnSalvar.Enabled = true;
             btnCadastrar.Enabled = false;
         }
@@ -159,57 +149,22 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             txtCidade.Enabled = true;
             txtDDD.Enabled = true;
-            comboEstados.Enabled = true;
             btnSalvar.Enabled = true;
             txtCodigo.Enabled = false;
+            txtEstado.Enabled = false;
         }
 
         private void btnCadastrar_Click_1(object sender, EventArgs e)
         {
-            FrmCadastroEstado frmCadastroEstado = new FrmCadastroEstado();
-
-            frmCadastroEstado.FormClosed += (s, args) =>
-            {
-                CarregarEstados(null);
-
-                var listaAtualizada = (List<Estado>)comboEstados.DataSource;
-
-                if (listaAtualizada != null && listaAtualizada.Any())
-                {
-                    var ultimoEstado = listaAtualizada.OrderByDescending(p => p.Id).FirstOrDefault();
-
-                    if (ultimoEstado != null)
-                    {
-                        comboEstados.SelectedValue = ultimoEstado.Id;
-                        txtCodEstado.Text = ultimoEstado.Id.ToString();
-                    }
-                }
-            };
-
-            frmCadastroEstado.ShowDialog();
+            FrmConsultaEstado frmConsultaEstado = new FrmConsultaEstado();
+            frmConsultaEstado.Owner = this;
+            frmConsultaEstado.ShowDialog();
         }
+  
         private void FrmCadastroCidade_Load_1(object sender, EventArgs e)
         {
-            if (comboEstados.Items.Count == 0)
-                CarregarEstados();
-
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
         }
-
-        private void comboEstados_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (carregandoCombo) return;
-
-            if (comboEstados.SelectedItem is Estado estado)
-            {
-                txtCodEstado.Text = estado.Id.ToString();
-            }
-            else
-            {
-                txtCodEstado.Clear();
-            }
-        }
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
 

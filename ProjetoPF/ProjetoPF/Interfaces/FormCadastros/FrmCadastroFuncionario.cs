@@ -1,15 +1,12 @@
 ﻿using ProjetoPF.Dao;
+using ProjetoPF.Interfaces.FormConsultas;
 using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Servicos;
+using ProjetoPF.Servicos.Localizacao;
+using ProjetoPF.Servicos.Pessoa;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormCadastros
@@ -20,53 +17,45 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private BaseServicos<Funcionario> funcionarioServicos = new BaseServicos<Funcionario>(new BaseDao<Funcionario>("Funcionarios"));
 
         private BaseServicos<Cidade> cidadeServices = new BaseServicos<Cidade>(new BaseDao<Cidade>("Cidades"));
+        private BaseServicos<Pais> paisServices = new BaseServicos<Pais>(new BaseDao<Pais>("Paises"));
 
         private bool carregandoCidades = false;
 
         private bool isEditando = false;
         private bool isExcluindo = false;
+      
         public FrmCadastroFuncionario()
         {
             InitializeComponent();
-            label4.Text = "Nome";
+            label4.Text = "Funcionário";
             label5.Text = "Apelido";
             label16.Text = "Data de Nascimento";
             label3.Text = "CPF";
             label6.Text = "RG";
             lblClassificacao.Text = "Gênero";
+
+            comboPessoa.Visible = false;
+            label2.Visible = false;
+
+            comboPessoa.SelectedItem = "FÍSICA";
             comboPessoa.Enabled = false;
-            comboPessoa.SelectedItem = "F";
+
+            txtCidadeFunc.Enabled = false;
+            DataDem.Enabled = false;
+
+            DataDem.Format = DateTimePickerFormat.Custom;
+            DataDem.CustomFormat = " ";
         }
         private bool ValidarEntrada()
         {
-            if (string.IsNullOrWhiteSpace(txtMatricula.Text))
-            {
-                MessageBox.Show("Informe a matrícula do funcionário.");
-                return false;
-            }
             if (string.IsNullOrWhiteSpace(txtNome_RazaoSocial.Text))
             {
                 MessageBox.Show("Informe o nome do funcionário.");
                 return false;
             }
-            if (!checkEstrangeiro.Checked && string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
-            {
-                MessageBox.Show("Informe o CPF para funcionários não estrangeiros.");
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(txtEmail.Text))
-            {
-                MessageBox.Show("Informe o e-mail do funcionário.");
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(txtTelefone.Text))
-            {
-                MessageBox.Show("Informe o telefone do funcionário.");
-                return false;
-            }
             if (string.IsNullOrWhiteSpace(txtRua.Text))
             {
-                MessageBox.Show("Informe a rua do funcionário.");
+                MessageBox.Show("Informe o endereço do funcionário.");
                 return false;
             }
             if (string.IsNullOrWhiteSpace(txtNumero.Text))
@@ -79,15 +68,62 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 MessageBox.Show("Informe o bairro do funcionário.");
                 return false;
             }
-            if (comboCidade.SelectedItem == null)
+            if (string.IsNullOrWhiteSpace(txtCidadeFunc.Text))
             {
                 MessageBox.Show("Selecione a cidade do funcionário.");
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(txtCep.Text))
+            if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                MessageBox.Show("Informe o CEP do funcionário.");
+                MessageBox.Show("Informe o e-mail do funcionário.");
                 return false;
+            }
+            if (string.IsNullOrWhiteSpace(txtTelefone.Text))
+            {
+                MessageBox.Show("Informe o telefone do funcionário.");
+                return false;
+            }
+            else
+            {
+                string nomeCidade = txtCidadeFunc.Text.Trim();
+                if (!string.IsNullOrEmpty(nomeCidade))
+                {
+                    var cidadeSelecionada = cidadeServices.BuscarTodos()
+                        .FirstOrDefault(c => c.Nome.Equals(nomeCidade, StringComparison.OrdinalIgnoreCase));
+
+                    if (cidadeSelecionada != null)
+                    {
+                        var estadoServices = new EstadoServicos();
+                        var estado = estadoServices.BuscarPorId(cidadeSelecionada.IdEstado);
+
+                        if (estado != null)
+                        {
+                            var pais = paisServices.BuscarPorId(estado.IdPais);
+                            string tipoPessoa = comboPessoa.SelectedItem?.ToString().ToUpper() ?? "";
+
+                            if (pais != null)
+                            {
+                                if (pais.Nome.Equals("Brasil", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
+                                    {
+                                        MessageBox.Show("Informe o CPF do funcionario (obrigatório para pessoa física no Brasil).");
+                                        return false;
+                                    }
+                                }
+
+                                else
+                                {
+                                    if (string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
+                                    {
+                                        MessageBox.Show("Informe o RG do funcionario (obrigatório para pessoa física estrangeira).");
+                                        return false;
+                                    }
+                                }                                       
+                            }
+                        }
+                    }
+                }
             }
             if (string.IsNullOrWhiteSpace(txtCargo.Text))
             {
@@ -97,6 +133,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (!decimal.TryParse(txtSalario.Text, out _))
             {
                 MessageBox.Show("Informe um salário válido.");
+                return false;
+            }
+            if (Dataadm.CustomFormat == " ")
+            {
+                MessageBox.Show("Selecione a data de admissão do funcionário.");
                 return false;
             }
             if (comboTurno.SelectedItem == null)
@@ -109,47 +150,20 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 MessageBox.Show("Informe a carga horária do funcionário.");
                 return false;
             }
+            if (string.IsNullOrWhiteSpace(txtMatricula.Text))
+            {
+                MessageBox.Show("Informe a matrícula do funcionário.");
+                return false;
+            }
+            FuncionarioServicos servicoFuncionario = new FuncionarioServicos();
+
+            if (servicoFuncionario.DocumentoDuplicado(funcionario))
+            {
+                MessageBox.Show("Já existe um funcionário com o mesmo CPF ou RG.", "Duplicidade", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
             return true;
         }
-        public void CarregarCidades(int? idSelecionado = null)
-        {
-            try
-            {
-                carregandoCidades = true;
-
-                comboCidade.DataSource = null;
-                comboCidade.Items.Clear();
-
-                var listaCidades = cidadeServices.BuscarTodos();
-
-                if (listaCidades != null && listaCidades.Any())
-                {
-                    comboCidade.DataSource = listaCidades;
-                    comboCidade.DisplayMember = "Nome";
-                    comboCidade.ValueMember = "Id";
-
-                    if (idSelecionado.HasValue)
-                    {
-                        comboCidade.SelectedValue = idSelecionado.Value;
-                        txtCodigoCidade.Text = idSelecionado.Value.ToString();
-                    }
-                    else
-                    {
-                        comboCidade.SelectedIndex = -1;
-                        txtCodigoCidade.Clear();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar cidades: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                carregandoCidades = false;
-            }
-        }
-
         public void LimparFormulario()
         {
             txtCodigo.Clear();
@@ -164,20 +178,21 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtNumero.Clear();
             txtBairro.Clear();
             txtCep.Clear();
-            txtCodigoCidade.Clear();
+            txtCodigoCidadeFunc.Clear();
             txtCargo.Clear();
             txtSalario.Clear();
             txtCargaHoraria.Clear();
+            txtCidadeFunc.Clear();
 
-            checkEstrangeiro.Checked = false;
-            dateTimePicker1.Value = DateTime.Now;
-            Dataadm.Value = DateTime.Now;
-            DataDem.Value = DateTime.Now;
-            DataDem.Checked = false;
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.CustomFormat = " ";
+            Dataadm.Format = DateTimePickerFormat.Custom;
+            Dataadm.CustomFormat = " ";
+            DataDem.Format = DateTimePickerFormat.Custom;
+            DataDem.CustomFormat = " ";
 
             comboPessoa.SelectedIndex = -1;
             comboClassificacao.SelectedIndex = -1;
-            comboCidade.SelectedIndex = -1;
             comboTurno.SelectedIndex = -1;
 
             isEditando = false;
@@ -207,21 +222,80 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCargo.Text = funcionario.Cargo;
             txtSalario.Text = funcionario.Salario.ToString("F2");
             txtCargaHoraria.Text = funcionario.CargaHoraria;
+            txtComplemento.Text = funcionario.Complemento;
 
-            checkEstrangeiro.Checked = funcionario.Estrangeiro;
-            dateTimePicker1.Value = funcionario.DataNascimentoCriacao;
-            Dataadm.Value = funcionario.DataAdmissao;
-            DataDem.Value = funcionario.DataDemissao;
+            if (funcionario.DataNascimentoCriacao.HasValue)
+            {
+                dateTimePicker1.Value = funcionario.DataNascimentoCriacao.Value;
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = "dd/MM/yyyy";
+            }
+            else
+            {
+                dateTimePicker1.Value = DateTime.Now;
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = " ";
+            }
+
+            if (funcionario.DataAdmissao.HasValue)
+            {
+                Dataadm.Value = funcionario.DataAdmissao.Value;
+                Dataadm.Format = DateTimePickerFormat.Custom;
+                Dataadm.CustomFormat = "dd/MM/yyyy";
+            }
+            else
+            {
+                Dataadm.Value = DateTime.Now;
+                Dataadm.Format = DateTimePickerFormat.Custom;
+                Dataadm.CustomFormat = " ";
+            }
+
+            if (funcionario.DataDemissao.HasValue)
+            {
+                DataDem.Value = funcionario.DataDemissao.Value;
+                DataDem.Format = DateTimePickerFormat.Custom;
+                DataDem.CustomFormat = "dd/MM/yyyy";
+            }
+            else
+            {
+                DataDem.Value = DateTime.Now;
+                DataDem.Format = DateTimePickerFormat.Custom;
+                DataDem.CustomFormat = " ";
+            }
 
             comboPessoa.SelectedItem = "F";
             comboPessoa.Enabled = false;
 
             comboClassificacao.SelectedIndex = comboClassificacao.FindStringExact(funcionario.Classificacao?.Trim());
-            comboTurno.SelectedIndex = comboTurno.FindStringExact(funcionario.Turno?.Trim());
 
-            CarregarCidades(funcionario.IdCidade);
-            comboCidade.SelectedValue = funcionario.IdCidade;
-            txtCodigoCidade.Text = funcionario.IdCidade.ToString();
+            comboTurno.SelectedIndex = -1;
+            if (!string.IsNullOrWhiteSpace(funcionario.Turno))
+            {
+                foreach (var item in comboTurno.Items)
+                {
+                    if (string.Equals(item.ToString().Trim(), funcionario.Turno.Trim(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        comboTurno.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            txtCodigoCidadeFunc.Text = funcionario.IdCidade.ToString();
+            var cidade = cidadeServices.BuscarPorId(funcionario.IdCidade);
+            if (cidade != null)
+            {
+                txtCidadeFunc.Text = cidade.Nome;
+
+                var estadoServices = new EstadoServicos();
+                var estado = estadoServices.BuscarPorId(cidade.IdEstado);
+                txtUF.Text = estado?.UF ?? "";
+            }
+            else
+            {
+                txtCidadeFunc.Text = "";
+                txtUF.Text = "";
+            }
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
 
@@ -230,7 +304,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             else
                 DesbloquearCampos();
         }
-        public void BloquearCampos()
+            public void BloquearCampos()
         {
             txtCodigo.Enabled = false;
             txtMatricula.Enabled = false;
@@ -244,20 +318,20 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtNumero.Enabled = false;
             txtBairro.Enabled = false;
             txtCep.Enabled = false;
-            txtCodigoCidade.Enabled = false;
+            txtCodigoCidadeFunc.Enabled = false;
+            txtComplemento.Enabled = false;
             txtCargo.Enabled = false;
             txtSalario.Enabled = false;
             txtCargaHoraria.Enabled = false;
+            txtCidadeFunc.Enabled = false;
 
             comboPessoa.Enabled = false;
             comboClassificacao.Enabled = false;
-            comboCidade.Enabled = false;
             comboTurno.Enabled = false;
 
             dateTimePicker1.Enabled = false;
             Dataadm.Enabled = false;
             DataDem.Enabled = false;
-            checkEstrangeiro.Enabled = false;
 
             btnCadastrarCidade.Enabled = false;
         }
@@ -276,19 +350,15 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtNumero.Enabled = true;
             txtBairro.Enabled = true;
             txtCep.Enabled = true;
-            txtCodigoCidade.Enabled = false;
+            txtCodigoCidadeFunc.Enabled = false;
             txtCargo.Enabled = true;
             txtSalario.Enabled = true;
             txtCargaHoraria.Enabled = true;
-
             comboClassificacao.Enabled = true;
-            comboCidade.Enabled = true;
             comboTurno.Enabled = true;
-
             dateTimePicker1.Enabled = true;
             Dataadm.Enabled = true;
-            DataDem.Enabled = true;
-            checkEstrangeiro.Enabled = true;
+            DataDem.Enabled = isEditando; 
 
             btnCadastrarCidade.Enabled = true;
         }
@@ -297,33 +367,33 @@ namespace ProjetoPF.Interfaces.FormCadastros
             funcionario.Matricula = txtMatricula.Text.Trim();
             funcionario.NomeRazaoSocial = txtNome_RazaoSocial.Text.Trim();
             funcionario.ApelidoNomeFantasia = txtApelido_NomeFantasia.Text.Trim();
-            funcionario.CpfCnpj = checkEstrangeiro.Checked ? null : txtCpf_Cnpj.Text.Trim();
             funcionario.RgInscricaoEstadual = txtRg_InscricaoEstadual.Text.Trim();
+            funcionario.CpfCnpj = txtCpf_Cnpj.Text.Trim();
             funcionario.Email = txtEmail.Text.Trim();
             funcionario.Telefone = txtTelefone.Text.Trim();
             funcionario.Rua = txtRua.Text.Trim();
             funcionario.Numero = txtNumero.Text.Trim();
             funcionario.Bairro = txtBairro.Text.Trim();
             funcionario.Cep = txtCep.Text.Trim();
-            funcionario.Estrangeiro = checkEstrangeiro.Checked;
+            funcionario.Complemento = txtComplemento.Text.Trim();
             funcionario.Classificacao = comboClassificacao.Text.Trim();
-            funcionario.DataNascimentoCriacao = dateTimePicker1.Value;
 
+            funcionario.DataNascimentoCriacao = dateTimePicker1.CustomFormat == " " ? (DateTime?)null : dateTimePicker1.Value;
+            funcionario.DataDemissao = DataDem.CustomFormat == " " ? (DateTime?)null : DataDem.Value;
+            funcionario.DataAdmissao = Dataadm.Value;
+
+            var cidadeSelecionada = cidadeServices.BuscarTodos()
+                .FirstOrDefault(c => c.Nome.Equals(txtCidadeFunc.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+            if (cidadeSelecionada == null)
+                throw new Exception("Cidade selecionada não foi encontrada.");
+
+            funcionario.IdCidade = cidadeSelecionada.Id;
             funcionario.Cargo = txtCargo.Text.Trim();
             funcionario.Salario = decimal.Parse(txtSalario.Text);
-            funcionario.Turno = comboTurno.Text.Trim(); 
+            funcionario.Turno = comboTurno.SelectedItem?.ToString().Trim();
             funcionario.CargaHoraria = txtCargaHoraria.Text.Trim();
             funcionario.DataAdmissao = Dataadm.Value;
-            funcionario.DataDemissao = DataDem.Value;
-
-            if (comboCidade.SelectedItem is Cidade cidadeSelecionada)
-            {
-                funcionario.IdCidade = cidadeSelecionada.Id;
-            }
-            else
-            {
-                throw new Exception("Nenhuma cidade foi selecionada.");
-            }
 
             funcionario.Id = (isEditando || isExcluindo) ? int.Parse(txtCodigo.Text) : 0;
             funcionario.DataCriacao = funcionario.DataCriacao == DateTime.MinValue ? DateTime.Now : funcionario.DataCriacao;
@@ -348,10 +418,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
+                AtualizarObjeto();
+
                 if (!ValidarEntrada())
                     return;
-
-                AtualizarObjeto();
 
                 if (isEditando)
                 {
@@ -374,56 +444,23 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void FrmCadastroFuncionario_Load(object sender, EventArgs e)
         {
-            if (comboCidade.Items.Count == 0)
-                CarregarCidades();
+            if (!isEditando && !isExcluindo)
+            {
+                CarregarCombosFixos(); 
+            }
 
-            CarregarCombosFixos();
-
-            comboClassificacao.Items.Clear();
-            comboClassificacao.Items.AddRange(new string[] { "Masculino", "Feminino", "Outro" });
-
-            comboTurno.Items.Clear();
-            comboTurno.Items.AddRange(new string[] { "Manhã", "Tarde", "Noite", "Integral", "Plantão" });
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            DataDem.ValueChanged += DataDem_ValueChanged;
+            Dataadm.ValueChanged += Dataadm_ValueChanged;
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
         }
 
         private void btnCadastrarCidade_Click(object sender, EventArgs e)
         {
-            FrmCadastroCidade frmCadastroCidade = new FrmCadastroCidade();
-            frmCadastroCidade.FormClosed += (s, args) =>
-            {
-                CarregarCidades(null);
-
-                var listaAtualizada = (List<Cidade>)comboCidade.DataSource;
-
-                if (listaAtualizada != null && listaAtualizada.Any())
-                {
-                    var ultimaCidade = listaAtualizada.OrderByDescending(p => p.Id).FirstOrDefault();
-
-                    if (ultimaCidade != null)
-                    {
-                        comboCidade.SelectedValue = ultimaCidade.Id;
-                        txtCodigoCidade.Text = ultimaCidade.Id.ToString();
-                    }
-                }
-            };
-
-            frmCadastroCidade.ShowDialog();
-        }
-
-        private void comboCidade_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (carregandoCidades) return;
-
-            if (comboCidade.SelectedItem is Cidade cidade)
-            {
-                txtCodigoCidade.Text = cidade.Id.ToString();
-            }
-            else
-            {
-                txtCodigoCidade.Clear();
-            }
+            FrmConsultaCidade frmConsultaCidade = new FrmConsultaCidade();
+            frmConsultaCidade.Owner = this;
+            frmConsultaCidade.ShowDialog();
         }
         private void CarregarCombosFixos()
         {
@@ -432,6 +469,21 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             comboTurno.Items.Clear();
             comboTurno.Items.AddRange(new string[] { "Manhã", "Tarde", "Noite", "Integral", "Plantão" });
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            dateTimePicker1.CustomFormat = "dd/MM/yyyy";
+        }
+
+        private void DataDem_ValueChanged(object sender, EventArgs e)
+        {
+            DataDem.CustomFormat = "dd/MM/yyyy";
+        }
+
+        private void Dataadm_ValueChanged(object sender, EventArgs e)
+        {
+            Dataadm.CustomFormat = "dd/MM/yyyy";
         }
     }
 }

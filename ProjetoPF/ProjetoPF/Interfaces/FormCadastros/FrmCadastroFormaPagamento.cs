@@ -38,7 +38,7 @@ namespace ProjetoPF.FormCadastros
                     }
                     formaPagamentoServices.Atualizar(formaPagamento);
                     isEditando = false;
-                    this.Sair();
+                    this.Close(); 
                     MessageBox.Show("Forma de pagamento atualizada com sucesso!");
                 }
                 else if (isExcluindo)
@@ -53,13 +53,14 @@ namespace ProjetoPF.FormCadastros
                     {
                         formaPagamentoServices.Remover(formaPagamento.Id);
                         isExcluindo = false;
-                        this.Sair();
+                        this.Close(); 
                     }
                 }
                 else
                 {
                     formaPagamentoServices.Criar(formaPagamento);
                     MessageBox.Show("Forma de pagamento salva com sucesso!");
+                    this.Close(); 
                 }
                 LimparCampos();
             }

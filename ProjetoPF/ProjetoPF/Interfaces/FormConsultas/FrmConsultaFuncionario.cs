@@ -72,7 +72,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Matrícula", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Nome", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Funcionario", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);

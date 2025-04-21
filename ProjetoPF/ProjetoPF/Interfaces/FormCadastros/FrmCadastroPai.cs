@@ -32,18 +32,6 @@ namespace ProjetoPF.FormCadastros
         {
 
         }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox1.Checked)
-            {
-                MessageBox.Show("A condição está ativa.");
-            }
-            else
-            {
-                MessageBox.Show("A condição está inativa.");
-            }
-        }
         public virtual void CarregarFormasDePagamento()
         {
 

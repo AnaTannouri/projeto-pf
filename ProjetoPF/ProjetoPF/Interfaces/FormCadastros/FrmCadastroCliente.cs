@@ -1,5 +1,7 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormCadastros;
+using ProjetoPF.FormConsultas;
+using ProjetoPF.Interfaces.FormConsultas;
 using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Modelos.Pessoa;
@@ -9,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormCadastros
@@ -16,7 +19,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
     public partial class FrmCadastroCliente : FrmCadastroPessoa
     {
         private Cliente cliente = new Cliente();
-        private BaseServicos<Cliente> clienteServicos = new BaseServicos<Cliente>(new BaseDao<Cliente>("Clientes"));
+
 
         private FrmCadastroFormaPagamento frmCadastroFormaPagamento = new FrmCadastroFormaPagamento();
         private BaseServicos<FormaPagamento> formaServices = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"));
@@ -24,10 +27,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private FrmCadastroCondPagamento frmCadastroCondPagamento = new FrmCadastroCondPagamento();
         private BaseServicos<CondicaoPagamento> condicacaoServices = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"));
         private BaseServicos<Cidade> cidadeServices = new BaseServicos<Cidade>(new BaseDao<Cidade>("Cidades"));
+        private BaseServicos<Pais> paisServices = new BaseServicos<Pais>(new BaseDao<Pais>("Paises"));
+        private ClienteServicos clienteServicos = new ClienteServicos();
 
         private bool carregandoFormas = false;
         private bool carregandoCondicoes = false;
         private bool carregandoCidades = false;
+        private bool dataSelecionada = false;
 
         private bool isEditando = false;
         private bool isExcluindo = false;
@@ -35,25 +41,44 @@ namespace ProjetoPF.Interfaces.FormCadastros
         public FrmCadastroCliente()
         {
             InitializeComponent();
+            CarregarTipoPessoa();
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.CustomFormat = " ";
         }
 
         private bool ValidarEntrada()
         {
+
+            if (!isEditando && comboPessoa.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um tipo.");
+                return false;
+            }
             if (string.IsNullOrWhiteSpace(txtNome_RazaoSocial.Text))
             {
                 MessageBox.Show("Informe o nome ou razão social do cliente.");
                 return false;
             }
-
-            if (!checkEstrangeiro.Checked && string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
+            if (string.IsNullOrWhiteSpace(txtRua.Text))
             {
-                MessageBox.Show("Informe o CPF/CNPJ para clientes não estrangeiros.");
+                MessageBox.Show("Informe o endereço do cliente.");
                 return false;
             }
 
-            if (checkEstrangeiro.Checked && string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
+            if (string.IsNullOrWhiteSpace(txtNumero.Text))
             {
-                MessageBox.Show("Informe o RG ou Inscrição Estadual para clientes estrangeiros.");
+                MessageBox.Show("Informe o número da residência do cliente.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtBairro.Text))
+            {
+                MessageBox.Show("Informe o bairro do cliente.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(txtCidade.Text))
+            {
+                MessageBox.Show("Selecione uma cidade para o cliente.");
                 return false;
             }
 
@@ -69,203 +94,75 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(txtRua.Text))
-            {
-                MessageBox.Show("Informe o nome da rua do cliente.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtNumero.Text))
-            {
-                MessageBox.Show("Informe o número da residência do cliente.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtBairro.Text))
-            {
-                MessageBox.Show("Informe o bairro do cliente.");
-                return false;
-            }
-
-            if (comboCidade.SelectedItem == null)
-            {
-                MessageBox.Show("Selecione a cidade do cliente.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtCep.Text))
-            {
-                MessageBox.Show("Informe o CEP do cliente.");
-                return false;
-            }
-
-            if (comboClassificacao.SelectedItem == null)
-            {
-                MessageBox.Show("Selecione a classificação do cliente.");
-                return false;
-            }
-
-            if (comboFormas.SelectedItem == null)
-            {
-                MessageBox.Show("Selecione a forma de pagamento do cliente.");
-                return false;
-            }
-
-            if (comboCondicoes.SelectedItem == null)
-            {
-                MessageBox.Show("Selecione a condição de pagamento do cliente.");
-                return false;
-            }
-
-            if (checkEstrangeiro.Checked)
-            {
-                if (string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
-                {
-                    MessageBox.Show("Informe o RG do cliente estrangeiro.");
-                    return false;
-                }
-            }
             else
             {
-                if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
+                string nomeCidade = txtCidade.Text.Trim();
+                if (!string.IsNullOrEmpty(nomeCidade))
                 {
-                    MessageBox.Show("Informe o CPF do cliente.");
-                    return false;
+                    var cidadeSelecionada = cidadeServices.BuscarTodos()
+                        .FirstOrDefault(c => c.Nome.Equals(nomeCidade, StringComparison.OrdinalIgnoreCase));
+
+                    if (cidadeSelecionada != null)
+                    {
+                        var estadoServices = new EstadoServicos();
+                        var estado = estadoServices.BuscarPorId(cidadeSelecionada.IdEstado);
+
+                        if (estado != null)
+                        {
+                            var pais = paisServices.BuscarPorId(estado.IdPais);
+                            string tipoPessoa = comboPessoa.SelectedItem?.ToString().ToUpper() ?? "";
+
+                            if (pais != null)
+                            {
+                                if (tipoPessoa == "FÍSICA" || tipoPessoa == "FISICA")
+                                {
+                                    if (pais.Nome.Equals("Brasil", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
+                                        {
+                                            MessageBox.Show("Informe o CPF do cliente (obrigatório para pessoa física no Brasil).");
+                                            return false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
+                                        {
+                                            MessageBox.Show("Informe o RG do cliente (obrigatório para pessoa física estrangeira).");
+                                            return false;
+                                        }
+                                    }
+                                }
+                                else if (tipoPessoa == "JURÍDICA" || tipoPessoa == "JURIDICA")
+                                {
+                                    if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
+                                    {
+                                        MessageBox.Show("Informe o CNPJ do cliente (obrigatório para pessoa jurídica).");
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
+            if (comboPessoa.SelectedItem?.ToString() == "Física" && comboClassificacao.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione a classificação (gênero) do cliente.");
+                return false;
+            }
 
+            if (string.IsNullOrWhiteSpace(txtCondicao.Text))
+            {
+                MessageBox.Show("Selecione uma condição para o cliente.");
+                return false;
+            }
+            if (clienteServicos.DocumentoDuplicado(cliente))
+            {
+                MessageBox.Show("Já existe um cliente com os mesmos dados de documento (CPF/CNPJ/RG).", "Duplicidade", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
             return true;
-        }
-
-        public void CarregarCidades(int? idSelecionado = null)
-        {
-            try
-            {
-                carregandoCidades = true;
-
-                comboCidade.DataSource = null;
-                comboCidade.Items.Clear();
-
-                var listaCidades = cidadeServices.BuscarTodos();
-
-                if (listaCidades != null && listaCidades.Any())
-                {
-                    comboCidade.DataSource = listaCidades;
-                    comboCidade.DisplayMember = "Nome";
-                    comboCidade.ValueMember = "Id";
-
-                    if (idSelecionado.HasValue)
-                    {
-                        comboCidade.SelectedValue = idSelecionado.Value;
-                        txtCodigoCidade.Text = idSelecionado.Value.ToString();
-                    }
-                    else
-                    {
-                        comboCidade.SelectedIndex = -1;
-                        txtCodigoCidade.Clear();
-                    }
-                }
-                else
-                {
-                    comboCidade.SelectedIndex = -1;
-                    txtCodigoCidade.Clear();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar cidades: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                carregandoCidades = false;
-            }
-        }
-
-        public void CarregarFormasPagamento(int? idSelecionado = null)
-        {
-            try
-            {
-                carregandoFormas = true;
-
-                comboFormas.DataSource = null;
-                comboFormas.Items.Clear();
-
-                var listaFormas = formaServices.BuscarTodos();
-
-                if (listaFormas != null && listaFormas.Any())
-                {
-                    comboFormas.DataSource = listaFormas;
-                    comboFormas.DisplayMember = "Descricao";
-                    comboFormas.ValueMember = "Id";
-
-                    if (idSelecionado.HasValue)
-                    {
-                        comboFormas.SelectedValue = idSelecionado.Value;
-                        txtCodigoForma.Text = idSelecionado.Value.ToString();
-                    }
-                    else
-                    {
-                        comboFormas.SelectedIndex = -1;
-                        txtCodigoForma.Clear();
-                    }
-                }
-                else
-                {
-                    comboFormas.SelectedIndex = -1;
-                    txtCodigoForma.Clear();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar formas de pagamento: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                carregandoFormas = false;
-            }
-        }
-        public void CarregarCondicoesPagamento(int? idSelecionado = null)
-        {
-            try
-            {
-                carregandoCondicoes = true;
-
-                comboCondicoes.DataSource = null;
-                comboCondicoes.Items.Clear();
-
-                var listaCondicoes = condicacaoServices.BuscarTodos();
-
-                if (listaCondicoes != null && listaCondicoes.Any())
-                {
-                    comboCondicoes.DataSource = listaCondicoes;
-                    comboCondicoes.DisplayMember = "Descricao";
-                    comboCondicoes.ValueMember = "Id";
-
-                    if (idSelecionado.HasValue)
-                    {
-                        comboCondicoes.SelectedValue = idSelecionado.Value;
-                        txtCodigoCondicao.Text = idSelecionado.Value.ToString();
-                    }
-                    else
-                    {
-                        comboCondicoes.SelectedIndex = -1;
-                        txtCodigoCondicao.Clear();
-                    }
-                }
-                else
-                {
-                    comboCondicoes.SelectedIndex = -1;
-                    txtCodigoCondicao.Clear();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar condição de pagamento: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                carregandoCondicoes = false;
-            }
         }
 
         public void LimparFormulario()
@@ -282,17 +179,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtBairro.Clear();
             txtCep.Clear();
             txtCodigoCidade.Clear();
-            txtCodigoForma.Clear();
             txtCodigoCondicao.Clear();
+            txtComplemento.Clear();
 
-            checkEstrangeiro.Checked = false;
-            dateTimePicker1.Value = DateTime.Now;
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.CustomFormat = " ";
 
             comboPessoa.SelectedIndex = -1;
             comboClassificacao.SelectedIndex = -1;
-            comboCidade.SelectedIndex = -1;
-            comboFormas.SelectedIndex = -1;
-            comboCondicoes.SelectedIndex = -1;
 
             isEditando = false;
             isExcluindo = false;
@@ -300,6 +194,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         public void CarregarDados(Cliente clienteSelecionado, bool isEditandoForm, bool isExcluindoForm)
         {
+
             cliente = clienteSelecionado;
             isEditando = isEditandoForm;
             isExcluindo = isExcluindoForm;
@@ -315,24 +210,60 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtNumero.Text = cliente.Numero;
             txtBairro.Text = cliente.Bairro;
             txtCep.Text = cliente.Cep;
-            comboPessoa.SelectedItem = cliente.TipoPessoa;
+            txtComplemento.Text = cliente.Complemento;
+
+            if (cliente.TipoPessoa != null)
+            {
+                string tipo = cliente.TipoPessoa.ToUpper();
+
+                if (tipo == "FÍSICA" || tipo == "FISICA")
+                    comboPessoa.SelectedItem = "FÍSICA";
+                else if (tipo == "JURÍDICA" || tipo == "JURIDICA")
+                    comboPessoa.SelectedItem = "JURÍDICA";
+                else
+                    comboPessoa.SelectedItem = null;
+            }
+            else
+            {
+                comboPessoa.SelectedItem = null;
+            }
+
             comboClassificacao.SelectedItem = cliente.Classificacao;
-            checkEstrangeiro.Checked = cliente.Estrangeiro;
-            dateTimePicker1.Value = cliente.DataNascimentoCriacao;
 
+            if (cliente.DataNascimentoCriacao.HasValue)
+            {
+                dateTimePicker1.Value = cliente.DataNascimentoCriacao.Value;
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = "dd/MM/yyyy";
+            }
+            else
+            {
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = " ";
+            }
 
-            CarregarCidades(cliente.IdCidade);
-            CarregarFormasPagamento(cliente.FormaPagamentoId);
-            CarregarCondicoesPagamento(cliente.CondicaoPagamentoId);
-
-            comboCidade.SelectedValue = cliente.IdCidade;
-            txtCodigoCidade.Text = cliente.IdCidade.ToString();
-
-            comboFormas.SelectedValue = cliente.FormaPagamentoId;
-            comboCondicoes.SelectedValue = cliente.CondicaoPagamentoId;
-
-            txtCodigoForma.Text = cliente.FormaPagamentoId.ToString();
             txtCodigoCondicao.Text = cliente.CondicaoPagamentoId.ToString();
+            var condicao = condicacaoServices.BuscarPorId(cliente.CondicaoPagamentoId);
+            txtCondicao.Text = condicao?.Descricao ?? "Desconhecida";
+
+            var cidade = cidadeServices.BuscarPorId(cliente.IdCidade);
+            if (cidade != null)
+            {
+                txtCodigoCidade.Text = cidade.Id.ToString();
+                txtCidade.Text = cidade.Nome;
+
+                var estadoServices = new EstadoServicos();
+                var estado = estadoServices.BuscarPorId(cidade.IdEstado);
+                txtUF.Text = estado?.UF?? "";
+            }
+            else
+            {
+                txtCodigoCidade.Clear();
+                txtCidade.Text = "Desconhecida";
+                txtUF.Text = "";
+            }
+
+            comboPessoa.Enabled = !isEditandoForm;
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
 
@@ -356,20 +287,15 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtNumero.Enabled = false;
             txtBairro.Enabled = false;
             txtCep.Enabled = false;
+            txtComplemento.Enabled = false;
             txtCodigoCidade.Enabled = false;
-            txtCodigoForma.Enabled = false;
             txtCodigoCondicao.Enabled = false;
 
             comboPessoa.Enabled = false;
             comboClassificacao.Enabled = false;
-            comboCidade.Enabled = false;
-            comboFormas.Enabled = false;
-            comboCondicoes.Enabled = false;
 
             dateTimePicker1.Enabled = false;
-            checkEstrangeiro.Enabled = false;
 
-            button1.Enabled = false;
             button2.Enabled = false;
             btnCadastrarCidade.Enabled = false;
         }
@@ -389,94 +315,15 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void FrmCadastroCliente_Load_1(object sender, EventArgs e)
         {
-            if (comboFormas.Items.Count == 0)
-                CarregarFormasPagamento();
-
-            if (comboCondicoes.Items.Count == 0)
-                CarregarCondicoesPagamento();
-
-            if (comboCidade.Items.Count == 0)
-                CarregarCidades();
-
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
         }
-
-        private void comboFormas_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (carregandoFormas) return;
-
-            if (comboFormas.SelectedItem is FormaPagamento formaPagamento)
-            {
-                txtCodigoForma.Text = formaPagamento.Id.ToString();
-            }
-            else
-            {
-                txtCodigoForma.Clear();
-            }
-        }
-
-        private void comboCondicoes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (carregandoCondicoes) return;
-
-            if (comboCondicoes.SelectedItem is CondicaoPagamento condicaoPagamento)
-            {
-                txtCodigoCondicao.Text = condicaoPagamento.Id.ToString();
-            }
-            else
-            {
-                txtCodigoCondicao.Clear();
-            }
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            FrmCadastroCondPagamento frmCadastroCondPagamento = new FrmCadastroCondPagamento();
-            frmCadastroCondPagamento.FormClosed += (s, args) =>
-            {
-                CarregarCondicoesPagamento(null);
-
-                var listaAtualizada = (List<CondicaoPagamento>)comboCondicoes.DataSource;
-
-                if (listaAtualizada != null && listaAtualizada.Any())
-                {
-                    var ultimaCondicao = listaAtualizada.OrderByDescending(p => p.Id).FirstOrDefault();
-
-                    if (ultimaCondicao != null)
-                    {
-                        comboCondicoes.SelectedValue = ultimaCondicao.Id;
-                        txtCodigoCondicao.Text = ultimaCondicao.Id.ToString();
-                    }
-                }
-            };
-
-            frmCadastroCondPagamento.ShowDialog();
+            FrmConsultaCondPagamento frmConsultaCondPagamento = new FrmConsultaCondPagamento();
+            frmConsultaCondPagamento.Owner = this;
+            frmConsultaCondPagamento.ShowDialog();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            FrmCadastroFormaPagamento frmCadastroFormaPagamento = new FrmCadastroFormaPagamento();
-            frmCadastroFormaPagamento.FormClosed += (s, args) =>
-            {
-                CarregarFormasPagamento(null);
-
-                var listaAtualizada = (List<FormaPagamento>)comboFormas.DataSource;
-
-                if (listaAtualizada != null && listaAtualizada.Any())
-                {
-                    var ultimaForma = listaAtualizada.OrderByDescending(p => p.Id).FirstOrDefault();
-
-                    if (ultimaForma != null)
-                    {
-                        comboFormas.SelectedValue = ultimaForma.Id;
-                        txtCodigoForma.Text = ultimaForma.Id.ToString();
-                    }
-                }
-            };
-
-            frmCadastroFormaPagamento.ShowDialog();
-        }
-
         private void btnSalvar_Click_1(object sender, EventArgs e)
         {
             try
@@ -496,12 +343,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
+                AtualizarObjeto();
+
                 if (!ValidarEntrada())
                 {
                     return;
                 }
-
-                AtualizarObjeto();
 
                 if (isEditando)
                 {
@@ -535,7 +382,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             cliente.TipoPessoa = comboPessoa.Text;
             cliente.NomeRazaoSocial = txtNome_RazaoSocial.Text.Trim();
             cliente.ApelidoNomeFantasia = txtApelido_NomeFantasia.Text.Trim();
-            cliente.CpfCnpj = checkEstrangeiro.Checked ? null : txtCpf_Cnpj.Text.Trim();
             cliente.RgInscricaoEstadual = txtRg_InscricaoEstadual.Text.Trim();
             cliente.Email = txtEmail.Text.Trim();
             cliente.Telefone = txtTelefone.Text.Trim();
@@ -543,36 +389,23 @@ namespace ProjetoPF.Interfaces.FormCadastros
             cliente.Numero = txtNumero.Text.Trim();
             cliente.Bairro = txtBairro.Text.Trim();
             cliente.Cep = txtCep.Text.Trim();
+            cliente.Complemento = txtComplemento.Text.Trim();
+            cliente.CpfCnpj = txtCpf_Cnpj.Text.Trim();
             cliente.Classificacao = comboClassificacao.SelectedItem?.ToString();
-            cliente.Estrangeiro = checkEstrangeiro.Checked;
-            cliente.DataNascimentoCriacao = dateTimePicker1.Value;
+            cliente.DataNascimentoCriacao = dateTimePicker1.CustomFormat == " " ? (DateTime?)null : dateTimePicker1.Value;
 
-            if (comboCidade.SelectedItem is Cidade cidadeSelecionada)
-            {
-                cliente.IdCidade = cidadeSelecionada.Id;
-            }
-            else
-            {
-                throw new Exception("Nenhuma cidade foi selecionada.");
-            }
 
-            if (comboFormas.SelectedItem is FormaPagamento forma)
-            {
-                cliente.FormaPagamentoId = forma.Id;
-            }
-            else
-            {
-                cliente.FormaPagamentoId.ToString();
-            }
+            if (!int.TryParse(txtCodigoCondicao.Text, out int idCondicao))
+                throw new Exception("Código da condição de pagamento inválido.");
+            cliente.CondicaoPagamentoId = idCondicao;
 
-            if (comboCondicoes.SelectedItem is CondicaoPagamento condicao)
-            {
-                cliente.CondicaoPagamentoId = condicao.Id;
-            }
-            else
-            {
-                cliente.CondicaoPagamentoId.ToString();
-            }
+            var cidadeSelecionada = cidadeServices.BuscarTodos()
+                .FirstOrDefault(c => c.Nome.Equals(txtCidade.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+            if (cidadeSelecionada == null)
+                throw new Exception("Cidade selecionada não foi encontrada.");
+
+            cliente.IdCidade = cidadeSelecionada.Id;
 
             cliente.Id = (isEditando || isExcluindo) ? int.Parse(txtCodigo.Text) : 0;
 
@@ -582,42 +415,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void button3_Click(object sender, EventArgs e)
         {
-            FrmCadastroCidade frmCadastroCidade = new FrmCadastroCidade();
-            frmCadastroCidade.FormClosed += (s, args) =>
-            {
-                CarregarCidades(null);
-
-                var listaAtualizada = (List<Cidade>)comboCidade.DataSource;
-
-                if (listaAtualizada != null && listaAtualizada.Any())
-                {
-                    var ultimaCidade = listaAtualizada.OrderByDescending(p => p.Id).FirstOrDefault();
-
-                    if (ultimaCidade != null)
-                    {
-                        comboCidade.SelectedValue = ultimaCidade.Id;
-                        txtCodigoCidade.Text = ultimaCidade.Id.ToString();
-                    }
-                }
-            };
-
-            frmCadastroCidade.ShowDialog();
-
+            FrmConsultaCidade frmConsultaCidade = new FrmConsultaCidade();
+            frmConsultaCidade.Owner = this;
+            frmConsultaCidade.ShowDialog();
         }
 
-        private void comboCidade_SelectedIndexChanged(object sender, EventArgs e)
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            if (carregandoCidades) return;
-
-            if (comboCidade.SelectedItem is Cidade cidade)
-            {
-                txtCodigoCidade.Text = cidade.Id.ToString();
-            }
-            else
-            {
-                txtCodigoCidade.Clear();
-            }
-
+            dateTimePicker1.CustomFormat = "dd/MM/yyyy";
         }
     }
 }

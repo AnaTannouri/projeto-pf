@@ -18,11 +18,6 @@ namespace ProjetoPF.Servicos.Pessoa
                 throw new Exception("Validação de entrada falhou. Preencha todos os campos obrigatórios.");
             }
 
-            if (!fornecedor.Estrangeiro && VerificarDuplicidade("CpfCnpj", fornecedor.CpfCnpj, fornecedor))
-                throw new Exception("Já existe um fornecedor com este CNPJ.");
-            else if (fornecedor.Estrangeiro && VerificarDuplicidade("RgInscricaoEstadual", fornecedor.RgInscricaoEstadual, fornecedor))
-                throw new Exception("Já existe um fornecedor com esta inscrição.");
-
             fornecedor.DataCriacao = DateTime.Now;
             fornecedor.DataAtualizacao = DateTime.Now;
 
@@ -39,11 +34,6 @@ namespace ProjetoPF.Servicos.Pessoa
                 throw new Exception("Validação de entrada falhou. Preencha todos os campos obrigatórios.");
             }
 
-            if (!fornecedor.Estrangeiro && VerificarDuplicidade("CpfCnpj", fornecedor.CpfCnpj, fornecedor))
-                throw new Exception("Já existe um fornecedor com este CNPJ.");
-            else if (fornecedor.Estrangeiro && VerificarDuplicidade("RgInscricaoEstadual", fornecedor.RgInscricaoEstadual, fornecedor))
-                throw new Exception("Já existe um fornecedor com este RG.");
-
             fornecedor.DataAtualizacao = DateTime.Now;
 
             Atualizar(fornecedor);
@@ -52,16 +42,6 @@ namespace ProjetoPF.Servicos.Pessoa
         private bool ValidarEntrada(Fornecedor fornecedor)
         {
             if (string.IsNullOrWhiteSpace(fornecedor.NomeRazaoSocial))
-            {
-                return false;
-            }
-
-            if (!fornecedor.Estrangeiro && string.IsNullOrWhiteSpace(fornecedor.CpfCnpj))
-            {
-                return false;
-            }
-
-            if (fornecedor.Estrangeiro && string.IsNullOrWhiteSpace(fornecedor.RgInscricaoEstadual))
             {
                 return false;
             }
@@ -93,6 +73,24 @@ namespace ProjetoPF.Servicos.Pessoa
 
             return true;
         }
+        public bool DocumentoDuplicado(Fornecedor fornecedor)
+        {
+            var todosFornecedores = BuscarTodos();
 
+            if (fornecedor.Id != 0)
+                todosFornecedores = todosFornecedores.FindAll(f => f.Id != fornecedor.Id);
+
+            if (!string.IsNullOrWhiteSpace(fornecedor.CpfCnpj))
+            {
+                return todosFornecedores.Any(f => f.CpfCnpj == fornecedor.CpfCnpj);
+            }
+
+            if (!string.IsNullOrWhiteSpace(fornecedor.RgInscricaoEstadual))
+            {
+                return todosFornecedores.Any(f => f.RgInscricaoEstadual == fornecedor.RgInscricaoEstadual);
+            }
+
+            return false;
+        }
     }
 }

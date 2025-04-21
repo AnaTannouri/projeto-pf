@@ -19,6 +19,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             InitializeComponent();
             frmCadastroEstado = new FrmCadastroEstado();
+            this.listViewFormaPagamento.MouseDoubleClick += new MouseEventHandler(this.listViewFormaPagamento_MouseDoubleClick);
         }
 
         private void AjustarLarguraColunas()
@@ -53,6 +54,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             estado.DataAtualizacao.ToString("dd/MM/yyyy")
                         }
                     };
+                    item.Tag = estado;
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -90,6 +92,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
 
                 frmCadastroEstado = new FrmCadastroEstado();
                 frmCadastroEstado.CarregarDados(estadoSelecionado, false, true);
+                frmCadastroEstado.BloquearCampos();
                 frmCadastroEstado.FormClosed += FrmCadastroEstado_FormClosed;
                 frmCadastroEstado.ShowDialog();
             }
@@ -104,7 +107,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             if (listViewFormaPagamento.Columns.Count == 0)
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Nome", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Estado", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("UF", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Nome do País", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
@@ -137,9 +140,9 @@ namespace ProjetoPF.Interfaces.FormConsultas
 
                 frmCadastroEstado = new FrmCadastroEstado();
                 frmCadastroEstado.CarregarDados(estadoSelecionado, true, false);
-                frmCadastroEstado.DesbloquearCampos();
                 frmCadastroEstado.FormClosed += FrmCadastroEstado_FormClosed;
                 frmCadastroEstado.ShowDialog();
+
             }
             else
             {
@@ -154,6 +157,24 @@ namespace ProjetoPF.Interfaces.FormConsultas
             frmCadastroEstado.DesbloquearCampos();
             frmCadastroEstado.FormClosed += FrmCadastroEstado_FormClosed;
             frmCadastroEstado.ShowDialog();
+        }
+
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, EventArgs e)
+        {
+            if (!(this.Owner is FrmCadastroCidade frmCadastroCidade))
+                return;
+
+            if (listViewFormaPagamento.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                var estadoSelecionado = (Estado)itemSelecionado.Tag;
+
+                frmCadastroCidade.txtEstado.Text = estadoSelecionado.Nome;
+                frmCadastroCidade.txtCodEstado.Text = estadoSelecionado.Id.ToString();
+                frmCadastroCidade.Tag = estadoSelecionado;
+
+                this.Close();
+            }
         }
     }
 }

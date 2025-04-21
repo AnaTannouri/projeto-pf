@@ -20,10 +20,6 @@ namespace ProjetoPF.Servicos.Pessoa
                 throw new Exception("Validação de entrada falhou. Preencha todos os campos obrigatórios.");
             }
 
-            if (!funcionario.Estrangeiro && VerificarDuplicidade("CpfCnpj", funcionario.CpfCnpj, funcionario))
-                throw new Exception("Já existe um funcionário com este CPF.");
-            else if (funcionario.Estrangeiro && VerificarDuplicidade("RgInscricaoEstadual", funcionario.RgInscricaoEstadual, funcionario))
-                throw new Exception("Já existe um funcionário com este RG.");
 
             funcionario.DataCriacao = DateTime.Now;
             funcionario.DataAtualizacao = DateTime.Now;
@@ -41,11 +37,6 @@ namespace ProjetoPF.Servicos.Pessoa
                 throw new Exception("Validação de entrada falhou. Preencha todos os campos obrigatórios.");
             }
 
-            if (!funcionario.Estrangeiro && VerificarDuplicidade("CpfCnpj", funcionario.CpfCnpj, funcionario))
-                throw new Exception("Já existe um funcionário com este CPF.");
-            else if (funcionario.Estrangeiro && VerificarDuplicidade("RgInscricaoEstadual", funcionario.RgInscricaoEstadual, funcionario))
-                throw new Exception("Já existe um funcionário com este RG.");
-
             funcionario.DataAtualizacao = DateTime.Now;
 
             Atualizar(funcionario);
@@ -57,9 +48,6 @@ namespace ProjetoPF.Servicos.Pessoa
                 return false;
 
             if (string.IsNullOrWhiteSpace(funcionario.NomeRazaoSocial))
-                return false;
-
-            if (!funcionario.Estrangeiro && string.IsNullOrWhiteSpace(funcionario.CpfCnpj))
                 return false;
 
             if (string.IsNullOrWhiteSpace(funcionario.Email))
@@ -93,6 +81,23 @@ namespace ProjetoPF.Servicos.Pessoa
                 return false;
 
             return true;
+        }
+        public bool DocumentoDuplicado(Funcionario funcionario)
+        {
+            var todosFuncionarios = BuscarTodos();
+            if (funcionario.Id != 0)
+                todosFuncionarios = todosFuncionarios.FindAll(f => f.Id != funcionario.Id);
+
+            if (!string.IsNullOrWhiteSpace(funcionario.CpfCnpj))
+            {
+                return todosFuncionarios.Any(f => f.CpfCnpj == funcionario.CpfCnpj);
+            }
+            if (!string.IsNullOrWhiteSpace(funcionario.RgInscricaoEstadual))
+            {
+                return todosFuncionarios.Any(f => f.RgInscricaoEstadual == funcionario.RgInscricaoEstadual);
+            }
+
+            return false;
         }
     }
 }

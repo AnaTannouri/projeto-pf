@@ -31,7 +31,6 @@
             this.txtEstado = new System.Windows.Forms.TextBox();
             this.txtUf = new System.Windows.Forms.TextBox();
             this.txtCodPais = new System.Windows.Forms.TextBox();
-            this.comboPaises = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -39,33 +38,42 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.btnCadastrar = new System.Windows.Forms.Button();
+            this.btnPaís = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
+            this.txtPais = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSalvar
             // 
+            this.btnSalvar.TabIndex = 4;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click_1);
             // 
             // txtCodigo
             // 
             this.txtCodigo.Enabled = false;
+            this.txtCodigo.Location = new System.Drawing.Point(12, 55);
+            // 
+            // btnVoltar
+            // 
+            this.btnVoltar.TabIndex = 0;
             // 
             // txtEstado
             // 
-            this.txtEstado.Location = new System.Drawing.Point(146, 55);
+            this.txtEstado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtEstado.Location = new System.Drawing.Point(188, 57);
             this.txtEstado.MaxLength = 100;
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.Size = new System.Drawing.Size(371, 20);
-            this.txtEstado.TabIndex = 5;
+            this.txtEstado.TabIndex = 1;
             // 
             // txtUf
             // 
+            this.txtUf.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtUf.Location = new System.Drawing.Point(12, 119);
             this.txtUf.MaxLength = 2;
             this.txtUf.Name = "txtUf";
             this.txtUf.Size = new System.Drawing.Size(100, 20);
-            this.txtUf.TabIndex = 6;
+            this.txtUf.TabIndex = 2;
             // 
             // txtCodPais
             // 
@@ -73,22 +81,13 @@
             this.txtCodPais.Location = new System.Drawing.Point(146, 119);
             this.txtCodPais.Name = "txtCodPais";
             this.txtCodPais.Size = new System.Drawing.Size(100, 20);
-            this.txtCodPais.TabIndex = 7;
+            this.txtCodPais.TabIndex = 0;
             this.txtCodPais.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // comboPaises
-            // 
-            this.comboPaises.FormattingEnabled = true;
-            this.comboPaises.Location = new System.Drawing.Point(267, 119);
-            this.comboPaises.Name = "comboPaises";
-            this.comboPaises.Size = new System.Drawing.Size(250, 21);
-            this.comboPaises.TabIndex = 8;
-            this.comboPaises.SelectedIndexChanged += new System.EventHandler(this.comboPaises_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(143, 39);
+            this.label2.Location = new System.Drawing.Point(185, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 9;
@@ -117,16 +116,16 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(264, 103);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.Size = new System.Drawing.Size(29, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "Países";
+            this.label5.Text = "País";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(184, 34);
+            this.label6.Location = new System.Drawing.Point(226, 32);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(15, 20);
             this.label6.TabIndex = 13;
@@ -154,15 +153,15 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "*";
             // 
-            // btnCadastrar
+            // btnPaís
             // 
-            this.btnCadastrar.Location = new System.Drawing.Point(532, 119);
-            this.btnCadastrar.Name = "btnCadastrar";
-            this.btnCadastrar.Size = new System.Drawing.Size(95, 23);
-            this.btnCadastrar.TabIndex = 17;
-            this.btnCadastrar.Text = "Cadastrar";
-            this.btnCadastrar.UseVisualStyleBackColor = true;
-            this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
+            this.btnPaís.Location = new System.Drawing.Point(523, 117);
+            this.btnPaís.Name = "btnPaís";
+            this.btnPaís.Size = new System.Drawing.Size(137, 23);
+            this.btnPaís.TabIndex = 3;
+            this.btnPaís.Text = "Selecionar País";
+            this.btnPaís.UseVisualStyleBackColor = true;
+            this.btnPaís.Click += new System.EventHandler(this.btnCadastrar_Click);
             // 
             // label8
             // 
@@ -174,12 +173,21 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Estado";
             // 
+            // txtPais
+            // 
+            this.txtPais.Enabled = false;
+            this.txtPais.Location = new System.Drawing.Point(267, 119);
+            this.txtPais.Name = "txtPais";
+            this.txtPais.Size = new System.Drawing.Size(250, 20);
+            this.txtPais.TabIndex = 19;
+            // 
             // FrmCadastroEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.Controls.Add(this.txtPais);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.btnCadastrar);
+            this.Controls.Add(this.btnPaís);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -187,20 +195,17 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboPaises);
             this.Controls.Add(this.txtCodPais);
             this.Controls.Add(this.txtUf);
             this.Controls.Add(this.txtEstado);
             this.Name = "FrmCadastroEstado";
             this.Text = "Cadastro Estado";
-            this.Load += new System.EventHandler(this.FrmCadastroEstado_Load_1);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtEstado, 0);
             this.Controls.SetChildIndex(this.txtUf, 0);
             this.Controls.SetChildIndex(this.txtCodPais, 0);
-            this.Controls.SetChildIndex(this.comboPaises, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.label4, 0);
@@ -208,8 +213,9 @@
             this.Controls.SetChildIndex(this.label6, 0);
             this.Controls.SetChildIndex(this.label7, 0);
             this.Controls.SetChildIndex(this.label9, 0);
-            this.Controls.SetChildIndex(this.btnCadastrar, 0);
+            this.Controls.SetChildIndex(this.btnPaís, 0);
             this.Controls.SetChildIndex(this.label8, 0);
+            this.Controls.SetChildIndex(this.txtPais, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,8 +225,6 @@
 
         private System.Windows.Forms.TextBox txtEstado;
         private System.Windows.Forms.TextBox txtUf;
-        private System.Windows.Forms.TextBox txtCodPais;
-        private System.Windows.Forms.ComboBox comboPaises;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -228,7 +232,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button btnCadastrar;
+        private System.Windows.Forms.Button btnPaís;
         private System.Windows.Forms.Label label8;
+        public System.Windows.Forms.TextBox txtPais;
+        public System.Windows.Forms.TextBox txtCodPais;
     }
 }

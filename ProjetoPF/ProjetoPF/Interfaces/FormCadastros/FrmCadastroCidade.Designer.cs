@@ -31,7 +31,6 @@
             this.txtCidade = new System.Windows.Forms.TextBox();
             this.txtDDD = new System.Windows.Forms.TextBox();
             this.txtCodEstado = new System.Windows.Forms.TextBox();
-            this.comboEstados = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,23 +40,31 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.Label();
             this.btnCadastrar = new System.Windows.Forms.Button();
+            this.txtEstado = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSalvar
             // 
+            this.btnSalvar.TabIndex = 4;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // txtCodigo
             // 
             this.txtCodigo.Enabled = false;
+            this.txtCodigo.Location = new System.Drawing.Point(12, 55);
+            // 
+            // btnVoltar
+            // 
+            this.btnVoltar.TabIndex = 0;
             // 
             // txtCidade
             // 
-            this.txtCidade.Location = new System.Drawing.Point(130, 55);
+            this.txtCidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCidade.Location = new System.Drawing.Point(171, 55);
             this.txtCidade.MaxLength = 100;
             this.txtCidade.Name = "txtCidade";
             this.txtCidade.Size = new System.Drawing.Size(372, 20);
-            this.txtCidade.TabIndex = 5;
+            this.txtCidade.TabIndex = 1;
             // 
             // txtDDD
             // 
@@ -65,7 +72,7 @@
             this.txtDDD.MaxLength = 5;
             this.txtDDD.Name = "txtDDD";
             this.txtDDD.Size = new System.Drawing.Size(100, 20);
-            this.txtDDD.TabIndex = 6;
+            this.txtDDD.TabIndex = 2;
             this.txtDDD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtCodEstado
@@ -74,22 +81,13 @@
             this.txtCodEstado.Location = new System.Drawing.Point(129, 124);
             this.txtCodEstado.Name = "txtCodEstado";
             this.txtCodEstado.Size = new System.Drawing.Size(100, 20);
-            this.txtCodEstado.TabIndex = 7;
+            this.txtCodEstado.TabIndex = 0;
             this.txtCodEstado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // comboEstados
-            // 
-            this.comboEstados.FormattingEnabled = true;
-            this.comboEstados.Location = new System.Drawing.Point(236, 124);
-            this.comboEstados.Name = "comboEstados";
-            this.comboEstados.Size = new System.Drawing.Size(266, 21);
-            this.comboEstados.TabIndex = 8;
-            this.comboEstados.SelectedIndexChanged += new System.EventHandler(this.comboEstados_SelectedIndexChanged_1);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(127, 39);
+            this.label2.Location = new System.Drawing.Point(168, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 9;
@@ -118,16 +116,16 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(233, 108);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(45, 13);
+            this.label5.Size = new System.Drawing.Size(40, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "Estados";
+            this.label5.Text = "Estado";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(165, 35);
+            this.label6.Location = new System.Drawing.Point(206, 35);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(15, 20);
             this.label6.TabIndex = 13;
@@ -167,18 +165,27 @@
             // 
             // btnCadastrar
             // 
-            this.btnCadastrar.Location = new System.Drawing.Point(508, 124);
+            this.btnCadastrar.Location = new System.Drawing.Point(508, 122);
             this.btnCadastrar.Name = "btnCadastrar";
-            this.btnCadastrar.Size = new System.Drawing.Size(75, 23);
-            this.btnCadastrar.TabIndex = 17;
-            this.btnCadastrar.Text = "Cadastrar";
+            this.btnCadastrar.Size = new System.Drawing.Size(142, 23);
+            this.btnCadastrar.TabIndex = 3;
+            this.btnCadastrar.Text = "Selecionar Estado";
             this.btnCadastrar.UseVisualStyleBackColor = true;
             this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click_1);
+            // 
+            // txtEstado
+            // 
+            this.txtEstado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtEstado.Location = new System.Drawing.Point(236, 124);
+            this.txtEstado.Name = "txtEstado";
+            this.txtEstado.Size = new System.Drawing.Size(266, 20);
+            this.txtEstado.TabIndex = 0;
             // 
             // FrmCadastroCidade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.Controls.Add(this.txtEstado);
             this.Controls.Add(this.btnCadastrar);
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.label8);
@@ -188,7 +195,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboEstados);
             this.Controls.Add(this.txtCodEstado);
             this.Controls.Add(this.txtDDD);
             this.Controls.Add(this.txtCidade);
@@ -201,7 +207,6 @@
             this.Controls.SetChildIndex(this.txtCidade, 0);
             this.Controls.SetChildIndex(this.txtDDD, 0);
             this.Controls.SetChildIndex(this.txtCodEstado, 0);
-            this.Controls.SetChildIndex(this.comboEstados, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.label4, 0);
@@ -211,6 +216,7 @@
             this.Controls.SetChildIndex(this.label8, 0);
             this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.btnCadastrar, 0);
+            this.Controls.SetChildIndex(this.txtEstado, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,8 +226,6 @@
 
         private System.Windows.Forms.TextBox txtCidade;
         private System.Windows.Forms.TextBox txtDDD;
-        private System.Windows.Forms.TextBox txtCodEstado;
-        private System.Windows.Forms.ComboBox comboEstados;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -231,5 +235,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label txtNome;
         private System.Windows.Forms.Button btnCadastrar;
+        public System.Windows.Forms.TextBox txtEstado;
+        public System.Windows.Forms.TextBox txtCodEstado;
     }
 }

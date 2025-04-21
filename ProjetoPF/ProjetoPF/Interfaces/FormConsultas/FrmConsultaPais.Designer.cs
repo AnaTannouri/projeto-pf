@@ -35,6 +35,9 @@
             // 
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click_2);
             // 
+            // listViewFormaPagamento
+            // 
+            // 
             // btnEditar
             // 
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click_2);

@@ -2,6 +2,7 @@
 using ProjetoPF.Interfaces.FormCadastros;
 using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Servicos;
+using ProjetoPF.Servicos.Localizacao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             InitializeComponent();
             frmCadastroCidade = new FrmCadastroCidade();
+            this.listViewFormaPagamento.MouseDoubleClick += new MouseEventHandler(this.listViewFormaPagamento_MouseDoubleClick);
         }
 
         private void AjustarLarguraColunas()
@@ -53,6 +55,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             cidade.DataAtualizacao.ToString("dd/MM/yyyy")
                         }
                     };
+                    item.Tag = cidade;
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -66,9 +69,9 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             if (listViewFormaPagamento.Columns.Count == 0)
             {
-                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Nome", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("DDD", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Cidade", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("DDD", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Nome do Estado", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
@@ -151,6 +154,63 @@ namespace ProjetoPF.Interfaces.FormConsultas
             else
             {
                 MessageBox.Show("Selecione uma cidade para excluir.");
+            }
+        }
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.Owner is FrmCadastroCliente frmCadastroCliente)
+            {
+                if (listViewFormaPagamento.SelectedItems.Count > 0)
+                {
+                    var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                    var cidadeSelecionada = (Cidade)itemSelecionado.Tag;
+
+                    frmCadastroCliente.txtCidade.Text = cidadeSelecionada.Nome;
+                    frmCadastroCliente.txtCodigoCidade.Text = cidadeSelecionada.Id.ToString();
+
+                    var estadoServices = new EstadoServicos();
+                    var estado = estadoServices.BuscarPorId(cidadeSelecionada.IdEstado);
+                    frmCadastroCliente.txtUF.Text = estado != null ? estado.UF : "UF?";
+
+                    frmCadastroCliente.Tag = cidadeSelecionada;
+                    this.Close();
+                }
+            }
+            if (this.Owner is FrmCadastroFuncionario frmCadastroFuncionario)
+            {
+                if (listViewFormaPagamento.SelectedItems.Count > 0)
+                {
+                    var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                    var cidadeSelecionada = (Cidade)itemSelecionado.Tag;
+
+                    frmCadastroFuncionario.txtCidadeFunc.Text = cidadeSelecionada.Nome;
+                    frmCadastroFuncionario.txtCodigoCidadeFunc.Text = cidadeSelecionada.Id.ToString();
+
+                    var estadoServices = new EstadoServicos();
+                    var estado = estadoServices.BuscarPorId(cidadeSelecionada.IdEstado);
+                    frmCadastroFuncionario.txtUF.Text = estado != null ? estado.UF : "UF?";
+
+                    frmCadastroFuncionario.Tag = cidadeSelecionada;
+                    this.Close();
+                }
+            }
+            else if (this.Owner is FrmCadastroFornecedor frmCadastroFornecedor)
+            {
+                if (listViewFormaPagamento.SelectedItems.Count > 0)
+                {
+                    var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                    var cidadeSelecionada = (Cidade)itemSelecionado.Tag;
+
+                    frmCadastroFornecedor.txtCidade.Text = cidadeSelecionada.Nome;
+                    frmCadastroFornecedor.txtCodigoCidade.Text = cidadeSelecionada.Id.ToString();
+
+                    var estadoServices = new EstadoServicos();
+                    var estado = estadoServices.BuscarPorId(cidadeSelecionada.IdEstado);
+                    frmCadastroFornecedor.txtUF.Text = estado != null ? estado.UF : "UF?";
+
+                    frmCadastroFornecedor.Tag = cidadeSelecionada;
+                    this.Close();
+                }
             }
         }
     }

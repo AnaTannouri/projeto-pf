@@ -17,11 +17,11 @@ namespace ProjetoPF.Dao
             using (TransactionScope scope = new TransactionScope())
             {
                 if (parcelas == null || parcelas.Count == 0)
-                    throw new Exception("Cadastre ao menos uma parcela!");
+                    MessageBox.Show("Cadastre ao menos uma parcela!");
 
                 bool duplicado = VerificarDuplicidade("Descricao", condicao.Descricao, condicao);
                 if (duplicado)
-                    throw new Exception("Já existe uma condição de pagamento com esta descrição.");
+                    MessageBox.Show("Já existe uma condição de pagamento com esta descrição.");
 
                 this.Criar(condicao);
 

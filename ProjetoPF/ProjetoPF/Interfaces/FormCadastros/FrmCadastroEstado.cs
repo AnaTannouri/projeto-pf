@@ -1,5 +1,7 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormCadastros;
+using ProjetoPF.FormConsultas;
+using ProjetoPF.Interfaces.FormConsultas;
 using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Servicos;
 using ProjetoPF.Servicos.Localizacao;
@@ -27,44 +29,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             InitializeComponent();
         }
 
-        public void CarregarPaises(int? idSelecionado = null)
-        {
-            try
-            {
-                carregandoCombo = true;
-
-                var listaPaises = paisServices.BuscarTodos();
-
-                comboPaises.Items.Clear();
-
-                if (listaPaises != null && listaPaises.Any())
-                {
-                    comboPaises.DataSource = listaPaises;
-                    comboPaises.DisplayMember = "Nome";
-                    comboPaises.ValueMember = "Id";
-
-                    if (idSelecionado.HasValue)
-                    {
-                        comboPaises.SelectedValue = idSelecionado.Value;
-                        txtCodPais.Text = idSelecionado.Value.ToString();
-                    }
-                    else
-                    {
-                        comboPaises.SelectedIndex = -1;
-                        txtCodPais.Clear();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar países: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                carregandoCombo = false;
-            }
-        }
-
         private bool ValidarEntrada()
         {
             if (string.IsNullOrWhiteSpace(txtEstado.Text))
@@ -79,7 +43,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return false;
             }
 
-            if (comboPaises.SelectedItem == null)
+            if (string.IsNullOrWhiteSpace(txtCodPais.Text))
             {
                 MessageBox.Show("Selecione um país.");
                 return false;
@@ -93,14 +57,15 @@ namespace ProjetoPF.Interfaces.FormCadastros
             estado.Nome = txtEstado.Text.Trim();
             estado.UF = txtUf.Text.Trim();
 
-            if (comboPaises.SelectedValue != null)
-            {
-                estado.IdPais = (int)comboPaises.SelectedValue;
-            }
-            else
-            {
-                throw new Exception("Nenhum país foi selecionado.");
-            }
+            if (!int.TryParse(txtCodPais.Text, out int idPais))
+                throw new Exception("Código do país inválido.");
+
+            Pais paisSelecionado = paisServices.BuscarPorId(idPais);
+
+            if (paisSelecionado == null)
+                throw new Exception("País selecionado não foi encontrado.");
+
+            estado.IdPais = idPais; 
 
             if (isEditando || isExcluindo)
                 estado.Id = int.Parse(txtCodigo.Text);
@@ -121,18 +86,36 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtEstado.Text = estadoSelecionado.Nome;
             txtUf.Text = estadoSelecionado.UF;
 
-            CarregarPaises(estadoSelecionado.IdPais);
-
-            comboPaises.SelectedValue = estadoSelecionado.IdPais;
-            txtCodPais.Text = estadoSelecionado.IdPais.ToString();
+            if (estadoSelecionado.IdPais > 0)
+            {
+                Pais pais = paisServices.BuscarPorId(estadoSelecionado.IdPais);
+                if (pais != null)
+                {
+                    txtCodPais.Text = pais.Id.ToString();
+                    txtPais.Text = pais.Nome;
+                }
+                else
+                {
+                    txtCodPais.Text = "";
+                    txtPais.Text = "Desconhecido";
+                }
+            }
+            else
+            {
+                txtCodPais.Text = "";
+                txtPais.Text = "";
+            }
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
 
             if (isExcluindo)
                 BloquearCampos();
+            else
+                DesbloquearCampos();
+
         }
 
-        public void LimparCampos()
+         public void LimparCampos()
         {
             txtCodigo.Clear();
             txtEstado.Clear();
@@ -149,39 +132,21 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             txtEstado.Enabled = false;
             txtUf.Enabled = false;
-            comboPaises.Enabled = false;
+            txtPais.Enabled = false;
             btnSalvar.Enabled = true;
-            btnCadastrar.Enabled = false;
+            btnPaís.Enabled = false;
         }
 
         public void DesbloquearCampos()
         {
             txtEstado.Enabled = true;
             txtUf.Enabled = true;
-            comboPaises.Enabled = true;
             btnSalvar.Enabled = true;
             txtCodigo.Enabled = false;
         }
 
-        private void comboPaises_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (carregandoCombo) return;
-
-            if (comboPaises.SelectedItem is Pais pais)
-            {
-                txtCodPais.Text = pais.Id.ToString();
-            }
-            else
-            {
-                txtCodPais.Clear();
-            }
-        }
-
         private void FrmCadastroEstado_Load_1(object sender, EventArgs e)
         {
-            if (comboPaises.Items.Count == 0)
-                CarregarPaises();
-
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
         }
 
@@ -241,27 +206,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
-            FrmCadastroPais frmCadastroPais = new FrmCadastroPais();
-
-            frmCadastroPais.FormClosed += (s, args) =>
-            {
-                CarregarPaises(null);
-
-                var listaAtualizada = (List<Pais>)comboPaises.DataSource;
-
-                if (listaAtualizada != null && listaAtualizada.Any())
-                {
-                    var ultimoPais = listaAtualizada.OrderByDescending(p => p.Id).FirstOrDefault();
-
-                    if (ultimoPais != null)
-                    {
-                        comboPaises.SelectedValue = ultimoPais.Id;
-                        txtCodPais.Text = ultimoPais.Id.ToString();
-                    }
-                }
-            };
-
-            frmCadastroPais.ShowDialog();
+            FrmConsultaPais frmConsultaPais = new FrmConsultaPais();
+            frmConsultaPais.Owner = this;
+            frmConsultaPais.ShowDialog();
         }
     }
 }

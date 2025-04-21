@@ -1,11 +1,13 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormCadastros;
+using ProjetoPF.FormConsultas;
 using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormCadastros
@@ -27,7 +29,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
         public FrmCadastroCondPagamento()
         {
             InitializeComponent();
-            comboFormPagamento.SelectedIndexChanged += comboFormPagamento_SelectedIndexChanged;
         }
 
         private bool ValidarEntrada()
@@ -64,6 +65,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtMulta.Clear();
             txtPrazo.Clear();
             txtParcela.Clear();
+            txtForma.Clear();   
             txtPorcentagem.Clear();
             txtRestante.Text = "100";
             parcelas.Clear();
@@ -78,146 +80,26 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
-            FrmCadastroFormaPagamento frmCadastroForma = new FrmCadastroFormaPagamento();
-            frmCadastroForma.FormClosed += (s, args) =>
-            {
-                CarregarFormasDePagamento();
-                var formas = comboFormPagamento.DataSource as List<FormaPagamento>;
-                if (formas != null && formas.Any())
-                {
-                    comboFormPagamento.SelectedItem = formas.Last();
-                }
-            }; ;
-            frmCadastroForma.ShowDialog();
+            FrmConsultaFormaPagamento frmConsultaFormaPagamento = new FrmConsultaFormaPagamento();
+            frmConsultaFormaPagamento.Owner = this;
+            frmConsultaFormaPagamento.ShowDialog();
         }
-        private void comboFormPagamento_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboFormPagamento.SelectedItem is FormaPagamento forma)
-            {
-                txtCod.Text = forma.Id.ToString();
-            }
-            else
-            {
-                txtCod.Clear();
-            }
-        }
-        public override void CarregarFormasDePagamento()
-        {
-            try
-            {
-                var formasDePagamento = formaPagamentoServicos.BuscarTodos();
-
-                if (formasDePagamento != null && formasDePagamento.Any())
-                {
-                    comboFormPagamento.DataSource = formasDePagamento;
-                    comboFormPagamento.DisplayMember = "Descricao";
-                    comboFormPagamento.ValueMember = "Id";
-                    comboFormPagamento.SelectedIndex = -1;
-                }
-                else
-                {
-                    comboFormPagamento.Items.Clear();
-                    MessageBox.Show("Nenhuma forma de pagamento encontrada.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar formas de pagamento: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void FrmCadastroCondPagamento_Load(object sender, EventArgs e)
         {
             CarregarFormasDePagamento();
             listView1.View = View.Details;
-            listView1.Columns.Add("Número Parcela", 100);
-            listView1.Columns.Add("Forma Pagamento", 150);
-            listView1.Columns.Add("Prazo", 80);
-            listView1.Columns.Add("%", 80);
+            listView1.Columns.Add("Número Parcela", 100, HorizontalAlignment.Right);
+            listView1.Columns.Add("Prazo", 80, HorizontalAlignment.Right);
+            listView1.Columns.Add("Parcela %", 80, HorizontalAlignment.Right);
+            listView1.Columns.Add("Taxa de Juros %", 100, HorizontalAlignment.Right);
+            listView1.Columns.Add("Taxa de Multa %", 100, HorizontalAlignment.Right);
+            listView1.Columns.Add("Forma de Pagamento", 150);
             txtParcela.Text = proximoNumeroParcela.ToString();
 
             listView1.FullRowSelect = true;
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
         }
-
-        private void btnGerarParcela_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int numParcela = proximoNumeroParcela;
-
-                if (comboFormPagamento.SelectedItem == null)
-                {
-                    MessageBox.Show("Por favor, selecione uma forma de pagamento.");
-                    return;
-                }
-
-                FormaPagamento pagamentoSelecionado = (FormaPagamento)comboFormPagamento.SelectedItem;
-                string formaPagamento = pagamentoSelecionado.Descricao;
-                int prazo = int.Parse(txtPrazo.Text);
-
-                if (!decimal.TryParse(txtPorcentagem.Text.Replace(",", "."), out decimal porcentagemParcela))
-                {
-                    MessageBox.Show("Informe uma porcentagem válida.");
-                    return;
-                }
-
-                if (porcentagemParcela > porcentagemRestante)
-                {
-                    MessageBox.Show($"A porcentagem informada excede o restante disponível ({porcentagemRestante:F2}%).");
-                    txtParcela.Clear();
-                    txtPrazo.Clear();
-                    txtPorcentagem.Clear();
-                    comboFormPagamento.SelectedIndex = -1;
-                    return;
-
-                }
-
-                porcentagemRestante -= porcentagemParcela;
-                txtRestante.Text = porcentagemRestante.ToString("F2");
-
-                CondicaoPagamentoParcelas novaParcela = new CondicaoPagamentoParcelas
-                {
-                    NumParcela = numParcela,
-                    IdFormaPagamento = pagamentoSelecionado.Id,
-                    Prazo = prazo,
-                    Porcentagem = porcentagemParcela
-                };
-
-                parcelas.Add(novaParcela);
-
-                ListViewItem lvi = new ListViewItem(novaParcela.NumParcela.ToString());
-                lvi.SubItems.Add(formaPagamento);
-                lvi.SubItems.Add(novaParcela.Prazo.ToString());
-                lvi.SubItems.Add(novaParcela.Porcentagem.ToString("F2") + "%");
-                listView1.Items.Add(lvi);
-
-                MessageBox.Show($"Parcela {numParcela} gerada com sucesso!");
-
-                proximoNumeroParcela++;
-
-                if (porcentagemRestante > 0)
-                {
-                    txtParcela.Text = proximoNumeroParcela.ToString();
-                }
-                else
-                {
-                    txtParcela.Clear();
-                }
-
-                txtPrazo.Clear();
-                txtPorcentagem.Clear();
-                comboFormPagamento.SelectedIndex = -1;
-
-                comboFormPagamento.Focus();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao gerar parcela: {ex.Message}");
-            }
-        }
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             try
@@ -240,6 +122,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
                         isExcluindo = false;
                         this.Close();
                     }
+                    return;
+                }
+
+                if (VerificarDuplicidade())
+                {
+                    MessageBox.Show("Já existe uma condição de pagamento com essas informações.", "Erro de duplicidade", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -274,7 +162,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                         return;
                     }
 
-                    servico.AtualizarCondicaoComParcelas(condicaoPagamento, parcelas); // Atualiza tudo
+                    servico.AtualizarCondicaoComParcelas(condicaoPagamento, parcelas);
                     MessageBox.Show("Condição de pagamento atualizada com sucesso!");
                     isEditando = false;
                     this.Close();
@@ -286,6 +174,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
 
                 LimparCampos();
+                Close();
             }
             catch (SqlException ex) when (ex.Number == 547)
             {
@@ -308,10 +197,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtMulta.Enabled = false;
             txtPrazo.Enabled = false;
             txtPorcentagem.Enabled = false;
-            comboFormPagamento.Enabled = false;
+            txtForma.Enabled = false;
             btnGerarParcela.Enabled = false;
             btnRemover.Enabled = false;
-            btnCadastrar.Enabled = false;
+            btnFormasPagamento.Enabled = false;
             btnSalvar.Enabled = true;
         }
         public void DesbloquearCampos()
@@ -321,7 +210,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtMulta.Enabled = true;
             txtPrazo.Enabled = true;
             txtPorcentagem.Enabled = true;
-            comboFormPagamento.Enabled = true;
             btnGerarParcela.Enabled = true;
             btnSalvar.Enabled = true;
             txtCodigo.Enabled = false;
@@ -336,6 +224,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             condicaoPagamento = condicao;
             isEditando = isEditandoForm;
             isExcluindo = isExcluindoForm;
+            AtualizarObjeto(); 
 
             parcelas = condicaoPagamentoParcelasServicos.BuscarTodos().Where(p => p.IdCondicaoPagamento == condicao.Id).ToList();
 
@@ -347,9 +236,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 string descForma = forma != null ? forma.Descricao : "Desconhecida";
 
                 ListViewItem item = new ListViewItem(contador.ToString());
-                item.SubItems.Add(descForma);
                 item.SubItems.Add(parcela.Prazo.ToString());
                 item.SubItems.Add(parcela.Porcentagem.ToString("F2") + "%");
+                item.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
+                item.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
+                item.SubItems.Add(descForma);
                 listView1.Items.Add(item);
 
                 contador++;
@@ -399,9 +290,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     string descricaoForma = forma != null ? forma.Descricao : "Desconhecida";
 
                     ListViewItem lvi = new ListViewItem(contador.ToString());
-                    lvi.SubItems.Add(descricaoForma);
                     lvi.SubItems.Add(parcela.Prazo.ToString());
                     lvi.SubItems.Add(parcela.Porcentagem.ToString("F2") + "%");
+                    lvi.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
+                    lvi.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
+                    lvi.SubItems.Add(descricaoForma);
                     listView1.Items.Add(lvi);
 
                     parcela.NumParcela = contador;
@@ -413,6 +306,146 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                 MessageBox.Show("Parcela removida com sucesso!");
             }
+        }
+
+        private void btnGerarParcela_Click_1(object sender, EventArgs e)
+        {
+
+            try
+            {
+                AtualizarObjeto();
+                int numParcela = proximoNumeroParcela;
+
+                if (string.IsNullOrWhiteSpace(txtForma.Text))
+                {
+                    MessageBox.Show("Por favor, informe uma forma de pagamento.");
+                    return;
+                }
+
+                var formasPagamento = formaPagamentoServicos.BuscarTodos();
+                FormaPagamento pagamentoSelecionado = formasPagamento
+                    .FirstOrDefault(f => f.Descricao.Equals(txtForma.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                if (pagamentoSelecionado == null)
+                {
+                    MessageBox.Show("Forma de pagamento não encontrada.");
+                    return;
+                }
+
+                string formaPagamento = pagamentoSelecionado.Descricao;
+                int prazo = int.Parse(txtPrazo.Text);
+
+                string textoPorcentagem = txtPorcentagem.Text.Trim().Replace('.', ',');
+                if (!decimal.TryParse(textoPorcentagem, NumberStyles.Any, CultureInfo.CurrentCulture, out decimal porcentagemParcela) || porcentagemParcela <= 0)
+                {
+                    MessageBox.Show("Informe uma porcentagem válida.");
+                    return;
+                }
+
+                if (porcentagemParcela > porcentagemRestante)
+                {
+                    MessageBox.Show($"A porcentagem informada excede o restante disponível ({porcentagemRestante:F2}%).");
+                    txtParcela.Clear();
+                    txtPrazo.Clear();
+                    txtPorcentagem.Clear();
+                    txtForma.Clear();
+                    return;
+                }
+
+                porcentagemRestante -= porcentagemParcela;
+                txtRestante.Text = porcentagemRestante.ToString("F2");
+
+                CondicaoPagamentoParcelas novaParcela = new CondicaoPagamentoParcelas
+                {
+                    NumParcela = numParcela,
+                    IdFormaPagamento = pagamentoSelecionado.Id,
+                    Prazo = prazo,
+                    Porcentagem = porcentagemParcela
+                };
+
+                parcelas.Add(novaParcela);
+
+                ListViewItem lvi = new ListViewItem(novaParcela.NumParcela.ToString());
+                lvi.SubItems.Add(novaParcela.Prazo.ToString());
+                lvi.SubItems.Add(novaParcela.Porcentagem.ToString("F2") + "%");
+                lvi.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
+                lvi.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
+                lvi.SubItems.Add(formaPagamento);
+                listView1.Items.Add(lvi);
+
+                MessageBox.Show($"Parcela {numParcela} gerada com sucesso!");
+
+                proximoNumeroParcela++;
+
+                if (porcentagemRestante > 0)
+                {
+                    txtParcela.Text = proximoNumeroParcela.ToString();
+                }
+                else
+                {
+                    txtParcela.Clear();
+                }
+
+                txtPrazo.Clear();
+                txtPorcentagem.Clear();
+                txtForma.Clear();
+
+                txtForma.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao gerar parcela: {ex.Message}");
+            }
+        }
+        private bool VerificarDuplicidade()
+        {
+            var condicoesExistentes = condicaoPagamentoServices.BuscarTodos();
+
+            foreach (var condExistente in condicoesExistentes)
+            {
+                if (isEditando && condExistente.Id == condicaoPagamento.Id)
+                    continue;
+
+                if (!condExistente.Descricao.Equals(txtCondPagamento.Text.Trim(), StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                if (condExistente.TaxaJuros != decimal.Parse(txtJuros.Text))
+                    continue;
+
+                if (condExistente.Multa != decimal.Parse(txtMulta.Text))
+                    continue;
+
+                var parcelasExistentes = condicaoPagamentoParcelasServicos.BuscarTodos()
+                    .Where(p => p.IdCondicaoPagamento == condExistente.Id)
+                    .OrderBy(p => p.NumParcela)
+                    .ToList();
+
+                if (parcelasExistentes.Count != parcelas.Count)
+                    continue;
+
+                bool todasIguais = true;
+
+                for (int i = 0; i < parcelas.Count; i++)
+                {
+                    var pNova = parcelas[i];
+                    var pExistente = parcelasExistentes[i];
+
+                    if (pNova.Prazo != pExistente.Prazo ||
+                        pNova.Porcentagem != pExistente.Porcentagem ||
+                        pNova.IdFormaPagamento != pExistente.IdFormaPagamento)
+                    {
+                        todasIguais = false;
+                        break;
+                    }
+                }
+
+                if (todasIguais)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

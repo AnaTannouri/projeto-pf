@@ -55,7 +55,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
 
                 LimparCampos();
-                Sair();
+                this.Close();
             }
             catch (Exception ex)
             {

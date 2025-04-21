@@ -1,6 +1,7 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.Modelos.Pessoa;
 using System;
+using System.Linq;
 
 namespace ProjetoPF.Servicos
 {
@@ -14,11 +15,6 @@ namespace ProjetoPF.Servicos
             {
                 throw new Exception("Validação de entrada falhou. Preencha todos os campos obrigatórios.");
             }
-
-            if (!cliente.Estrangeiro && VerificarDuplicidade("CpfCnpj", cliente.CpfCnpj, cliente))
-                throw new Exception("Já existe um cliente com este CPF.");
-            else if (cliente.Estrangeiro && VerificarDuplicidade("RgInscricaoEstadual", cliente.RgInscricaoEstadual, cliente))
-                throw new Exception("Já existe um cliente com este RG.");
 
             cliente.DataCriacao = DateTime.Now;
             cliente.DataAtualizacao = DateTime.Now;
@@ -36,11 +32,6 @@ namespace ProjetoPF.Servicos
                 throw new Exception("Validação de entrada falhou. Preencha todos os campos obrigatórios.");
             }
 
-            if (!cliente.Estrangeiro && VerificarDuplicidade("CpfCnpj", cliente.CpfCnpj, cliente))
-                throw new Exception("Já existe um cliente com este CPF.");
-            else if (cliente.Estrangeiro && VerificarDuplicidade("RgInscricaoEstadual", cliente.RgInscricaoEstadual, cliente))
-                throw new Exception("Já existe um cliente com este RG.");
-
             cliente.DataAtualizacao = DateTime.Now;
 
             Atualizar(cliente);
@@ -49,16 +40,6 @@ namespace ProjetoPF.Servicos
         private bool ValidarEntrada(Cliente cliente)
         {
             if (string.IsNullOrWhiteSpace(cliente.NomeRazaoSocial))
-            {
-                return false;
-            }
-
-            if (!cliente.Estrangeiro && string.IsNullOrWhiteSpace(cliente.CpfCnpj))
-            {
-                return false;
-            }
-
-            if (cliente.Estrangeiro && string.IsNullOrWhiteSpace(cliente.RgInscricaoEstadual))
             {
                 return false;
             }
@@ -94,5 +75,32 @@ namespace ProjetoPF.Servicos
 
             return true;
         }
+        public bool DocumentoDuplicado(Cliente cliente)
+        {
+            var todosClientes = BuscarTodos();
+
+            if (cliente.Id != 0)
+                todosClientes = todosClientes.FindAll(c => c.Id != cliente.Id);
+
+            string tipo = cliente.TipoPessoa?.ToUpper() ?? "";
+
+            if ((tipo == "FÍSICA" || tipo == "FISICA") && !string.IsNullOrWhiteSpace(cliente.CpfCnpj))
+            {
+                return todosClientes.Any(c => c.CpfCnpj == cliente.CpfCnpj);
+            }
+
+            if ((tipo == "JURÍDICA" || tipo == "JURIDICA") && !string.IsNullOrWhiteSpace(cliente.CpfCnpj))
+            {
+                return todosClientes.Any(c => c.CpfCnpj == cliente.CpfCnpj);
+            }
+
+            if ((tipo == "FÍSICA" || tipo == "FISICA") && string.IsNullOrWhiteSpace(cliente.CpfCnpj) && !string.IsNullOrWhiteSpace(cliente.RgInscricaoEstadual))
+            {
+                return todosClientes.Any(c => c.RgInscricaoEstadual == cliente.RgInscricaoEstadual);
+            }
+
+            return false;
+        }
+
     }
 }
