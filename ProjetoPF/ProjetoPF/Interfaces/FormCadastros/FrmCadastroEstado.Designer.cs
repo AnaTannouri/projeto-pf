@@ -57,6 +57,10 @@
             // 
             this.btnVoltar.TabIndex = 0;
             // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
+            // 
             // txtEstado
             // 
             this.txtEstado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
@@ -89,36 +93,36 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(185, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
+            this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Estado";
+            this.label2.Text = "Estado:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 103);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(18, 13);
+            this.label3.Size = new System.Drawing.Size(21, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Uf";
+            this.label3.Text = "Uf:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(143, 103);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 13);
+            this.label4.Size = new System.Drawing.Size(68, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Código País";
+            this.label4.Text = "Código País:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(264, 103);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.Size = new System.Drawing.Size(32, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "País";
+            this.label5.Text = "País:";
             // 
             // label6
             // 
@@ -184,7 +188,7 @@
             // FrmCadastroEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.txtPais);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnPaís);
@@ -200,6 +204,14 @@
             this.Controls.Add(this.txtEstado);
             this.Name = "FrmCadastroEstado";
             this.Text = "Cadastro Estado";
+            this.Load += new System.EventHandler(this.FrmCadastroEstado_Load);
+            this.Controls.SetChildIndex(this.labelDataCriacao, 0);
+            this.Controls.SetChildIndex(this.labelCriacao, 0);
+            this.Controls.SetChildIndex(this.lblAtualizacao, 0);
+            this.Controls.SetChildIndex(this.checkAtivo, 0);
+            this.Controls.SetChildIndex(this.lblDataAtual, 0);
+            this.Controls.SetChildIndex(this.DataAtaul, 0);
+            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

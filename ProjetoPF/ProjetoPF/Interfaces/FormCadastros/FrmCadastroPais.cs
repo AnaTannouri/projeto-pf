@@ -1,5 +1,6 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.Modelos.Localizacao;
+using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Servicos;
 using ProjetoPF.Servicos.Localizacao;
 using System;
@@ -31,7 +32,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                 if (isExcluindo)
                 {
-                    if (MessageBox.Show("Deseja realmente excluir este país?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    if (MessageBox.Show("Deseja realmente remover este país?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         PaisServices.Remover(pais.Id);
                         MessageBox.Show("País removido com sucesso!");
@@ -61,11 +62,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("REFERENCE") && ex.InnerException.Message.Contains("Estados"))
                 {
-                    MessageBox.Show("Não é possível excluir o país, pois ele está vinculado a um ou mais estados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não é possível remover o país, pois ele está vinculado a um ou mais estados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (ex.Message.Contains("REFERENCE") && ex.Message.Contains("Estados"))
                 {
-                    MessageBox.Show("Não é possível excluir o país, pois ele está vinculado a um ou mais estados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não é possível remover o país, pois ele está vinculado a um ou mais estados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -111,6 +112,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             pais.Nome = txtPais.Text.Trim();
             pais.Sigla = txtSigla.Text.Trim();
             pais.DDI = txtDdi.Text.Trim();
+            pais.Ativo = checkAtivo.Checked;
 
             if (isEditando || isExcluindo)
                 pais.Id = int.Parse(txtCodigo.Text);
@@ -126,6 +128,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtPais.Text = paisSelecionado.Nome;
             txtSigla.Text = paisSelecionado.Sigla;
             txtDdi.Text = paisSelecionado.DDI;
+            checkAtivo.Checked = paisSelecionado.Ativo;
+            checkAtivo.Enabled = isEditandoForm;
 
             pais = paisSelecionado;
             isEditando = isEditandoForm;
@@ -139,6 +143,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtPais.Clear();
             txtSigla.Clear();
             txtDdi.Clear();
+            checkAtivo.Checked = true;
+            checkAtivo.Enabled = false;
             pais = new Pais();
             isEditando = false;
             isExcluindo = false;
@@ -163,7 +169,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void FrmCadastroPais_Load(object sender, EventArgs e)
         {
-
+            labelCriacao.Text = pais.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = pais.DataAtualizacao.ToShortDateString();
         }
     }
 }

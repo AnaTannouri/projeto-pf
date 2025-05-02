@@ -57,16 +57,16 @@
             // 
             // btnExcluir
             // 
-            this.btnExcluir.Location = new System.Drawing.Point(1095, 694);
+            this.btnExcluir.Location = new System.Drawing.Point(1095, 654);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(118, 23);
             this.btnExcluir.TabIndex = 2;
-            this.btnExcluir.Text = "Excluir";
+            this.btnExcluir.Text = "Remover";
             this.btnExcluir.UseVisualStyleBackColor = true;
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(971, 694);
+            this.btnEditar.Location = new System.Drawing.Point(971, 654);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(118, 23);
             this.btnEditar.TabIndex = 3;
@@ -76,7 +76,7 @@
             // 
             // btnVoltar
             // 
-            this.btnVoltar.Location = new System.Drawing.Point(1217, 694);
+            this.btnVoltar.Location = new System.Drawing.Point(1217, 654);
             this.btnVoltar.Name = "btnVoltar";
             this.btnVoltar.Size = new System.Drawing.Size(118, 23);
             this.btnVoltar.TabIndex = 4;
@@ -87,7 +87,7 @@
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(847, 694);
+            this.btnAdicionar.Location = new System.Drawing.Point(847, 654);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(118, 23);
             this.btnAdicionar.TabIndex = 5;
@@ -102,7 +102,7 @@
             this.listViewFormaPagamento.HideSelection = false;
             this.listViewFormaPagamento.Location = new System.Drawing.Point(34, 89);
             this.listViewFormaPagamento.Name = "listViewFormaPagamento";
-            this.listViewFormaPagamento.Size = new System.Drawing.Size(1298, 589);
+            this.listViewFormaPagamento.Size = new System.Drawing.Size(1298, 559);
             this.listViewFormaPagamento.TabIndex = 6;
             this.listViewFormaPagamento.UseCompatibleStateImageBehavior = false;
             this.listViewFormaPagamento.View = System.Windows.Forms.View.Details;
@@ -122,7 +122,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.btnFiltro);
             this.Controls.Add(this.listViewFormaPagamento);
             this.Controls.Add(this.btnAdicionar);
@@ -132,8 +132,8 @@
             this.Controls.Add(this.btnPesquisar);
             this.Controls.Add(this.txtPesquisa);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximumSize = new System.Drawing.Size(1360, 768);
-            this.MinimumSize = new System.Drawing.Size(1360, 768);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
+            this.MinimumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaPai";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Formulário consulta pai";

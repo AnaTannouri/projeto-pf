@@ -43,17 +43,20 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 {
                     var nomePais = paises.FirstOrDefault(p => p.Id == estado.IdPais)?.Nome ?? "N/A";
 
-                    ListViewItem item = new ListViewItem(estado.Id.ToString())
+                    ListViewItem item = new ListViewItem(estado.Id.ToString());
+                    item.SubItems.Add(estado.Nome);
+                    item.SubItems.Add(estado.UF);
+                    item.SubItems.Add(nomePais);
+                    item.SubItems.Add(estado.Ativo ? "Sim" : "Não");
+                    item.SubItems.Add(estado.DataCriacao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(estado.DataAtualizacao.ToString("dd/MM/yyyy"));  
+
+
+
+                    if (!estado.Ativo)
                     {
-                        SubItems =
-                        {
-                            estado.Nome,
-                            estado.UF,
-                            nomePais,
-                            estado.DataCriacao.ToString("dd/MM/yyyy"),
-                            estado.DataAtualizacao.ToString("dd/MM/yyyy")
-                        }
-                    };
+                        item.ForeColor = System.Drawing.Color.Red;
+                    }
                     item.Tag = estado;
                     listViewFormaPagamento.Items.Add(item);
                 }
@@ -110,6 +113,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Estado", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("UF", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Nome do País", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
             }
@@ -169,12 +173,18 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
                 var estadoSelecionado = (Estado)itemSelecionado.Tag;
 
+                if (!estadoSelecionado.Ativo)
+                {
+                    MessageBox.Show("Este estado está inativo. Selecione um estado ativo.", "Estado inativo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 frmCadastroCidade.txtEstado.Text = estadoSelecionado.Nome;
                 frmCadastroCidade.txtCodEstado.Text = estadoSelecionado.Id.ToString();
                 frmCadastroCidade.Tag = estadoSelecionado;
 
                 this.Close();
-            }
+            }                   
         }
     }
 }

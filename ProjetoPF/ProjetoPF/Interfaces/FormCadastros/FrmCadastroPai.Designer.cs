@@ -36,6 +36,9 @@
             this.lblDataAtual = new System.Windows.Forms.Label();
             this.DataAtaul = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
+            this.labelDataCriacao = new System.Windows.Forms.Label();
+            this.labelCriacao = new System.Windows.Forms.Label();
+            this.lblAtualizacao = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -71,9 +74,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Código";
+            this.label1.Text = "Código:";
             // 
             // checkAtivo
             // 
@@ -87,7 +90,7 @@
             // lblDataAtual
             // 
             this.lblDataAtual.AutoSize = true;
-            this.lblDataAtual.Location = new System.Drawing.Point(17, 651);
+            this.lblDataAtual.Location = new System.Drawing.Point(12, 626);
             this.lblDataAtual.Name = "lblDataAtual";
             this.lblDataAtual.Size = new System.Drawing.Size(87, 13);
             this.lblDataAtual.TabIndex = 4;
@@ -96,7 +99,7 @@
             // DataAtaul
             // 
             this.DataAtaul.AutoSize = true;
-            this.DataAtaul.Location = new System.Drawing.Point(17, 672);
+            this.DataAtaul.Location = new System.Drawing.Point(12, 647);
             this.DataAtaul.Name = "DataAtaul";
             this.DataAtaul.Size = new System.Drawing.Size(106, 13);
             this.DataAtaul.TabIndex = 5;
@@ -105,18 +108,47 @@
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(17, 694);
+            this.lblUsuario.Location = new System.Drawing.Point(12, 669);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(40, 13);
+            this.lblUsuario.Size = new System.Drawing.Size(111, 13);
             this.lblUsuario.TabIndex = 6;
-            this.lblUsuario.Text = "Usário:";
+            this.lblUsuario.Text = "Alterado pelo Usuário:";
+            // 
+            // labelDataCriacao
+            // 
+            this.labelDataCriacao.AutoSize = true;
+            this.labelDataCriacao.Location = new System.Drawing.Point(105, 626);
+            this.labelDataCriacao.Name = "labelDataCriacao";
+            this.labelDataCriacao.Size = new System.Drawing.Size(0, 13);
+            this.labelDataCriacao.TabIndex = 7;
+            // 
+            // labelCriacao
+            // 
+            this.labelCriacao.AutoSize = true;
+            this.labelCriacao.Location = new System.Drawing.Point(105, 626);
+            this.labelCriacao.Name = "labelCriacao";
+            this.labelCriacao.Size = new System.Drawing.Size(10, 13);
+            this.labelCriacao.TabIndex = 0;
+            this.labelCriacao.Text = "-";
+            // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.AutoSize = true;
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
+            this.lblAtualizacao.Name = "lblAtualizacao";
+            this.lblAtualizacao.Size = new System.Drawing.Size(10, 13);
+            this.lblAtualizacao.TabIndex = 8;
+            this.lblAtualizacao.Text = "-";
             // 
             // FrmCadastroPai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.lblAtualizacao);
+            this.Controls.Add(this.labelCriacao);
+            this.Controls.Add(this.labelDataCriacao);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.DataAtaul);
             this.Controls.Add(this.lblDataAtual);
@@ -126,8 +158,8 @@
             this.Controls.Add(this.btnVoltar);
             this.Controls.Add(this.txtCodigo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximumSize = new System.Drawing.Size(1360, 768);
-            this.MinimumSize = new System.Drawing.Size(1360, 768);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
+            this.MinimumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmCadastroPai";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Formulário cadastro pai";
@@ -146,5 +178,8 @@
         public System.Windows.Forms.Label lblDataAtual;
         public System.Windows.Forms.Label DataAtaul;
         public System.Windows.Forms.Label lblUsuario;
+        public System.Windows.Forms.Label labelDataCriacao;
+        public System.Windows.Forms.Label labelCriacao;
+        public System.Windows.Forms.Label lblAtualizacao;
     }
 }

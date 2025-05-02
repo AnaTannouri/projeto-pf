@@ -29,6 +29,8 @@ namespace ProjetoPF.FormConsultas
                 listViewFormaPagamento.Columns.Add("Condição", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Juros %", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Multa %", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Desconto %", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
             }
@@ -63,16 +65,22 @@ namespace ProjetoPF.FormConsultas
                 {
                     ListViewItem item = new ListViewItem(condicao.Id.ToString())
                     {
-                        SubItems =
-                        {
-                            condicao.Descricao,
-                            condicao.TaxaJuros.ToString("F2"),
-                            condicao.Multa.ToString("F2"),
-                            condicao.DataCriacao.ToString("dd/MM/yyyy"),
-                            condicao.DataAtualizacao.ToString("dd/MM/yyyy")
-                        }
+                        Tag = condicao
                     };
-                    item.Tag = condicao;
+
+                    item.SubItems.Add(condicao.Descricao);
+                    item.SubItems.Add(condicao.TaxaJuros.ToString("F2"));
+                    item.SubItems.Add(condicao.Multa.ToString("F2"));
+                    item.SubItems.Add(condicao.Desconto.ToString("F2"));
+                    item.SubItems.Add(condicao.Ativo ? "Sim" : "Não");
+                    item.SubItems.Add(condicao.DataCriacao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(condicao.DataAtualizacao.ToString("dd/MM/yyyy"));
+
+                    if (!condicao.Ativo)
+                    {
+                        item.ForeColor = System.Drawing.Color.Red;
+                    }
+
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -160,6 +168,12 @@ namespace ProjetoPF.FormConsultas
                     var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
                     var condicaoSelecionado = (CondicaoPagamento)itemSelecionado.Tag;
 
+                    if (!condicaoSelecionado.Ativo)
+                    {
+                        MessageBox.Show("Esta condição de pagamento está inativa e não pode ser selecionada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     frmCadastroCliente.txtCondicao.Text = condicaoSelecionado.Descricao;
                     frmCadastroCliente.txtCodigoCondicao.Text = condicaoSelecionado.Id.ToString();
                     frmCadastroCliente.Tag = condicaoSelecionado;
@@ -172,6 +186,12 @@ namespace ProjetoPF.FormConsultas
                 {
                     var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
                     var condicaoSelecionado = (CondicaoPagamento)itemSelecionado.Tag;
+
+                    if (!condicaoSelecionado.Ativo)
+                    {
+                        MessageBox.Show("Esta condição de pagamento está inativa e não pode ser selecionada.", "Condição Inativa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
                     frmCadastroFornecedor.txtCondicao.Text = condicaoSelecionado.Descricao;
                     frmCadastroFornecedor.txtCodigoCondicao.Text = condicaoSelecionado.Id.ToString();

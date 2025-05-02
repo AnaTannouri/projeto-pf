@@ -69,7 +69,7 @@
             this.formaDePagamentoToolStripMenuItem,
             this.condiçãoDePagamentoToolStripMenuItem});
             this.pagamentoToolStripMenuItem1.Name = "pagamentoToolStripMenuItem1";
-            this.pagamentoToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.pagamentoToolStripMenuItem1.Size = new System.Drawing.Size(135, 22);
             this.pagamentoToolStripMenuItem1.Text = "Pagamento";
             // 
             // formaDePagamentoToolStripMenuItem
@@ -93,7 +93,7 @@
             this.estadoToolStripMenuItem,
             this.cidadeToolStripMenuItem});
             this.localizaçãoToolStripMenuItem.Name = "localizaçãoToolStripMenuItem";
-            this.localizaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.localizaçãoToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.localizaçãoToolStripMenuItem.Text = "Localização";
             // 
             // paísToolStripMenuItem
@@ -124,7 +124,7 @@
             this.funcionárioToolStripMenuItem,
             this.fornecedorToolStripMenuItem});
             this.pessoasToolStripMenuItem.Name = "pessoasToolStripMenuItem";
-            this.pessoasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pessoasToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.pessoasToolStripMenuItem.Text = "Pessoa";
             // 
             // clienteToolStripMenuItem
@@ -163,13 +163,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.menuStrip2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(1360, 768);
-            this.MinimumSize = new System.Drawing.Size(1360, 768);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
+            this.MinimumSize = new System.Drawing.Size(1358, 718);
             this.Name = "FrmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menu Principal";

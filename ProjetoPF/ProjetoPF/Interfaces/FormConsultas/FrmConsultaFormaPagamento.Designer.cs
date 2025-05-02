@@ -33,13 +33,12 @@
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(845, 694);
+            this.btnAdicionar.Location = new System.Drawing.Point(845, 655);
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click_1);
             // 
             // listViewFormaPagamento
             // 
             this.listViewFormaPagamento.Location = new System.Drawing.Point(37, 89);
-            this.listViewFormaPagamento.Size = new System.Drawing.Size(1298, 591);
             // 
             // txtPesquisa
             // 
@@ -47,12 +46,12 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(969, 694);
+            this.btnEditar.Location = new System.Drawing.Point(969, 655);
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click_1);
             // 
             // btnExcluir
             // 
-            this.btnExcluir.Location = new System.Drawing.Point(1093, 694);
+            this.btnExcluir.Location = new System.Drawing.Point(1093, 655);
             this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
             // label2
@@ -69,7 +68,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
             this.Name = "FrmConsultaFormaPagamento";
             this.Text = "Consulta Formas de Pagamento";

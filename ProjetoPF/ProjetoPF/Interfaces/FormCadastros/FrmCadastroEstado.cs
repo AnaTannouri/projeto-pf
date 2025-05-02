@@ -3,6 +3,7 @@ using ProjetoPF.FormCadastros;
 using ProjetoPF.FormConsultas;
 using ProjetoPF.Interfaces.FormConsultas;
 using ProjetoPF.Modelos.Localizacao;
+using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Servicos;
 using ProjetoPF.Servicos.Localizacao;
 using System;
@@ -57,6 +58,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             estado.Nome = txtEstado.Text.Trim();
             estado.UF = txtUf.Text.Trim();
 
+            estado.Ativo = checkAtivo.Checked;
+
             if (!int.TryParse(txtCodPais.Text, out int idPais))
                 throw new Exception("Código do país inválido.");
 
@@ -85,6 +88,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodigo.Text = estadoSelecionado.Id.ToString();
             txtEstado.Text = estadoSelecionado.Nome;
             txtUf.Text = estadoSelecionado.UF;
+
+            checkAtivo.Checked = estadoSelecionado.Ativo;
+            checkAtivo.Enabled = isEditandoForm;
 
             if (estadoSelecionado.IdPais > 0)
             {
@@ -126,6 +132,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             estado = new Estado();
             isEditando = false;
             isExcluindo = false;
+
+            checkAtivo.Checked = true;
+            checkAtivo.Enabled = false;
         }
 
         public void BloquearCampos()
@@ -143,11 +152,17 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtUf.Enabled = true;
             btnSalvar.Enabled = true;
             txtCodigo.Enabled = false;
+            checkAtivo.Enabled = isEditando;
         }
 
         private void FrmCadastroEstado_Load_1(object sender, EventArgs e)
         {
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
+            if (!isEditando && !isExcluindo)
+            {
+                checkAtivo.Checked = true;
+                checkAtivo.Enabled = false;
+            }
         }
 
         private void btnSalvar_Click_1(object sender, EventArgs e)
@@ -158,7 +173,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 {
                     if (estado != null && estado.Id != 0)
                     {
-                        if (MessageBox.Show("Deseja realmente excluir este estado?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        if (MessageBox.Show("Deseja realmente remover este estado?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
                             estadoServices.Remover(estado.Id);
                             MessageBox.Show("Estado removido com sucesso!");
@@ -170,6 +185,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
 
                 if (!ValidarEntrada()) return;
+
+                Pais pais = paisServices.BuscarPorId(estado.IdPais);
+                if (pais != null && !pais.Ativo)
+                {
+                    MessageBox.Show("O país selecionado está inativo. Selecione um país ativo para continuar.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 AtualizarObjeto();
 
@@ -191,11 +213,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("REFERENCE") && ex.InnerException.Message.Contains("Cidades"))
                 {
-                    MessageBox.Show("Não é possível excluir o estado, pois ele está vinculado a uma ou mais cidades.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não é possível remover o estado, pois ele está vinculado a uma ou mais cidades.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (ex.Message.Contains("REFERENCE") && ex.Message.Contains("Cidades"))
                 {
-                    MessageBox.Show("Não é possível excluir o estado, pois ele está vinculado a uma ou mais cidades.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não é possível remover o estado, pois ele está vinculado a uma ou mais cidades.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -209,6 +231,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
             FrmConsultaPais frmConsultaPais = new FrmConsultaPais();
             frmConsultaPais.Owner = this;
             frmConsultaPais.ShowDialog();
+        }
+
+        private void FrmCadastroEstado_Load(object sender, EventArgs e)
+        {
+            labelCriacao.Text = estado.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = estado.DataAtualizacao.ToShortDateString();
         }
     }
 }

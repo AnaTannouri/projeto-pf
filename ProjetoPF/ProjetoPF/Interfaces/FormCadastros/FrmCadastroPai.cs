@@ -28,13 +28,13 @@ namespace ProjetoPF.FormCadastros
         {
         }
 
-        private void FrmCadastroPai_Load(object sender, EventArgs e)
-        {
-
-        }
         public virtual void CarregarFormasDePagamento()
         {
 
+        }
+
+        private void FrmCadastroPai_Load(object sender, EventArgs e)
+        {
         }
     }
 }

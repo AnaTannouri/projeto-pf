@@ -54,9 +54,14 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             cliente.NomeRazaoSocial,
                             cliente.Telefone,
                             cliente.DataCriacao.ToString("dd/MM/yyyy"),
-                            cliente.DataAtualizacao.ToString("dd/MM/yyyy")
+                            cliente.DataAtualizacao.ToString("dd/MM/yyyy"),
+                            cliente.Ativo ? "Sim" : "Não"
                         }
                     };
+
+                    if (!cliente.Ativo)
+                        item.ForeColor = System.Drawing.Color.Red;
+
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -74,6 +79,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Tipo Pessoa", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Nome/Razão Social", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
             }

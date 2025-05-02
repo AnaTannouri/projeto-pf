@@ -54,6 +54,10 @@
             // 
             this.btnVoltar.TabIndex = 0;
             // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
+            // 
             // txtPais
             // 
             this.txtPais.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
@@ -87,27 +91,27 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(185, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "País";
+            this.label2.Text = "País:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 92);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.Size = new System.Drawing.Size(33, 13);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Sigla";
+            this.label3.Text = "Sigla:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(155, 92);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(26, 13);
+            this.label4.Size = new System.Drawing.Size(29, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "DDI";
+            this.label4.Text = "DDI:";
             // 
             // label5
             // 
@@ -155,7 +159,7 @@
             // FrmCadastroPais
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -169,6 +173,13 @@
             this.Name = "FrmCadastroPais";
             this.Text = "Cadastro País";
             this.Load += new System.EventHandler(this.FrmCadastroPais_Load);
+            this.Controls.SetChildIndex(this.labelDataCriacao, 0);
+            this.Controls.SetChildIndex(this.labelCriacao, 0);
+            this.Controls.SetChildIndex(this.lblAtualizacao, 0);
+            this.Controls.SetChildIndex(this.checkAtivo, 0);
+            this.Controls.SetChildIndex(this.lblDataAtual, 0);
+            this.Controls.SetChildIndex(this.DataAtaul, 0);
+            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

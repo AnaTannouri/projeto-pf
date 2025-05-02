@@ -53,10 +53,14 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             funcionario.Matricula,
                             funcionario.NomeRazaoSocial,
                             funcionario.Telefone,
+                            funcionario.Ativo ? "Sim" : "Não",
                             funcionario.DataCriacao.ToString("dd/MM/yyyy"),
                             funcionario.DataAtualizacao.ToString("dd/MM/yyyy")
                         }
                     };
+                    if (!funcionario.Ativo)
+                        item.ForeColor = Color.Red;
+
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -74,6 +78,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Matrícula", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Funcionario", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
             }

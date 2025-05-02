@@ -57,6 +57,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.txtForma = new System.Windows.Forms.TextBox();
+            this.maskedTxtDesconto = new System.Windows.Forms.MaskedTextBox();
+            this.lblDesconto = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSalvar
@@ -72,6 +74,10 @@
             // btnVoltar
             // 
             this.btnVoltar.TabIndex = 0;
+            // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
             // 
             // label2
             // 
@@ -97,18 +103,18 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(183, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(124, 13);
+            this.label3.Size = new System.Drawing.Size(127, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Condição de Pagamento";
+            this.label3.Text = "Condição de Pagamento:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(13, 84);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 13);
+            this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Código Forma";
+            this.label4.Text = "Código Forma:";
             // 
             // txtCod
             // 
@@ -124,27 +130,27 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(129, 87);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 13);
+            this.label5.Size = new System.Drawing.Size(116, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Formas de Pagamento";
+            this.label5.Text = "Formas de Pagamento:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(465, 38);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(85, 13);
+            this.label6.Size = new System.Drawing.Size(88, 13);
             this.label6.TabIndex = 16;
-            this.label6.Text = "Taxa de Juros %";
+            this.label6.Text = "Taxa de Juros %:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(619, 38);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 13);
+            this.label7.Size = new System.Drawing.Size(47, 13);
             this.label7.TabIndex = 17;
-            this.label7.Text = "Multa %";
+            this.label7.Text = "Multa %:";
             // 
             // txtParcela
             // 
@@ -169,43 +175,43 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(11, 136);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(43, 13);
+            this.label8.Size = new System.Drawing.Size(46, 13);
             this.label8.TabIndex = 22;
-            this.label8.Text = "Parcela";
+            this.label8.Text = "Parcela:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(127, 136);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(34, 13);
+            this.label9.Size = new System.Drawing.Size(37, 13);
             this.label9.TabIndex = 23;
-            this.label9.Text = "Prazo";
+            this.label9.Text = "Prazo:";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(296, 136);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(70, 13);
+            this.label10.Size = new System.Drawing.Size(73, 13);
             this.label10.TabIndex = 24;
-            this.label10.Text = "Porcentagem";
+            this.label10.Text = "Porcentagem:";
             // 
             // Restante
             // 
             this.Restante.AutoSize = true;
             this.Restante.Location = new System.Drawing.Point(508, 138);
             this.Restante.Name = "Restante";
-            this.Restante.Size = new System.Drawing.Size(61, 13);
+            this.Restante.Size = new System.Drawing.Size(64, 13);
             this.Restante.TabIndex = 25;
-            this.Restante.Text = "Restante %";
+            this.Restante.Text = "Restante %:";
             // 
             // listView1
             // 
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(15, 197);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1317, 442);
+            this.listView1.Size = new System.Drawing.Size(1317, 411);
             this.listView1.TabIndex = 28;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -347,11 +353,30 @@
             this.txtForma.Size = new System.Drawing.Size(269, 20);
             this.txtForma.TabIndex = 42;
             // 
+            // maskedTxtDesconto
+            // 
+            this.maskedTxtDesconto.Location = new System.Drawing.Point(778, 54);
+            this.maskedTxtDesconto.Name = "maskedTxtDesconto";
+            this.maskedTxtDesconto.Size = new System.Drawing.Size(139, 20);
+            this.maskedTxtDesconto.TabIndex = 43;
+            this.maskedTxtDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblDesconto
+            // 
+            this.lblDesconto.AutoSize = true;
+            this.lblDesconto.Location = new System.Drawing.Point(775, 40);
+            this.lblDesconto.Name = "lblDesconto";
+            this.lblDesconto.Size = new System.Drawing.Size(67, 13);
+            this.lblDesconto.TabIndex = 44;
+            this.lblDesconto.Text = "Desconto %:";
+            // 
             // FrmCadastroCondPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.lblDesconto);
+            this.Controls.Add(this.maskedTxtDesconto);
             this.Controls.Add(this.txtForma);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
@@ -384,6 +409,9 @@
             this.Name = "FrmCadastroCondPagamento";
             this.Text = "Cadastro Condição de Pagamento";
             this.Load += new System.EventHandler(this.FrmCadastroCondPagamento_Load);
+            this.Controls.SetChildIndex(this.labelDataCriacao, 0);
+            this.Controls.SetChildIndex(this.labelCriacao, 0);
+            this.Controls.SetChildIndex(this.lblAtualizacao, 0);
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
@@ -420,6 +448,8 @@
             this.Controls.SetChildIndex(this.label16, 0);
             this.Controls.SetChildIndex(this.label17, 0);
             this.Controls.SetChildIndex(this.txtForma, 0);
+            this.Controls.SetChildIndex(this.maskedTxtDesconto, 0);
+            this.Controls.SetChildIndex(this.lblDesconto, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -456,5 +486,7 @@
         private System.Windows.Forms.Label label17;
         public System.Windows.Forms.TextBox txtForma;
         public System.Windows.Forms.TextBox txtCod;
+        private System.Windows.Forms.Label lblDesconto;
+        private System.Windows.Forms.MaskedTextBox maskedTxtDesconto;
     }
 }

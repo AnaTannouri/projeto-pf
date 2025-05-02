@@ -74,6 +74,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (estadoSelecionado == null)
                 throw new Exception("Estado selecionado não foi encontrado.");
 
+            if (!estadoSelecionado.Ativo)
+                throw new Exception("O estado selecionado está inativo. Selecione um estado ativo.");
+
             cidade.IdEstado = idEstado;
 
             if (isEditando || isExcluindo)
@@ -84,6 +87,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             cidade.Id = isEditando || isExcluindo ? int.Parse(txtCodigo.Text) : 0;
             cidade.DataCriacao = cidade.DataCriacao == DateTime.MinValue ? DateTime.Now : cidade.DataCriacao;
             cidade.DataAtualizacao = DateTime.Now;
+            cidade.Ativo = checkAtivo.Checked;
         }
 
         public void CarregarDados(Cidade cidadeSelecionada, bool isEditandoForm, bool isExcluindoForm)
@@ -122,6 +126,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 BloquearCampos();
             else
                 DesbloquearCampos();
+
+            checkAtivo.Checked = cidadeSelecionada.Ativo;
+            checkAtivo.Enabled = isEditandoForm;
         }
 
         public void LimparCampos()
@@ -134,6 +141,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             cidade = new Cidade();
             isEditando = false;
             isExcluindo = false;
+
+            checkAtivo.Checked = true;
+            checkAtivo.Enabled = false;
         }
 
         public void BloquearCampos()
@@ -164,6 +174,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FrmCadastroCidade_Load_1(object sender, EventArgs e)
         {
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
+            labelCriacao.Text = cidade.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = cidade.DataAtualizacao.ToShortDateString();
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -174,7 +186,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 {
                     if (cidade != null && cidade.Id != 0)
                     {
-                        if (MessageBox.Show("Deseja realmente excluir esta cidade?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        if (MessageBox.Show("Deseja realmente remover esta cidade?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
                             cidadeServices.Remover(cidade.Id);
                             MessageBox.Show("Cidade removida com sucesso!");

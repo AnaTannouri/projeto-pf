@@ -7,6 +7,7 @@ namespace ProjetoPF.Modelos.Pagamento
     {
         public string Descricao { get; set; }
         public decimal TaxaJuros { get; set; }
+        public decimal Desconto { get; set; }
         public decimal Multa { get; set; }
     }
 }

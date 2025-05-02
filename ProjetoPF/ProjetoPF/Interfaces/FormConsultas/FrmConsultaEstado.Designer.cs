@@ -60,8 +60,9 @@
             // FrmConsultaEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaEstado";
             this.Text = "Consulta Estados";
             this.Load += new System.EventHandler(this.FrmConsultaEstado_Load_1);

@@ -4,6 +4,7 @@ using ProjetoPF.Interfaces.FormCadastros;
 using ProjetoPF.Servicos;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -44,6 +45,7 @@ namespace ProjetoPF.FormConsultas
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Forma de Pagamento", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left); 
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
             }
@@ -75,9 +77,15 @@ namespace ProjetoPF.FormConsultas
                         Tag = formaPagamento  
                     };
                     item.SubItems.Add(formaPagamento.Descricao);
+                    item.SubItems.Add(formaPagamento.Ativo ? "Sim" : "Não");
                     item.SubItems.Add(formaPagamento.DataCriacao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(formaPagamento.DataAtualizacao.ToString("dd/MM/yyyy"));
                     listViewFormaPagamento.Items.Add(item);
+                    
+                    if (!formaPagamento.Ativo)
+                    {
+                        item.ForeColor = Color.Red;
+                    }
                 }
             }
             else if (!string.IsNullOrEmpty(pesquisa))
@@ -184,19 +192,23 @@ namespace ProjetoPF.FormConsultas
         {
             if (listViewFormaPagamento.SelectedItems.Count > 0)
             {
-               
                 var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
-
-
                 FormaPagamento formaSelecionada = (FormaPagamento)itemSelecionado.Tag;
 
+                if (!formaSelecionada.Ativo)
+                {
+                    MessageBox.Show("Esta forma de pagamento está inativa e não pode ser selecionada.",
+                                    "Forma inativa",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    return;
+                }
 
                 if (this.Owner is FrmCadastroCondPagamento frmCadastroCondPagamento)
                 {
-
                     frmCadastroCondPagamento.txtForma.Text = formaSelecionada.Descricao;
                     frmCadastroCondPagamento.txtCod.Text = formaSelecionada.Id.ToString();
-                    this.Close(); 
+                    this.Close();
                 }
             }
         }

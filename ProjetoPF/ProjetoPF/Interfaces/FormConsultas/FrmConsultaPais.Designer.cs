@@ -35,9 +35,6 @@
             // 
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click_2);
             // 
-            // listViewFormaPagamento
-            // 
-            // 
             // btnEditar
             // 
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click_2);
@@ -59,8 +56,9 @@
             // FrmConsultaPais
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaPais";
             this.Text = "Consulta Países";
             this.Load += new System.EventHandler(this.FrmConsultaPais_Load);

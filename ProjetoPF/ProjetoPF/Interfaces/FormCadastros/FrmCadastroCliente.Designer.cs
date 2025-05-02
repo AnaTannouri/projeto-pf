@@ -80,6 +80,14 @@
             "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "Física",
             "Jurídica",
             "Física",
@@ -138,6 +146,7 @@
             "Jurídica"});
             this.comboPessoa.Location = new System.Drawing.Point(176, 52);
             this.comboPessoa.TabIndex = 1;
+            this.comboPessoa.SelectedIndexChanged += new System.EventHandler(this.comboPessoa_SelectedIndexChanged);
             // 
             // comboClassificacao
             // 
@@ -212,13 +221,8 @@
             // label3
             // 
             this.label3.Location = new System.Drawing.Point(8, 309);
-            this.label3.Size = new System.Drawing.Size(27, 13);
-            this.label3.Text = "CPF";
-            // 
-            // label4
-            // 
-            this.label4.Size = new System.Drawing.Size(103, 13);
-            this.label4.Text = "Nome/Razão Social";
+            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.Text = "CPF:";
             // 
             // label6
             // 
@@ -246,6 +250,10 @@
             // 
             this.btnVoltar.TabIndex = 0;
             // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
+            // 
             // txtCodigoCondicao
             // 
             this.txtCodigoCondicao.Enabled = false;
@@ -270,18 +278,18 @@
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(9, 358);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(88, 13);
+            this.label22.Size = new System.Drawing.Size(91, 13);
             this.label22.TabIndex = 47;
-            this.label22.Text = "Código Condição";
+            this.label22.Text = "Código Condição:";
             // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Location = new System.Drawing.Point(171, 357);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(109, 13);
+            this.label23.Size = new System.Drawing.Size(112, 13);
             this.label23.TabIndex = 48;
-            this.label23.Text = "Condição Pagamento";
+            this.label23.Text = "Condição Pagamento:";
             // 
             // label24
             // 
@@ -309,7 +317,7 @@
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label26.ForeColor = System.Drawing.Color.Red;
-            this.label26.Location = new System.Drawing.Point(50, 76);
+            this.label26.Location = new System.Drawing.Point(113, 76);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(15, 20);
             this.label26.TabIndex = 51;
@@ -408,9 +416,9 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(440, 196);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(40, 13);
+            this.label14.Size = new System.Drawing.Size(43, 13);
             this.label14.TabIndex = 63;
-            this.label14.Text = "Cidade";
+            this.label14.Text = "Cidade:";
             // 
             // txtCodigoCidade
             // 
@@ -426,9 +434,9 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(293, 195);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(76, 13);
+            this.label15.Size = new System.Drawing.Size(79, 13);
             this.label15.TabIndex = 65;
-            this.label15.Text = "Código Cidade";
+            this.label15.Text = "Código Cidade:";
             // 
             // btnCadastrarCidade
             // 
@@ -471,14 +479,14 @@
             this.label21.AutoSize = true;
             this.label21.Location = new System.Drawing.Point(620, 196);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(21, 13);
+            this.label21.Size = new System.Drawing.Size(24, 13);
             this.label21.TabIndex = 67;
-            this.label21.Text = "UF";
+            this.label21.Text = "UF:";
             // 
             // FrmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.txtUF);
             this.Controls.Add(this.txtCondicao);
@@ -505,6 +513,13 @@
             this.Name = "FrmCadastroCliente";
             this.Text = "Cadastro Cliente";
             this.Load += new System.EventHandler(this.FrmCadastroCliente_Load_1);
+            this.Controls.SetChildIndex(this.labelDataCriacao, 0);
+            this.Controls.SetChildIndex(this.labelCriacao, 0);
+            this.Controls.SetChildIndex(this.lblAtualizacao, 0);
+            this.Controls.SetChildIndex(this.checkAtivo, 0);
+            this.Controls.SetChildIndex(this.lblDataAtual, 0);
+            this.Controls.SetChildIndex(this.DataAtaul, 0);
+            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtComplemento, 0);
             this.Controls.SetChildIndex(this.txtCodigoCondicao, 0);

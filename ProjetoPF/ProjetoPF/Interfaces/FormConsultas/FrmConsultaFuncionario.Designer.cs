@@ -56,8 +56,9 @@
             // FrmConsultaFuncionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaFuncionario";
             this.Load += new System.EventHandler(this.FrmConsultaFuncionario_Load);
             this.Controls.SetChildIndex(this.txtPesquisa, 0);

@@ -72,9 +72,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaCondPagamento";
             this.Text = "Consulta Condição de Pagamento";
             this.Load += new System.EventHandler(this.FrmConsultaCondPagamento_Load_1);

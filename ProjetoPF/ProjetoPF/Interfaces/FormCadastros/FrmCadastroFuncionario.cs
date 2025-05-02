@@ -23,16 +23,16 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private bool isEditando = false;
         private bool isExcluindo = false;
-      
+
         public FrmCadastroFuncionario()
         {
             InitializeComponent();
-            label4.Text = "Funcionário";
-            label5.Text = "Apelido";
-            label16.Text = "Data de Nascimento";
-            label3.Text = "CPF";
-            label6.Text = "RG";
-            lblClassificacao.Text = "Gênero";
+            label4.Text = "Funcionário:";
+            label5.Text = "Apelido:";
+            label16.Text = "Data de Nascimento:";
+            label3.Text = "CPF:";
+            label6.Text = "RG:";
+            lblClassificacao.Text = "Gênero:";
 
             comboPessoa.Visible = false;
             label2.Visible = false;
@@ -66,6 +66,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (string.IsNullOrWhiteSpace(txtBairro.Text))
             {
                 MessageBox.Show("Informe o bairro do funcionário.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(txtCep.Text))
+            {
+                MessageBox.Show("Informe o cep do funcionário.");
                 return false;
             }
             if (string.IsNullOrWhiteSpace(txtCidadeFunc.Text))
@@ -195,6 +200,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             comboClassificacao.SelectedIndex = -1;
             comboTurno.SelectedIndex = -1;
 
+            checkAtivo.Checked = true;
+            checkAtivo.Enabled = false;
+
             isEditando = false;
             isExcluindo = false;
         }
@@ -223,6 +231,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtSalario.Text = funcionario.Salario.ToString("F2");
             txtCargaHoraria.Text = funcionario.CargaHoraria;
             txtComplemento.Text = funcionario.Complemento;
+
+            checkAtivo.Checked = funcionarioSelecionado.Ativo;
+            checkAtivo.Enabled = isEditandoForm;
 
             if (funcionario.DataNascimentoCriacao.HasValue)
             {
@@ -383,10 +394,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
             funcionario.DataAdmissao = Dataadm.Value;
 
             var cidadeSelecionada = cidadeServices.BuscarTodos()
-                .FirstOrDefault(c => c.Nome.Equals(txtCidadeFunc.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+    .FirstOrDefault(c => c.Nome.Equals(txtCidadeFunc.Text.Trim(), StringComparison.OrdinalIgnoreCase));
 
             if (cidadeSelecionada == null)
                 throw new Exception("Cidade selecionada não foi encontrada.");
+
+            if (!cidadeSelecionada.Ativo)
+                throw new Exception("A cidade selecionada está inativa. Selecione uma cidade ativa.");
 
             funcionario.IdCidade = cidadeSelecionada.Id;
             funcionario.Cargo = txtCargo.Text.Trim();
@@ -398,6 +412,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             funcionario.Id = (isEditando || isExcluindo) ? int.Parse(txtCodigo.Text) : 0;
             funcionario.DataCriacao = funcionario.DataCriacao == DateTime.MinValue ? DateTime.Now : funcionario.DataCriacao;
             funcionario.DataAtualizacao = DateTime.Now;
+            funcionario.Ativo = checkAtivo.Checked;
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -408,7 +423,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 {
                     if (funcionario != null && funcionario.Id != 0)
                     {
-                        if (MessageBox.Show("Deseja realmente excluir este funcionário?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        if (MessageBox.Show("Deseja realmente remover este funcionário?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
                             funcionarioServicos.Remover(funcionario.Id);
                             MessageBox.Show("Funcionário removido com sucesso!");
@@ -444,6 +459,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void FrmCadastroFuncionario_Load(object sender, EventArgs e)
         {
+            label4.Text = "Funcionário";
             if (!isEditando && !isExcluindo)
             {
                 CarregarCombosFixos(); 
@@ -454,6 +470,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             Dataadm.ValueChanged += Dataadm_ValueChanged;
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
+            labelCriacao.Text = funcionario.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = funcionario.DataAtualizacao.ToShortDateString();
         }
 
         private void btnCadastrarCidade_Click(object sender, EventArgs e)
@@ -465,10 +483,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void CarregarCombosFixos()
         {
             comboClassificacao.Items.Clear();
-            comboClassificacao.Items.AddRange(new string[] { "Masculino", "Feminino", "Outro" });
+            comboClassificacao.Items.AddRange(new string[] { "MASCULINO", "FEMININO", "OUTROS" });
 
             comboTurno.Items.Clear();
-            comboTurno.Items.AddRange(new string[] { "Manhã", "Tarde", "Noite", "Integral", "Plantão" });
+            comboTurno.Items.AddRange(new string[] { "MANHÃ", "TARDE", "NOITE", "INTEGRAL", "PLANTÃO" });
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

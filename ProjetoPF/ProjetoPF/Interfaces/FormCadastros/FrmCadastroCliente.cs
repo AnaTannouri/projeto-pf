@@ -182,6 +182,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodigoCondicao.Clear();
             txtComplemento.Clear();
 
+            checkAtivo.Checked = true;
+            checkAtivo.Enabled = false;
+
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = " ";
 
@@ -211,6 +214,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtBairro.Text = cliente.Bairro;
             txtCep.Text = cliente.Cep;
             txtComplemento.Text = cliente.Complemento;
+            checkAtivo.Checked = clienteSelecionado.Ativo;
+            checkAtivo.Enabled = isEditandoForm;
 
             if (cliente.TipoPessoa != null)
             {
@@ -317,6 +322,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
+            labelCriacao.Text = cliente.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = cliente.DataAtualizacao.ToShortDateString();
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -332,7 +339,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 {
                     if (cliente != null && cliente.Id != 0)
                     {
-                        if (MessageBox.Show("Deseja realmente excluir este cliente?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        if (MessageBox.Show("Deseja realmente remover este cliente?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
                             clienteServicos.Remover(cliente.Id);
                             MessageBox.Show("Cliente removido com sucesso!");
@@ -369,7 +376,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("REFERENCE"))
                 {
-                    MessageBox.Show("Não é possível excluir o cliente, pois ele está vinculado a outro(s) registro(s).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não é possível remover o cliente, pois ele está vinculado a outro(s) registro(s).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -392,6 +399,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             cliente.Complemento = txtComplemento.Text.Trim();
             cliente.CpfCnpj = txtCpf_Cnpj.Text.Trim();
             cliente.Classificacao = comboClassificacao.SelectedItem?.ToString();
+            cliente.Ativo = checkAtivo.Checked;
             cliente.DataNascimentoCriacao = dateTimePicker1.CustomFormat == " " ? (DateTime?)null : dateTimePicker1.Value;
 
 
@@ -423,6 +431,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
+        }
+
+        private void comboPessoa_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboPessoa.SelectedItem?.ToString() == "FÍSICA")
+            {
+                label4.Text = "Cliente:";
+            }
+
+            if (comboPessoa.SelectedItem?.ToString() == "JURÍDICA")
+            {
+                label4.Text = "Razão Social Cliente:";
+            }
         }
     }
 }

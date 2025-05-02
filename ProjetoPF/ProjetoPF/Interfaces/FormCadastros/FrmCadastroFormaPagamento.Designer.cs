@@ -48,6 +48,10 @@
             this.btnVoltar.TabIndex = 0;
             this.btnVoltar.Click += new System.EventHandler(this.btnVoltar_Click);
             // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
+            // 
             // txtDescricao
             // 
             this.txtDescricao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
@@ -63,9 +67,9 @@
             this.lblFormaPagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFormaPagamento.Location = new System.Drawing.Point(186, 46);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
-            this.lblFormaPagamento.Size = new System.Drawing.Size(111, 13);
+            this.lblFormaPagamento.Size = new System.Drawing.Size(114, 13);
             this.lblFormaPagamento.TabIndex = 5;
-            this.lblFormaPagamento.Text = "Forma de Pagamento ";
+            this.lblFormaPagamento.Text = "Forma de Pagamento :";
             // 
             // label2
             // 
@@ -82,7 +86,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(333, 41);
+            this.label3.Location = new System.Drawing.Point(306, 41);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(15, 20);
             this.label3.TabIndex = 7;
@@ -92,7 +96,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblFormaPagamento);
@@ -101,6 +105,13 @@
             this.Text = "  Cadastro Formas de Pagamento";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FrmCadastroFormaPagamento_Load);
+            this.Controls.SetChildIndex(this.labelDataCriacao, 0);
+            this.Controls.SetChildIndex(this.labelCriacao, 0);
+            this.Controls.SetChildIndex(this.lblAtualizacao, 0);
+            this.Controls.SetChildIndex(this.checkAtivo, 0);
+            this.Controls.SetChildIndex(this.lblDataAtual, 0);
+            this.Controls.SetChildIndex(this.DataAtaul, 0);
+            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.txtDescricao, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);

@@ -1,6 +1,7 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormConsultas;
 using ProjetoPF.Interfaces.FormCadastros;
+using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Servicos;
 using System;
 using System.Data.SqlClient;
@@ -44,8 +45,8 @@ namespace ProjetoPF.FormCadastros
                 else if (isExcluindo)
                 {
                     DialogResult result = MessageBox.Show(
-                                          "Você tem certeza que deseja excluir este item?",
-                                          "Confirmar Exclusão",
+                                          "Você tem certeza que deseja remover este item?",
+                                          "Confirmar remoção",
                                           MessageBoxButtons.YesNo,
                                           MessageBoxIcon.Warning);
 
@@ -105,6 +106,7 @@ namespace ProjetoPF.FormCadastros
         private void AtualizarObjeto()
         {
             formaPagamento.Descricao = txtDescricao.Text.Trim();
+            formaPagamento.Ativo = checkAtivo.Checked;
 
             if (isEditando || isExcluindo)
                 formaPagamento.Id = int.Parse(txtCodigo.Text);
@@ -119,6 +121,8 @@ namespace ProjetoPF.FormCadastros
         {
             txtCodigo.Text = forma.Id.ToString();
             txtDescricao.Text = forma.Descricao;
+            checkAtivo.Checked = forma.Ativo;
+
             formaPagamento = forma;
             isEditando = isEditandoForm;
             isExcluindo = isExcluindoForm;
@@ -130,6 +134,8 @@ namespace ProjetoPF.FormCadastros
             txtDescricao.Clear();
             formaPagamento = new FormaPagamento();
             isEditando = false;
+
+            checkAtivo.Checked = true;
         }
         public void BloquearCampos()
         {
@@ -146,6 +152,7 @@ namespace ProjetoPF.FormCadastros
 
         private void FrmCadastroFormaPagamento_Load(object sender, EventArgs e)
         {
+            checkAtivo.Enabled = isEditando;
             if (isExcluindo)
             {
                 btnSalvar.Text = "Remover"; 
@@ -154,6 +161,8 @@ namespace ProjetoPF.FormCadastros
             {
                 btnSalvar.Text = "Salvar";
             }
+            labelCriacao.Text = formaPagamento.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = formaPagamento.DataAtualizacao.ToShortDateString();
         }
 
         private void btnVoltar_Click(object sender, EventArgs e)

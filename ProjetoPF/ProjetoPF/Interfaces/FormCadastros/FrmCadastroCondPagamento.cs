@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Globalization;
 using System.Windows.Forms;
+using ProjetoPF.Modelos.Pessoa;
 
 namespace ProjetoPF.Interfaces.FormCadastros
 {
@@ -53,7 +54,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
             condicaoPagamento.Descricao = txtCondPagamento.Text.Trim();
             condicaoPagamento.TaxaJuros = decimal.Parse(txtJuros.Text);
             condicaoPagamento.Multa = decimal.Parse(txtMulta.Text);
-            condicaoPagamento.DataCriacao = DateTime.Now;
+            condicaoPagamento.Ativo = checkAtivo.Checked;
+            if (string.IsNullOrEmpty(maskedTxtDesconto.Text.Trim()))
+            {
+                condicaoPagamento.Desconto = 0;  
+            }
+            else
+            {
+                condicaoPagamento.Desconto = decimal.Parse(maskedTxtDesconto.Text);
+            }
+
+            if (condicaoPagamento.DataCriacao == DateTime.MinValue)
+                condicaoPagamento.DataCriacao = DateTime.Now;
+
             condicaoPagamento.DataAtualizacao = DateTime.Now;
         }
 
@@ -63,6 +76,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCondPagamento.Clear();
             txtJuros.Clear();
             txtMulta.Clear();
+            maskedTxtDesconto.Clear();
             txtPrazo.Clear();
             txtParcela.Clear();
             txtForma.Clear();   
@@ -76,6 +90,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             condicaoPagamento = new CondicaoPagamento();
             isEditando = false;
             isExcluindo = false;
+            checkAtivo.Checked = true;      
+            checkAtivo.Enabled = false;
         }
 
         private void btnCadastrar_Click(object sender, EventArgs e)
@@ -86,6 +102,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
         }
         private void FrmCadastroCondPagamento_Load(object sender, EventArgs e)
         {
+            if (!isEditando && !isExcluindo)
+            {
+                checkAtivo.Checked = true;
+                checkAtivo.Enabled = false;
+            }
             CarregarFormasDePagamento();
             listView1.View = View.Details;
             listView1.Columns.Add("Número Parcela", 100, HorizontalAlignment.Right);
@@ -93,12 +114,15 @@ namespace ProjetoPF.Interfaces.FormCadastros
             listView1.Columns.Add("Parcela %", 80, HorizontalAlignment.Right);
             listView1.Columns.Add("Taxa de Juros %", 100, HorizontalAlignment.Right);
             listView1.Columns.Add("Taxa de Multa %", 100, HorizontalAlignment.Right);
+            listView1.Columns.Add("Taxa de Desconto %", 125, HorizontalAlignment.Right);
             listView1.Columns.Add("Forma de Pagamento", 150);
             txtParcela.Text = proximoNumeroParcela.ToString();
 
             listView1.FullRowSelect = true;
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
+            labelCriacao.Text = condicaoPagamento.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = condicaoPagamento.DataAtualizacao.ToShortDateString();
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -151,6 +175,18 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     );
                     return;
                 }
+                foreach (var parcela in parcelas)
+                {
+                    var forma = formaPagamentoServicos.BuscarPorId(parcela.IdFormaPagamento);
+                    if (forma == null || !forma.Ativo)
+                    {
+                        MessageBox.Show($"A parcela {parcela.NumParcela} está associada a uma forma de pagamento inativa. Remova ou substitua para continuar.",
+                                        "Forma de pagamento inativa",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
 
                 AtualizarObjeto();
 
@@ -195,6 +231,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCondPagamento.Enabled = false;
             txtJuros.Enabled = false;
             txtMulta.Enabled = false;
+            maskedTxtDesconto.Enabled = false;
             txtPrazo.Enabled = false;
             txtPorcentagem.Enabled = false;
             txtForma.Enabled = false;
@@ -208,11 +245,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCondPagamento.Enabled = true;
             txtJuros.Enabled = true;
             txtMulta.Enabled = true;
+            maskedTxtDesconto.Enabled = true;
             txtPrazo.Enabled = true;
             txtPorcentagem.Enabled = true;
             btnGerarParcela.Enabled = true;
             btnSalvar.Enabled = true;
             txtCodigo.Enabled = false;
+            checkAtivo.Enabled = isEditando;
         }
         public void CarregarDados(CondicaoPagamento condicao, bool isEditandoForm, bool isExcluindoForm)
         {
@@ -220,6 +259,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCondPagamento.Text = condicao.Descricao;
             txtJuros.Text = condicao.TaxaJuros.ToString("F2");
             txtMulta.Text = condicao.Multa.ToString("F2");
+            checkAtivo.Checked = condicao.Ativo;      
+            checkAtivo.Enabled = isEditandoForm;
+            maskedTxtDesconto.Text = condicao.Desconto.ToString("F2");
 
             condicaoPagamento = condicao;
             isEditando = isEditandoForm;
@@ -240,6 +282,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 item.SubItems.Add(parcela.Porcentagem.ToString("F2") + "%");
                 item.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
                 item.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
+                item.SubItems.Add(condicaoPagamento.Desconto.ToString("F2") + "%");
                 item.SubItems.Add(descForma);
                 listView1.Items.Add(item);
 
@@ -294,6 +337,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     lvi.SubItems.Add(parcela.Porcentagem.ToString("F2") + "%");
                     lvi.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
                     lvi.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
+                    lvi.SubItems.Add(condicaoPagamento.Desconto.ToString("F2") + "%");
                     lvi.SubItems.Add(descricaoForma);
                     listView1.Items.Add(lvi);
 
@@ -322,13 +366,20 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
-                var formasPagamento = formaPagamentoServicos.BuscarTodos();
+                var formasPagamento = formaPagamentoServicos.BuscarTodos()
+                        .Where(f => f.Ativo) 
+                        .ToList();
                 FormaPagamento pagamentoSelecionado = formasPagamento
                     .FirstOrDefault(f => f.Descricao.Equals(txtForma.Text.Trim(), StringComparison.OrdinalIgnoreCase));
 
                 if (pagamentoSelecionado == null)
                 {
                     MessageBox.Show("Forma de pagamento não encontrada.");
+                    return;
+                }
+                else if (!pagamentoSelecionado.Ativo)
+                {
+                    MessageBox.Show("A forma de pagamento selecionada está inativa. Selecione uma forma ativa.", "Forma inativa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -370,6 +421,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 lvi.SubItems.Add(novaParcela.Porcentagem.ToString("F2") + "%");
                 lvi.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
                 lvi.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
+                lvi.SubItems.Add(condicaoPagamento.Desconto.ToString("F2") + "%");
                 lvi.SubItems.Add(formaPagamento);
                 listView1.Items.Add(lvi);
 

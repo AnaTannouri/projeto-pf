@@ -44,17 +44,19 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 {
                     ListViewItem item = new ListViewItem(pais.Id.ToString())
                     {
-                        SubItems =
-                {
-                    pais.Nome,
-                    pais.Sigla,
-                    pais.DDI,
-                    pais.DataCriacao.ToString("dd/MM/yyyy"),
-                    pais.DataAtualizacao.ToString("dd/MM/yyyy")
-                    
-                }
+                        Tag = pais
                     };
-                    item.Tag = pais;
+
+                    item.SubItems.Add(pais.Nome);
+                    item.SubItems.Add(pais.Sigla);
+                    item.SubItems.Add(pais.DDI);
+                    item.SubItems.Add(pais.Ativo ? "Sim" : "Não"); 
+                    item.SubItems.Add(pais.DataCriacao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(pais.DataAtualizacao.ToString("dd/MM/yyyy"));
+
+                    if (!pais.Ativo)
+                        item.ForeColor = Color.Red;
+
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -151,7 +153,8 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("País", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Sigla", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("DDI", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("DDI", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left); 
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
             }
@@ -168,6 +171,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
             {
                 var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
                 var paisSelecionado = (Pais)itemSelecionado.Tag;
+
+                if (!paisSelecionado.Ativo)
+                {
+                    MessageBox.Show("Este país está inativo. Selecione um país ativo para continuar.", "País inativo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 frmCadastroEstado.txtPais.Text = paisSelecionado.Nome;
                 frmCadastroEstado.txtCodPais.Text = paisSelecionado.Id.ToString();

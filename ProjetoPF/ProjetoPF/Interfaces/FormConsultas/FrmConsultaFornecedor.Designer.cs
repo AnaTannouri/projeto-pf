@@ -56,8 +56,9 @@
             // FrmConsultaFornecedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
+            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaFornecedor";
             this.Text = "Consulta Fornecedores";
             this.Load += new System.EventHandler(this.FrmConsultaFornecedor_Load_1);

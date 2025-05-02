@@ -54,11 +54,20 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.txtUF = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comboPessoa
             // 
             this.comboPessoa.Items.AddRange(new object[] {
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
             "FÍSICA",
@@ -86,6 +95,7 @@
             "Física",
             "Jurídica"});
             this.comboPessoa.TabIndex = 1;
+            this.comboPessoa.SelectedIndexChanged += new System.EventHandler(this.comboPessoa_SelectedIndexChanged);
             // 
             // comboClassificacao
             // 
@@ -167,6 +177,10 @@
             // 
             this.label2.Location = new System.Drawing.Point(169, 36);
             // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(122, 647);
+            // 
             // btnSalvar
             // 
             this.btnSalvar.TabIndex = 18;
@@ -201,9 +215,9 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(298, 197);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(76, 13);
+            this.label15.Size = new System.Drawing.Size(79, 13);
             this.label15.TabIndex = 71;
-            this.label15.Text = "Código Cidade";
+            this.label15.Text = "Código Cidade:";
             // 
             // txtCodigoCidade
             // 
@@ -219,9 +233,9 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(436, 195);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(40, 13);
+            this.label14.Size = new System.Drawing.Size(43, 13);
             this.label14.TabIndex = 69;
-            this.label14.Text = "Cidade";
+            this.label14.Text = "Cidade:";
             // 
             // label36
             // 
@@ -248,9 +262,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(9, 434);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(120, 13);
+            this.label17.Size = new System.Drawing.Size(123, 13);
             this.label17.TabIndex = 74;
-            this.label17.Text = "Valor Minímo de Pedido";
+            this.label17.Text = "Valor Minímo de Pedido:";
             // 
             // label35
             // 
@@ -268,18 +282,18 @@
             this.label23.AutoSize = true;
             this.label23.Location = new System.Drawing.Point(169, 371);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(109, 13);
+            this.label23.Size = new System.Drawing.Size(112, 13);
             this.label23.TabIndex = 84;
-            this.label23.Text = "Condição Pagamento";
+            this.label23.Text = "Condição Pagamento:";
             // 
             // label22
             // 
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(13, 371);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(88, 13);
+            this.label22.Size = new System.Drawing.Size(91, 13);
             this.label22.TabIndex = 83;
-            this.label22.Text = "Código Condição";
+            this.label22.Text = "Código Condição:";
             // 
             // button2
             // 
@@ -316,7 +330,7 @@
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.ForeColor = System.Drawing.Color.Red;
-            this.label20.Location = new System.Drawing.Point(86, 79);
+            this.label20.Location = new System.Drawing.Point(150, 79);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(15, 20);
             this.label20.TabIndex = 88;
@@ -422,9 +436,9 @@
             this.label25.AutoSize = true;
             this.label25.Location = new System.Drawing.Point(606, 197);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(21, 13);
+            this.label25.Size = new System.Drawing.Size(24, 13);
             this.label25.TabIndex = 116;
-            this.label25.Text = "UF";
+            this.label25.Text = "UF:";
             // 
             // txtUF
             // 
@@ -434,10 +448,22 @@
             this.txtUF.Size = new System.Drawing.Size(78, 20);
             this.txtUF.TabIndex = 115;
             // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.ForeColor = System.Drawing.Color.Red;
+            this.label26.Location = new System.Drawing.Point(37, 190);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(15, 20);
+            this.label26.TabIndex = 117;
+            this.label26.Text = "*";
+            // 
             // FrmCadastroFornecedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(1344, 729);
+            this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.txtUF);
             this.Controls.Add(this.label21);
@@ -467,6 +493,13 @@
             this.Name = "FrmCadastroFornecedor";
             this.Text = "Cadastro Fornecedor";
             this.Load += new System.EventHandler(this.FrmCadastroFornecedor_Load);
+            this.Controls.SetChildIndex(this.labelDataCriacao, 0);
+            this.Controls.SetChildIndex(this.labelCriacao, 0);
+            this.Controls.SetChildIndex(this.lblAtualizacao, 0);
+            this.Controls.SetChildIndex(this.checkAtivo, 0);
+            this.Controls.SetChildIndex(this.lblDataAtual, 0);
+            this.Controls.SetChildIndex(this.DataAtaul, 0);
+            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.label4, 0);
@@ -517,6 +550,7 @@
             this.Controls.SetChildIndex(this.label21, 0);
             this.Controls.SetChildIndex(this.txtUF, 0);
             this.Controls.SetChildIndex(this.label25, 0);
+            this.Controls.SetChildIndex(this.label26, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -550,5 +584,6 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label25;
         public System.Windows.Forms.TextBox txtUF;
+        private System.Windows.Forms.Label label26;
     }
 }

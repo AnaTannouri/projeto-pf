@@ -52,10 +52,16 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             fornecedor.NomeRazaoSocial,
                             fornecedor.Telefone,
                             fornecedor.ValorMinimoPedido?.ToString("C2") ?? "R$ 0,00",
-                            fornecedor.DataCriacao.ToString("dd/MM/yyyy") ?? string.Empty,
-                            fornecedor.DataAtualizacao.ToString("dd/MM/yyyy") ?? string.Empty
+                            fornecedor.Ativo ? "Sim" : "Não",
+                            fornecedor.DataCriacao.ToString("dd/MM/yyyy"),
+                            fornecedor.DataAtualizacao.ToString("dd/MM/yyyy")
                         }
                     };
+
+                    if (!fornecedor.Ativo)
+                        item.ForeColor = System.Drawing.Color.Red;
+
+                    item.Tag = fornecedor;
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
@@ -141,6 +147,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Nome/Razão Social", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Valor Mínimo", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
             }

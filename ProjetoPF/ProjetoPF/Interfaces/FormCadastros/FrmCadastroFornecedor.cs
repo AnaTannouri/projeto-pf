@@ -69,6 +69,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 MessageBox.Show("Informe o bairro do fornecedor.");
                 return false;
             }
+            if (string.IsNullOrWhiteSpace(txtCep.Text))
+            {
+                MessageBox.Show("Informe o cep do fornecedor.");
+                return false;
+            }
             if (string.IsNullOrWhiteSpace(txtCidade.Text))
             {
                 MessageBox.Show("Informe a cidade do fornecedor.");
@@ -170,6 +175,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodigoCidade.Clear();
             txtCodigoCondicao.Clear();
             txtValorMin.Clear();
+            checkAtivo.Checked = true;
+            checkAtivo.Enabled = false;
 
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = " ";
@@ -202,6 +209,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             comboPessoa.SelectedItem = fornecedor.TipoPessoa;
             comboPessoa.Enabled = !isEditandoForm;
             comboClassificacao.SelectedItem = fornecedor.Classificacao;
+            checkAtivo.Checked = fornecedor.Ativo;
+            checkAtivo.Enabled = isEditandoForm;
+
 
             txtCodigoCidade.Text = fornecedor.IdCidade.ToString();
 
@@ -289,6 +299,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
+            labelCriacao.Text = fornecedor.DataCriacao.ToShortDateString();
+            lblAtualizacao.Text = fornecedor.DataAtualizacao.ToShortDateString();
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -298,7 +310,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 {
                     if (fornecedor != null && fornecedor.Id != 0)
                     {
-                        if (MessageBox.Show("Deseja realmente excluir este fornecedor?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        if (MessageBox.Show("Deseja realmente remover este fornecedor?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
                             fornecedorServicos.Remover(fornecedor.Id);
                             MessageBox.Show("Fornecedor removido com sucesso!");
@@ -334,7 +346,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("REFERENCE"))
                 {
-                    MessageBox.Show("Não é possível excluir o fornecedor, pois ele está vinculado a outro(s) registro(s).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não é possível remover o fornecedor, pois ele está vinculado a outro(s) registro(s).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -358,6 +370,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             fornecedor.DataNascimentoCriacao = dateTimePicker1.CustomFormat == " " ? (DateTime?)null : dateTimePicker1.Value;
             fornecedor.Complemento = txtComplemento.Text.Trim();
             fornecedor.Complemento = txtComplemento.Text.Trim();
+            fornecedor.Ativo = checkAtivo.Checked;
 
             if (!int.TryParse(txtCodigoCidade.Text, out int idCidade))
                 throw new Exception("Código da cidade inválido.");
@@ -397,6 +410,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
+        }
+
+        private void comboPessoa_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboPessoa.SelectedItem?.ToString() == "FÍSICA")
+            {
+                label4.Text = "Fornecedor:";
+            }
+
+            if (comboPessoa.SelectedItem?.ToString() == "JURÍDICA")
+            {
+                label4.Text = "Razão Social Fornecedor:";
+            }
         }
     }
 }

@@ -43,18 +43,19 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 foreach (var cidade in cidades)
                 {
                     var nomeEstado = estados.FirstOrDefault(e => e.Id == cidade.IdEstado)?.Nome ?? "N/A";
+                    ListViewItem item = new ListViewItem(cidade.Id.ToString());
+                    item.SubItems.Add(cidade.Nome);
+                    item.SubItems.Add(cidade.DDD);
+                    item.SubItems.Add(nomeEstado);
+                    item.SubItems.Add(cidade.DataCriacao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(cidade.DataAtualizacao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(cidade.Ativo ? "Sim" : "Não");
 
-                    ListViewItem item = new ListViewItem(cidade.Id.ToString())
+                    if (!cidade.Ativo)
                     {
-                        SubItems =
-                        {
-                            cidade.Nome,
-                            cidade.DDD,
-                            nomeEstado,
-                            cidade.DataCriacao.ToString("dd/MM/yyyy"),
-                            cidade.DataAtualizacao.ToString("dd/MM/yyyy")
-                        }
-                    };
+                        item.ForeColor = System.Drawing.Color.Red;
+                    }
+
                     item.Tag = cidade;
                     listViewFormaPagamento.Items.Add(item);
                 }
@@ -71,8 +72,9 @@ namespace ProjetoPF.Interfaces.FormConsultas
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Cidade", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("DDD", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("DDD", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Nome do Estado", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
             }
@@ -165,6 +167,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
                     var cidadeSelecionada = (Cidade)itemSelecionado.Tag;
 
+                    if (!cidadeSelecionada.Ativo)
+                    {
+                        MessageBox.Show("Esta cidade está inativa e não pode ser selecionada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     frmCadastroCliente.txtCidade.Text = cidadeSelecionada.Nome;
                     frmCadastroCliente.txtCodigoCidade.Text = cidadeSelecionada.Id.ToString();
 
@@ -183,6 +191,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
                     var cidadeSelecionada = (Cidade)itemSelecionado.Tag;
 
+                    if (!cidadeSelecionada.Ativo)
+                    {
+                        MessageBox.Show("Esta cidade está inativa e não pode ser selecionada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     frmCadastroFuncionario.txtCidadeFunc.Text = cidadeSelecionada.Nome;
                     frmCadastroFuncionario.txtCodigoCidadeFunc.Text = cidadeSelecionada.Id.ToString();
 
@@ -200,6 +214,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 {
                     var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
                     var cidadeSelecionada = (Cidade)itemSelecionado.Tag;
+
+                    if (!cidadeSelecionada.Ativo)
+                    {
+                        MessageBox.Show("Esta cidade está inativa e não pode ser selecionada.", "Cidade Inativa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
                     frmCadastroFornecedor.txtCidade.Text = cidadeSelecionada.Nome;
                     frmCadastroFornecedor.txtCodigoCidade.Text = cidadeSelecionada.Id.ToString();
