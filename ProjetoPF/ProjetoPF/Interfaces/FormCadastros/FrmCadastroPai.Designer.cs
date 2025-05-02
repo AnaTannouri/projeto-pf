@@ -51,7 +51,7 @@
             // 
             // btnVoltar
             // 
-            this.btnVoltar.Location = new System.Drawing.Point(1206, 694);
+            this.btnVoltar.Location = new System.Drawing.Point(1206, 659);
             this.btnVoltar.Name = "btnVoltar";
             this.btnVoltar.Size = new System.Drawing.Size(126, 23);
             this.btnVoltar.TabIndex = 1;
@@ -61,7 +61,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(1074, 694);
+            this.btnSalvar.Location = new System.Drawing.Point(1074, 659);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(126, 23);
             this.btnSalvar.TabIndex = 2;

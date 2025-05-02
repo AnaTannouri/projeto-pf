@@ -88,6 +88,8 @@
             "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "Física",
             "Jurídica",
             "Física",
@@ -243,11 +245,13 @@
             // 
             // btnSalvar
             // 
+            this.btnSalvar.Location = new System.Drawing.Point(1074, 659);
             this.btnSalvar.TabIndex = 17;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click_1);
             // 
             // btnVoltar
             // 
+            this.btnVoltar.Location = new System.Drawing.Point(1206, 659);
             this.btnVoltar.TabIndex = 0;
             // 
             // lblAtualizacao

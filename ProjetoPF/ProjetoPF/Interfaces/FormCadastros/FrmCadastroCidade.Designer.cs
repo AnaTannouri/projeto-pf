@@ -45,6 +45,7 @@
             // 
             // btnSalvar
             // 
+            this.btnSalvar.Location = new System.Drawing.Point(1074, 654);
             this.btnSalvar.TabIndex = 4;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
@@ -55,11 +56,8 @@
             // 
             // btnVoltar
             // 
+            this.btnVoltar.Location = new System.Drawing.Point(1206, 654);
             this.btnVoltar.TabIndex = 0;
-            // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
             // 
             // txtCidade
             // 
