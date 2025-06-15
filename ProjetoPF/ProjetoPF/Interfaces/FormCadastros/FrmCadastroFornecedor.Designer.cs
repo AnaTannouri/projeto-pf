@@ -86,6 +86,12 @@
             "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "Física",
             "Jurídica",
             "Física",
@@ -94,61 +100,73 @@
             "Jurídica",
             "Física",
             "Jurídica"});
+            this.comboPessoa.MaxLength = 10;
             this.comboPessoa.TabIndex = 1;
             this.comboPessoa.SelectedIndexChanged += new System.EventHandler(this.comboPessoa_SelectedIndexChanged);
             // 
             // comboClassificacao
             // 
             this.comboClassificacao.Location = new System.Drawing.Point(505, 326);
+            this.comboClassificacao.MaxLength = 20;
             this.comboClassificacao.Size = new System.Drawing.Size(181, 21);
             this.comboClassificacao.TabIndex = 15;
             // 
             // txtNome_RazaoSocial
             // 
+            this.txtNome_RazaoSocial.MaxLength = 50;
             this.txtNome_RazaoSocial.TabIndex = 2;
             // 
             // txtCep
             // 
             this.txtCep.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCep.MaxLength = 10;
             this.txtCep.TabIndex = 9;
             // 
             // txtBairro
             // 
+            this.txtBairro.MaxLength = 40;
             this.txtBairro.TabIndex = 7;
             // 
             // txtNumero
             // 
             this.txtNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtNumero.MaxLength = 10;
             this.txtNumero.TabIndex = 6;
             this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTelefone
             // 
             this.txtTelefone.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtTelefone.MaxLength = 20;
             this.txtTelefone.TabIndex = 12;
             // 
             // txtEmail
             // 
+            this.txtEmail.MaxLength = 100;
             this.txtEmail.TabIndex = 11;
             // 
             // txtRua
             // 
+            this.txtRua.MaxLength = 40;
             this.txtRua.TabIndex = 5;
             // 
             // txtRg_InscricaoEstadual
             // 
             this.txtRg_InscricaoEstadual.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtRg_InscricaoEstadual.Location = new System.Drawing.Point(293, 327);
+            this.txtRg_InscricaoEstadual.MaxLength = 15;
             this.txtRg_InscricaoEstadual.TabIndex = 14;
             // 
             // txtCpf_Cnpj
             // 
             this.txtCpf_Cnpj.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCpf_Cnpj.Location = new System.Drawing.Point(12, 327);
+            this.txtCpf_Cnpj.MaxLength = 18;
             this.txtCpf_Cnpj.TabIndex = 13;
             // 
             // txtApelido_NomeFantasia
             // 
+            this.txtApelido_NomeFantasia.MaxLength = 40;
             this.txtApelido_NomeFantasia.TabIndex = 3;
             // 
             // dateTimePicker1
@@ -171,15 +189,12 @@
             // txtComplemento
             // 
             this.txtComplemento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtComplemento.MaxLength = 40;
             this.txtComplemento.TabIndex = 8;
             // 
             // label2
             // 
             this.label2.Location = new System.Drawing.Point(169, 36);
-            // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(122, 647);
             // 
             // btnSalvar
             // 
@@ -189,6 +204,10 @@
             // btnVoltar
             // 
             this.btnVoltar.TabIndex = 0;
+            // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 667);
             // 
             // label7
             // 
@@ -252,6 +271,7 @@
             // 
             this.txtValorMin.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtValorMin.Location = new System.Drawing.Point(12, 450);
+            this.txtValorMin.MaxLength = 10;
             this.txtValorMin.Name = "txtValorMin";
             this.txtValorMin.Size = new System.Drawing.Size(126, 20);
             this.txtValorMin.TabIndex = 17;
@@ -462,6 +482,7 @@
             // FrmCadastroFornecedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
@@ -499,7 +520,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.label4, 0);

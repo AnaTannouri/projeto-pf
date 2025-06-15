@@ -57,15 +57,11 @@
             // 
             this.btnVoltar.TabIndex = 0;
             // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
-            // 
             // txtEstado
             // 
             this.txtEstado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtEstado.Location = new System.Drawing.Point(188, 57);
-            this.txtEstado.MaxLength = 100;
+            this.txtEstado.MaxLength = 80;
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.Size = new System.Drawing.Size(371, 20);
             this.txtEstado.TabIndex = 1;
@@ -188,6 +184,7 @@
             // FrmCadastroEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.txtPais);
             this.Controls.Add(this.label8);
@@ -211,7 +208,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

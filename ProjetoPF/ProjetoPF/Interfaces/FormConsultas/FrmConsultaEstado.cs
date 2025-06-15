@@ -47,7 +47,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     item.SubItems.Add(estado.Nome);
                     item.SubItems.Add(estado.UF);
                     item.SubItems.Add(nomePais);
-                    item.SubItems.Add(estado.Ativo ? "Sim" : "Não");
+                    item.SubItems.Add(estado.Ativo ? "SIM" : "NÃO");
                     item.SubItems.Add(estado.DataCriacao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(estado.DataAtualizacao.ToString("dd/MM/yyyy"));  
 

@@ -90,6 +90,14 @@
             "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "Física",
             "Jurídica",
             "Física",
@@ -147,6 +155,7 @@
             "Física",
             "Jurídica"});
             this.comboPessoa.Location = new System.Drawing.Point(176, 52);
+            this.comboPessoa.MaxLength = 10;
             this.comboPessoa.TabIndex = 1;
             this.comboPessoa.SelectedIndexChanged += new System.EventHandler(this.comboPessoa_SelectedIndexChanged);
             // 
@@ -155,11 +164,12 @@
             this.comboClassificacao.ItemHeight = 13;
             this.comboClassificacao.Location = new System.Drawing.Point(498, 325);
             this.comboClassificacao.MaxDropDownItems = 15;
+            this.comboClassificacao.MaxLength = 20;
             this.comboClassificacao.TabIndex = 15;
             // 
             // txtNome_RazaoSocial
             // 
-            this.txtNome_RazaoSocial.MaxLength = 150;
+            this.txtNome_RazaoSocial.MaxLength = 50;
             this.txtNome_RazaoSocial.TabIndex = 2;
             // 
             // txtCep
@@ -170,7 +180,7 @@
             // 
             // txtBairro
             // 
-            this.txtBairro.MaxLength = 100;
+            this.txtBairro.MaxLength = 40;
             this.txtBairro.TabIndex = 7;
             // 
             // txtNumero
@@ -194,24 +204,26 @@
             // 
             // txtRua
             // 
-            this.txtRua.MaxLength = 150;
+            this.txtRua.MaxLength = 40;
             this.txtRua.TabIndex = 5;
             // 
             // txtRg_InscricaoEstadual
             // 
             this.txtRg_InscricaoEstadual.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtRg_InscricaoEstadual.Location = new System.Drawing.Point(290, 325);
+            this.txtRg_InscricaoEstadual.MaxLength = 15;
             this.txtRg_InscricaoEstadual.TabIndex = 14;
             // 
             // txtCpf_Cnpj
             // 
             this.txtCpf_Cnpj.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCpf_Cnpj.Location = new System.Drawing.Point(11, 325);
+            this.txtCpf_Cnpj.MaxLength = 18;
             this.txtCpf_Cnpj.TabIndex = 13;
             // 
             // txtApelido_NomeFantasia
             // 
-            this.txtApelido_NomeFantasia.MaxLength = 150;
+            this.txtApelido_NomeFantasia.MaxLength = 40;
             this.txtApelido_NomeFantasia.TabIndex = 3;
             // 
             // dateTimePicker1
@@ -237,6 +249,7 @@
             // txtComplemento
             // 
             this.txtComplemento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtComplemento.MaxLength = 40;
             this.txtComplemento.TabIndex = 8;
             // 
             // label2
@@ -245,18 +258,16 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(1074, 659);
             this.btnSalvar.TabIndex = 17;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click_1);
             // 
             // btnVoltar
             // 
-            this.btnVoltar.Location = new System.Drawing.Point(1206, 659);
             this.btnVoltar.TabIndex = 0;
             // 
             // lblAtualizacao
             // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 669);
             // 
             // txtCodigoCondicao
             // 
@@ -490,6 +501,7 @@
             // FrmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.txtUF);
@@ -523,7 +535,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtComplemento, 0);
             this.Controls.SetChildIndex(this.txtCodigoCondicao, 0);

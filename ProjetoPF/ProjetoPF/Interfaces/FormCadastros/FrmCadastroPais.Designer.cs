@@ -54,15 +54,11 @@
             // 
             this.btnVoltar.TabIndex = 0;
             // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
-            // 
             // txtPais
             // 
             this.txtPais.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPais.Location = new System.Drawing.Point(188, 55);
-            this.txtPais.MaxLength = 100;
+            this.txtPais.MaxLength = 40;
             this.txtPais.Name = "txtPais";
             this.txtPais.Size = new System.Drawing.Size(250, 20);
             this.txtPais.TabIndex = 1;
@@ -71,7 +67,7 @@
             // 
             this.txtSigla.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSigla.Location = new System.Drawing.Point(12, 108);
-            this.txtSigla.MaxLength = 10;
+            this.txtSigla.MaxLength = 5;
             this.txtSigla.Name = "txtSigla";
             this.txtSigla.Size = new System.Drawing.Size(100, 20);
             this.txtSigla.TabIndex = 2;
@@ -159,6 +155,7 @@
             // FrmCadastroPais
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -179,7 +176,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

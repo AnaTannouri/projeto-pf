@@ -61,6 +61,10 @@
     <Compile Include="Dao\Pessoa\ClienteDAO.cs" />
     <Compile Include="Dao\Pessoa\FornecedorDAO.cs" />
     <Compile Include="Dao\Pessoa\FuncionarioDAO.cs" />
+    <Compile Include="Dao\Produto\CategoriaDAO.cs" />
+    <Compile Include="Dao\Produto\MarcaDAO.cs" />
+    <Compile Include="Dao\Produto\ProdutoDAO.cs" />
+    <Compile Include="Dao\Produto\UnidadeMedidaDAO.cs" />
     <Compile Include="Interfaces\FormCadastros\FrmCadastroCidade.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +107,12 @@
     <Compile Include="Interfaces\FormCadastros\FrmCadastroFuncionario.Designer.cs">
       <DependentUpon>FrmCadastroFuncionario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroMarca.Designer.cs">
+      <DependentUpon>FrmCadastroMarca.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroPai.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +130,30 @@
     </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroPessoa.Designer.cs">
       <DependentUpon>FrmCadastroPessoa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCategoria.Designer.cs">
+      <DependentUpon>FrmCadastroCategoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroProduto.Designer.cs">
+      <DependentUpon>FrmCadastroProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroUnidadeMedida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroUnidadeMedida.Designer.cs">
+      <DependentUpon>FrmCadastroUnidadeMedida.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCategoria.Designer.cs">
+      <DependentUpon>FrmConsultaCategoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCidade.cs">
       <SubType>Form</SubType>
@@ -163,6 +197,12 @@
     <Compile Include="Interfaces\FormConsultas\FrmConsultaFuncionario.Designer.cs">
       <DependentUpon>FrmConsultaFuncionario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaMarca.Designer.cs">
+      <DependentUpon>FrmConsultaMarca.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaPai.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +214,18 @@
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaPais.Designer.cs">
       <DependentUpon>FrmConsultaPais.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaProduto.Designer.cs">
+      <DependentUpon>FrmConsultaProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaUnidadeMedida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaUnidadeMedida.Designer.cs">
+      <DependentUpon>FrmConsultaUnidadeMedida.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FrmPrincipal.cs">
       <SubType>Form</SubType>
@@ -192,6 +244,10 @@
     <Compile Include="Modelos\Pagamento\CondicaoPagamentoParcelas.cs" />
     <Compile Include="Modelos\Pessoa\Fornecedor.cs" />
     <Compile Include="Modelos\Pessoa\Funcionario.cs" />
+    <Compile Include="Modelos\Produto\Categoria.cs" />
+    <Compile Include="Modelos\Produto\Marca.cs" />
+    <Compile Include="Modelos\Produto\Produtos.cs" />
+    <Compile Include="Modelos\Produto\UnidadeMedida.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -209,6 +265,10 @@
     <Compile Include="Servicos\Pessoa\ClienteServicos.cs" />
     <Compile Include="Servicos\Pessoa\FornecedorServicos.cs" />
     <Compile Include="Servicos\Pessoa\FuncionarioServicos.cs" />
+    <Compile Include="Servicos\Produto\CategoriaServicos.cs" />
+    <Compile Include="Servicos\Produto\MarcaServicos.cs" />
+    <Compile Include="Servicos\Produto\ProdutoServicos.cs" />
+    <Compile Include="Servicos\Produto\UnidadeMedidaServicos.cs" />
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCidade.resx">
       <DependentUpon>FrmCadastroCidade.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,6 +292,9 @@
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroFuncionario.resx">
       <DependentUpon>FrmCadastroFuncionario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroMarca.resx">
+      <DependentUpon>FrmCadastroMarca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroPai.resx">
       <DependentUpon>FrmCadastroPai.cs</DependentUpon>
     </EmbeddedResource>
@@ -240,6 +303,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroPessoa.resx">
       <DependentUpon>FrmCadastroPessoa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCategoria.resx">
+      <DependentUpon>FrmCadastroCategoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroProduto.resx">
+      <DependentUpon>FrmCadastroProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroUnidadeMedida.resx">
+      <DependentUpon>FrmCadastroUnidadeMedida.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCategoria.resx">
+      <DependentUpon>FrmConsultaCategoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCidade.resx">
       <DependentUpon>FrmConsultaCidade.cs</DependentUpon>
@@ -262,11 +337,20 @@
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaFuncionario.resx">
       <DependentUpon>FrmConsultaFuncionario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaMarca.resx">
+      <DependentUpon>FrmConsultaMarca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaPai.resx">
       <DependentUpon>FrmConsultaPai.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaPais.resx">
       <DependentUpon>FrmConsultaPais.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaProduto.resx">
+      <DependentUpon>FrmConsultaProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaUnidadeMedida.resx">
+      <DependentUpon>FrmConsultaUnidadeMedida.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
@@ -290,5 +374,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

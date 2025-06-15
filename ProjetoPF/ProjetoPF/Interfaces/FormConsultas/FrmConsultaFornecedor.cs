@@ -1,9 +1,11 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.Interfaces.FormCadastros;
 using ProjetoPF.Modelos.Pessoa;
+using ProjetoPF.Modelos.Produto;
 using ProjetoPF.Servicos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormConsultas
@@ -52,7 +54,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             fornecedor.NomeRazaoSocial,
                             fornecedor.Telefone,
                             fornecedor.ValorMinimoPedido?.ToString("C2") ?? "R$ 0,00",
-                            fornecedor.Ativo ? "Sim" : "Não",
+                            fornecedor.Ativo ? "SIM" : "NÃO",
                             fornecedor.DataCriacao.ToString("dd/MM/yyyy"),
                             fornecedor.DataAtualizacao.ToString("dd/MM/yyyy")
                         }
@@ -128,8 +130,20 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     return;
                 }
 
-                FrmCadastroFornecedor frmCadastroFornecedor = new FrmCadastroFornecedor();
-                frmCadastroFornecedor.CarregarDados(fornecedorSelecionado, false, true); 
+                var daoProdutos = new BaseDao<Produtos>("Produtos");
+                var produtosVinculados = daoProdutos.BuscarTodos()
+                    .Where(p => p.IdFornecedor == fornecedorSelecionado.Id)
+                    .ToList();
+
+                if (produtosVinculados.Any())
+                {
+                    MessageBox.Show("Não é possível excluir este fornecedor, pois ele está vinculado a um ou mais produtos.",
+                                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                frmCadastroFornecedor = new FrmCadastroFornecedor();
+                frmCadastroFornecedor.CarregarDados(fornecedorSelecionado, false, true);
                 frmCadastroFornecedor.FormClosed += FrmCadastroFornecedor_FormClosed;
                 frmCadastroFornecedor.ShowDialog();
             }
@@ -151,9 +165,34 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
             }
+            listViewFormaPagamento.MouseDoubleClick += listViewFormaPagamento_MouseDoubleClick;
 
             AjustarLarguraColunas();
             PopularListView(string.Empty);
+        }
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listViewFormaPagamento.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                Fornecedor fornecedorSelecionado = (Fornecedor)itemSelecionado.Tag;
+
+                if (!fornecedorSelecionado.Ativo)
+                {
+                    MessageBox.Show("Este fornecedor está inativo e não pode ser selecionado.",
+                                    "Fornecedor inativo",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (this.Owner is FrmCadastroProduto frmCadastroProduto)
+                {
+                    frmCadastroProduto.txtFornecedor.Text = fornecedorSelecionado.NomeRazaoSocial;
+                    frmCadastroProduto.txtCodFornecedor.Text = fornecedorSelecionado.Id.ToString();
+                    this.Close();
+                }
+            }
         }
     }
 }

@@ -35,7 +35,6 @@
             this.checkAtivo = new System.Windows.Forms.CheckBox();
             this.lblDataAtual = new System.Windows.Forms.Label();
             this.DataAtaul = new System.Windows.Forms.Label();
-            this.lblUsuario = new System.Windows.Forms.Label();
             this.labelDataCriacao = new System.Windows.Forms.Label();
             this.labelCriacao = new System.Windows.Forms.Label();
             this.lblAtualizacao = new System.Windows.Forms.Label();
@@ -43,7 +42,7 @@
             // 
             // txtCodigo
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(12, 82);
+            this.txtCodigo.Location = new System.Drawing.Point(12, 53);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(153, 20);
             this.txtCodigo.TabIndex = 0;
@@ -90,7 +89,7 @@
             // lblDataAtual
             // 
             this.lblDataAtual.AutoSize = true;
-            this.lblDataAtual.Location = new System.Drawing.Point(12, 626);
+            this.lblDataAtual.Location = new System.Drawing.Point(12, 648);
             this.lblDataAtual.Name = "lblDataAtual";
             this.lblDataAtual.Size = new System.Drawing.Size(87, 13);
             this.lblDataAtual.TabIndex = 4;
@@ -99,25 +98,16 @@
             // DataAtaul
             // 
             this.DataAtaul.AutoSize = true;
-            this.DataAtaul.Location = new System.Drawing.Point(12, 647);
+            this.DataAtaul.Location = new System.Drawing.Point(12, 669);
             this.DataAtaul.Name = "DataAtaul";
             this.DataAtaul.Size = new System.Drawing.Size(106, 13);
             this.DataAtaul.TabIndex = 5;
             this.DataAtaul.Text = "Data de Atualização:";
             // 
-            // lblUsuario
-            // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(12, 669);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(111, 13);
-            this.lblUsuario.TabIndex = 6;
-            this.lblUsuario.Text = "Alterado pelo Usuário:";
-            // 
             // labelDataCriacao
             // 
             this.labelDataCriacao.AutoSize = true;
-            this.labelDataCriacao.Location = new System.Drawing.Point(105, 626);
+            this.labelDataCriacao.Location = new System.Drawing.Point(105, 648);
             this.labelDataCriacao.Name = "labelDataCriacao";
             this.labelDataCriacao.Size = new System.Drawing.Size(0, 13);
             this.labelDataCriacao.TabIndex = 7;
@@ -125,7 +115,7 @@
             // labelCriacao
             // 
             this.labelCriacao.AutoSize = true;
-            this.labelCriacao.Location = new System.Drawing.Point(105, 626);
+            this.labelCriacao.Location = new System.Drawing.Point(105, 648);
             this.labelCriacao.Name = "labelCriacao";
             this.labelCriacao.Size = new System.Drawing.Size(10, 13);
             this.labelCriacao.TabIndex = 0;
@@ -134,7 +124,7 @@
             // lblAtualizacao
             // 
             this.lblAtualizacao.AutoSize = true;
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 669);
             this.lblAtualizacao.Name = "lblAtualizacao";
             this.lblAtualizacao.Size = new System.Drawing.Size(10, 13);
             this.lblAtualizacao.TabIndex = 8;
@@ -144,12 +134,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.lblAtualizacao);
             this.Controls.Add(this.labelCriacao);
             this.Controls.Add(this.labelDataCriacao);
-            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.DataAtaul);
             this.Controls.Add(this.lblDataAtual);
             this.Controls.Add(this.checkAtivo);
@@ -177,7 +166,6 @@
         public System.Windows.Forms.CheckBox checkAtivo;
         public System.Windows.Forms.Label lblDataAtual;
         public System.Windows.Forms.Label DataAtaul;
-        public System.Windows.Forms.Label lblUsuario;
         public System.Windows.Forms.Label labelDataCriacao;
         public System.Windows.Forms.Label labelCriacao;
         public System.Windows.Forms.Label lblAtualizacao;

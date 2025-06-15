@@ -30,6 +30,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
         public FrmCadastroCondPagamento()
         {
             InitializeComponent();
+            txtJuros.KeyPress += SomenteNumerosOuVirgula_KeyPress;
+            txtMulta.KeyPress += SomenteNumerosOuVirgula_KeyPress;
+            maskedTxtDesconto.KeyPress += SomenteNumerosOuVirgula_KeyPress;
+            txtPrazo.KeyPress += SomenteNumerosOuVirgula_KeyPress;
+            txtPorcentagem.KeyPress += SomenteNumerosOuVirgula_KeyPress;
         }
 
         private bool ValidarEntrada()
@@ -498,6 +503,22 @@ namespace ProjetoPF.Interfaces.FormCadastros
             }
 
             return false;
+        }
+        private void SomenteNumerosOuVirgula_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) &&
+                !char.IsDigit(e.KeyChar) &&
+                e.KeyChar != ',')
+            {
+                e.Handled = true; 
+            }
+
+
+            TextBox txt = sender as TextBox;
+            if (e.KeyChar == ',' && txt != null && txt.Text.Contains(","))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -88,21 +88,37 @@ namespace ProjetoPF.Dao
                 if (!string.IsNullOrEmpty(filtro))
                 {
                     List<string> whereConditions = new List<string>();
+
                     if (int.TryParse(filtro, out int id))
                     {
                         whereConditions.Add("Id = @Id");
                         cmd.Parameters.AddWithValue("@Id", id);
                     }
-                    var propsTexto = typeof(T).GetProperties()
-                                              .Where(p => p.PropertyType == typeof(string));
 
                     int count = 0;
+
+                    var propsTexto = typeof(T).GetProperties()
+                        .Where(p => p.PropertyType == typeof(string));
                     foreach (var prop in propsTexto)
                     {
                         string paramName = $"@p{count}";
-                        whereConditions.Add($"LTRIM(RTRIM({prop.Name})) LIKE {paramName}");
+                        whereConditions.Add($"{prop.Name} LIKE {paramName}");
                         cmd.Parameters.AddWithValue(paramName, $"%{filtro}%");
                         count++;
+                    }
+
+                    if (decimal.TryParse(filtro.Replace(".", ","), out decimal valorDecimal))
+                    {
+                        var propsDecimal = typeof(T).GetProperties()
+                            .Where(p => p.PropertyType == typeof(decimal) || p.PropertyType == typeof(decimal?));
+
+                        foreach (var prop in propsDecimal)
+                        {
+                            string paramName = $"@d{count}";
+                            whereConditions.Add($"{prop.Name} = {paramName}");
+                            cmd.Parameters.AddWithValue(paramName, valorDecimal);
+                            count++;
+                        }
                     }
 
                     if (whereConditions.Count > 0)

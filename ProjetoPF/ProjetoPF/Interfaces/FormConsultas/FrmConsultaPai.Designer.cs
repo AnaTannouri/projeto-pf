@@ -40,6 +40,7 @@
             // 
             // txtPesquisa
             // 
+            this.txtPesquisa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPesquisa.Location = new System.Drawing.Point(34, 35);
             this.txtPesquisa.Name = "txtPesquisa";
             this.txtPesquisa.Size = new System.Drawing.Size(1163, 20);
@@ -121,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.btnFiltro);
             this.Controls.Add(this.listViewFormaPagamento);

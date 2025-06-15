@@ -37,6 +37,7 @@
             // 
             // txtPesquisa
             // 
+            this.txtPesquisa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPesquisa.Location = new System.Drawing.Point(38, 37);
             // 
             // btnEditar
@@ -60,9 +61,9 @@
             // FrmConsultaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
-            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaCliente";
             this.Text = "Consulta Clientes";
             this.Load += new System.EventHandler(this.FrmConsultaCliente_Load);

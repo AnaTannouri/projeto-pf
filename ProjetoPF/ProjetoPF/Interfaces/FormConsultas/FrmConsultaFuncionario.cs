@@ -53,7 +53,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             funcionario.Matricula,
                             funcionario.NomeRazaoSocial,
                             funcionario.Telefone,
-                            funcionario.Ativo ? "Sim" : "Não",
+                            funcionario.Ativo ? "SIM" : "NÃO",
                             funcionario.DataCriacao.ToString("dd/MM/yyyy"),
                             funcionario.DataAtualizacao.ToString("dd/MM/yyyy")
                         }

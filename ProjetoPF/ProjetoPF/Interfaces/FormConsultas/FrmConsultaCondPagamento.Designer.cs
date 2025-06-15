@@ -38,6 +38,7 @@
             // 
             // txtPesquisa
             // 
+            this.txtPesquisa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPesquisa.Location = new System.Drawing.Point(34, 39);
             this.txtPesquisa.Size = new System.Drawing.Size(1177, 20);
             // 
@@ -71,11 +72,10 @@
             // FrmConsultaCondPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
-            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaCondPagamento";
             this.Text = "Consulta Condição de Pagamento";
             this.Load += new System.EventHandler(this.FrmConsultaCondPagamento_Load_1);

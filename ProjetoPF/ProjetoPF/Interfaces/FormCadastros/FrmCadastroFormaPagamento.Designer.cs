@@ -48,15 +48,11 @@
             this.btnVoltar.TabIndex = 0;
             this.btnVoltar.Click += new System.EventHandler(this.btnVoltar_Click);
             // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
-            // 
             // txtDescricao
             // 
             this.txtDescricao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtDescricao.Location = new System.Drawing.Point(189, 64);
-            this.txtDescricao.MaxLength = 150;
+            this.txtDescricao.MaxLength = 40;
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(1143, 20);
             this.txtDescricao.TabIndex = 1;
@@ -95,7 +91,7 @@
             // FrmCadastroFormaPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -111,7 +107,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.txtDescricao, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);

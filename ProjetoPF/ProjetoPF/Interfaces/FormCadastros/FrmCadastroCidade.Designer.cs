@@ -63,7 +63,7 @@
             // 
             this.txtCidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCidade.Location = new System.Drawing.Point(171, 55);
-            this.txtCidade.MaxLength = 100;
+            this.txtCidade.MaxLength = 80;
             this.txtCidade.Name = "txtCidade";
             this.txtCidade.Size = new System.Drawing.Size(372, 20);
             this.txtCidade.TabIndex = 1;
@@ -71,11 +71,12 @@
             // txtDDD
             // 
             this.txtDDD.Location = new System.Drawing.Point(12, 125);
-            this.txtDDD.MaxLength = 5;
+            this.txtDDD.MaxLength = 3;
             this.txtDDD.Name = "txtDDD";
             this.txtDDD.Size = new System.Drawing.Size(100, 20);
             this.txtDDD.TabIndex = 2;
             this.txtDDD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtDDD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDDD_KeyPress);
             // 
             // txtCodEstado
             // 
@@ -179,6 +180,7 @@
             // 
             this.txtEstado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtEstado.Location = new System.Drawing.Point(236, 124);
+            this.txtEstado.MaxLength = 80;
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.Size = new System.Drawing.Size(266, 20);
             this.txtEstado.TabIndex = 0;
@@ -186,6 +188,7 @@
             // FrmCadastroCidade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.txtEstado);
             this.Controls.Add(this.btnCadastrar);
@@ -209,7 +212,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

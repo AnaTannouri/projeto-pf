@@ -15,6 +15,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormCadastros
@@ -40,6 +41,77 @@ namespace ProjetoPF.Interfaces.FormCadastros
             InitializeComponent();
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = " ";
+
+            txtCpf_Cnpj.KeyPress += SomenteNumerosPontuacao_KeyPress;
+            txtTelefone.KeyPress += Telefone_KeyPress;
+            txtCep.KeyPress += SomenteNumerosPontuacao_KeyPress;
+            txtNumero.KeyPress += SomenteNumeros_KeyPress;
+            txtValorMin.KeyPress += SomenteNumeros_KeyPress;
+        }
+        private bool ValidarCpf(string cpf)
+        {
+            cpf = new string(cpf.Where(char.IsDigit).ToArray());
+            if (cpf.Length != 11 || cpf.All(c => c == cpf[0])) return false;
+
+            int[] multiplicador1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            string tempCpf = cpf.Substring(0, 9);
+            int soma = 0;
+
+            for (int i = 0; i < 9; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+
+            int resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+
+            string digito = resto.ToString();
+            tempCpf += digito;
+            soma = 0;
+
+            for (int i = 0; i < 10; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+
+            resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+            digito += resto.ToString();
+
+            return cpf.EndsWith(digito);
+        }
+        private bool ValidarCnpj(string cnpj)
+        {
+            cnpj = new string(cnpj.Where(char.IsDigit).ToArray());
+            if (cnpj.Length != 14 || cnpj.All(c => c == cnpj[0])) return false;
+
+            int[] multiplicador1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            string tempCnpj = cnpj.Substring(0, 12);
+            int soma = 0;
+
+            for (int i = 0; i < 12; i++)
+                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador1[i];
+
+            int resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+
+            string digito = resto.ToString();
+            tempCnpj += digito;
+            soma = 0;
+
+            for (int i = 0; i < 13; i++)
+                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
+
+            resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+            digito += resto.ToString();
+
+            return cnpj.EndsWith(digito);
+        }
+
+        private bool ValidarEmail(string email)
+        {
+            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
 
         private bool ValidarEntrada()
@@ -79,9 +151,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 MessageBox.Show("Informe a cidade do fornecedor.");
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(txtEmail.Text))
+            if (!ValidarEmail(txtEmail.Text))
             {
-                MessageBox.Show("Informe o e-mail do fornecedor.");
+                MessageBox.Show("E-mail inválido.");
                 return false;
             }
 
@@ -110,13 +182,18 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                             if (pais != null)
                             {
-                                if (tipoPessoa == "FÍSICA" || tipoPessoa == "FISICA")
+                                if (tipoPessoa == "FÍSICA")
                                 {
                                     if (pais.Nome.Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                                     {
                                         if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
                                         {
-                                            MessageBox.Show("Informe o CPF do cliente (obrigatório para pessoa física no Brasil).");
+                                            MessageBox.Show("Informe o CPF do fornecedor (obrigatório para pessoa física no Brasil).");
+                                            return false;
+                                        }
+                                        else if (!ValidarCpf(txtCpf_Cnpj.Text))
+                                        {
+                                            MessageBox.Show("CPF inválido.");
                                             return false;
                                         }
                                     }
@@ -124,16 +201,21 @@ namespace ProjetoPF.Interfaces.FormCadastros
                                     {
                                         if (string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
                                         {
-                                            MessageBox.Show("Informe o RG do cliente (obrigatório para pessoa física estrangeira).");
+                                            MessageBox.Show("Informe o RG do fornecedor (obrigatório para pessoa física estrangeira).");
                                             return false;
                                         }
                                     }
                                 }
-                                else if (tipoPessoa == "JURÍDICA" || tipoPessoa == "JURIDICA")
+                                else if (tipoPessoa == "JURÍDICA")
                                 {
                                     if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
                                     {
-                                        MessageBox.Show("Informe o CNPJ do cliente (obrigatório para pessoa jurídica).");
+                                        MessageBox.Show("Informe o CNPJ do fornecedor (obrigatório para pessoa jurídica).");
+                                        return false;
+                                    }
+                                    else if (!ValidarCnpj(txtCpf_Cnpj.Text))
+                                    {
+                                        MessageBox.Show("CNPJ inválido.");
                                         return false;
                                     }
                                 }
@@ -421,7 +503,39 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             if (comboPessoa.SelectedItem?.ToString() == "JURÍDICA")
             {
-                label4.Text = "Razão Social Fornecedor:";
+                label4.Text = "Fornecedor:";
+            }
+        }
+        private void SomenteNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) &&
+                !char.IsDigit(e.KeyChar) &&
+                e.KeyChar != '.' &&
+                e.KeyChar != '-' &&
+                e.KeyChar != '/')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Telefone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) &&
+                !char.IsDigit(e.KeyChar) &&
+                e.KeyChar != '(' &&
+                e.KeyChar != ')' &&
+                e.KeyChar != '-' &&
+                e.KeyChar != ' ')
+            {
+                e.Handled = true;
             }
         }
     }

@@ -6,7 +6,9 @@ using ProjetoPF.Servicos;
 using ProjetoPF.Servicos.Localizacao;
 using ProjetoPF.Servicos.Pessoa;
 using System;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormCadastros
@@ -27,6 +29,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
         public FrmCadastroFuncionario()
         {
             InitializeComponent();
+
             label4.Text = "Funcionário:";
             label5.Text = "Apelido:";
             label16.Text = "Data de Nascimento:";
@@ -34,17 +37,25 @@ namespace ProjetoPF.Interfaces.FormCadastros
             label6.Text = "RG:";
             lblClassificacao.Text = "Gênero:";
 
-            comboPessoa.Visible = false;
-            label2.Visible = false;
-
+            comboPessoa.Items.Clear();
+            comboPessoa.Items.Add("FÍSICA");
             comboPessoa.SelectedItem = "FÍSICA";
             comboPessoa.Enabled = false;
+            comboPessoa.Visible = false;
+            label2.Visible = false;
 
             txtCidadeFunc.Enabled = false;
             DataDem.Enabled = false;
 
             DataDem.Format = DateTimePickerFormat.Custom;
             DataDem.CustomFormat = " ";
+
+            txtCpf_Cnpj.KeyPress += SomenteNumerosPontuacao_KeyPress;
+            txtCep.KeyPress += SomenteNumerosPontuacao_KeyPress;
+            txtTelefone.KeyPress += Telefone_KeyPress;
+            txtNumero.KeyPress += SomenteNumeros_KeyPress;
+            txtSalario.KeyPress += SomenteNumeros_KeyPress;
+            txtCargaHoraria.KeyPress += SomenteNumeros_KeyPress;
         }
         private bool ValidarEntrada()
         {
@@ -106,31 +117,37 @@ namespace ProjetoPF.Interfaces.FormCadastros
                             var pais = paisServices.BuscarPorId(estado.IdPais);
                             string tipoPessoa = comboPessoa.SelectedItem?.ToString().ToUpper() ?? "";
 
-                            if (pais != null)
+                            if (pais != null && tipoPessoa == "FÍSICA")
                             {
                                 if (pais.Nome.Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    if (string.IsNullOrWhiteSpace(txtCpf_Cnpj.Text))
+                                    string cpf = new string(txtCpf_Cnpj.Text.Where(char.IsDigit).ToArray());
+
+                                    if (string.IsNullOrWhiteSpace(cpf))
                                     {
-                                        MessageBox.Show("Informe o CPF do funcionario (obrigatório para pessoa física no Brasil).");
+                                        MessageBox.Show("Informe o CPF do funcionário (obrigatório para pessoa física no Brasil).");
+                                        return false;
+                                    }
+                                    else if (!ValidarCpf(cpf))
+                                    {
+                                        MessageBox.Show("CPF inválido.");
                                         return false;
                                     }
                                 }
-
                                 else
                                 {
                                     if (string.IsNullOrWhiteSpace(txtRg_InscricaoEstadual.Text))
                                     {
-                                        MessageBox.Show("Informe o RG do funcionario (obrigatório para pessoa física estrangeira).");
+                                        MessageBox.Show("Informe o RG do funcionário (obrigatório para pessoa física estrangeira).");
                                         return false;
                                     }
-                                }                                       
+                                }
                             }
                         }
                     }
                 }
             }
-            if (string.IsNullOrWhiteSpace(txtCargo.Text))
+                if (string.IsNullOrWhiteSpace(txtCargo.Text))
             {
                 MessageBox.Show("Informe o cargo do funcionário.");
                 return false;
@@ -274,10 +291,25 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 DataDem.CustomFormat = " ";
             }
 
-            comboPessoa.SelectedItem = "F";
+            comboPessoa.SelectedItem = "FÍSICA";
             comboPessoa.Enabled = false;
 
-            comboClassificacao.SelectedIndex = comboClassificacao.FindStringExact(funcionario.Classificacao?.Trim());
+            comboClassificacao.SelectedIndex = -1;
+            if (!string.IsNullOrWhiteSpace(funcionario.Classificacao))
+            {
+                string valorFuncionario = funcionario.Classificacao.Trim().ToUpperInvariant();
+
+                for (int i = 0; i < comboClassificacao.Items.Count; i++)
+                {
+                    string valorCombo = comboClassificacao.Items[i]?.ToString().Trim().ToUpperInvariant();
+
+                    if (valorFuncionario == valorCombo)
+                    {
+                        comboClassificacao.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
 
             comboTurno.SelectedIndex = -1;
             if (!string.IsNullOrWhiteSpace(funcionario.Turno))
@@ -387,7 +419,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             funcionario.Bairro = txtBairro.Text.Trim();
             funcionario.Cep = txtCep.Text.Trim();
             funcionario.Complemento = txtComplemento.Text.Trim();
-            funcionario.Classificacao = comboClassificacao.Text.Trim();
+            funcionario.Classificacao = comboClassificacao.SelectedItem?.ToString().Trim() ?? "";
 
             funcionario.DataNascimentoCriacao = dateTimePicker1.CustomFormat == " " ? (DateTime?)null : dateTimePicker1.Value;
             funcionario.DataDemissao = DataDem.CustomFormat == " " ? (DateTime?)null : DataDem.Value;
@@ -433,10 +465,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
-                AtualizarObjeto();
 
                 if (!ValidarEntrada())
                     return;
+
+                AtualizarObjeto();
 
                 if (isEditando)
                 {
@@ -460,9 +493,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FrmCadastroFuncionario_Load(object sender, EventArgs e)
         {
             label4.Text = "Funcionário";
-            if (!isEditando && !isExcluindo)
+
+            if (funcionario != null && funcionario.Id > 0 && (isEditando || isExcluindo))
             {
-                CarregarCombosFixos(); 
+                CarregarDados(funcionario, isEditando, isExcluindo);
             }
 
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
@@ -472,6 +506,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
             labelCriacao.Text = funcionario.DataCriacao.ToShortDateString();
             lblAtualizacao.Text = funcionario.DataAtualizacao.ToShortDateString();
+            if (comboPessoa.Items.Count == 0)
+            {
+                comboPessoa.Items.Add("FÍSICA");
+            }
+            comboPessoa.SelectedItem = "FÍSICA";
         }
 
         private void btnCadastrarCidade_Click(object sender, EventArgs e)
@@ -502,6 +541,74 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void Dataadm_ValueChanged(object sender, EventArgs e)
         {
             Dataadm.CustomFormat = "dd/MM/yyyy";
+        }
+        private void SomenteNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) &&
+                !char.IsDigit(e.KeyChar) &&
+                e.KeyChar != '.' &&
+                e.KeyChar != '-' &&
+                e.KeyChar != '/')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Telefone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) &&
+                !char.IsDigit(e.KeyChar) &&
+                e.KeyChar != '(' &&
+                e.KeyChar != ')' &&
+                e.KeyChar != '-' &&
+                e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private bool ValidarEmail(string email)
+        {
+            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        }
+
+        private bool ValidarCpf(string cpf)
+        {
+            cpf = new string(cpf.Where(char.IsDigit).ToArray());
+            if (cpf.Length != 11 || cpf.All(c => c == cpf[0])) return false;
+
+            int[] multiplicador1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            string tempCpf = cpf.Substring(0, 9);
+            int soma = 0;
+
+            for (int i = 0; i < 9; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+
+            int resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+
+            string digito = resto.ToString();
+            tempCpf += digito;
+            soma = 0;
+
+            for (int i = 0; i < 10; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+
+            resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+            digito += resto.ToString();
+
+            return cpf.EndsWith(digito);
         }
     }
 }

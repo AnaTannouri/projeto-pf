@@ -18,6 +18,10 @@ namespace ProjetoPF
         FrmConsultaFornecedor frmConsultaFornecedor = new FrmConsultaFornecedor();
         FrmConsultaFuncionario frmConsultaFuncionario = new FrmConsultaFuncionario();
 
+        FrmConsultaCategoria frmConsultaCategoria = new FrmConsultaCategoria();
+        FrmConsultaUnidadeMedida frmConsultaUnidadeMedida = new FrmConsultaUnidadeMedida();
+        FrmConsultaMarca frmConsultaMarca = new FrmConsultaMarca();
+        FrmConsultaProduto frmConsultaProduto = new FrmConsultaProduto();  
         public FrmPrincipal()
         {
             InitializeComponent();
@@ -60,6 +64,25 @@ namespace ProjetoPF
         private void fornecedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmConsultaFornecedor.ShowDialog();
+        }
+
+        private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaCategoria.ShowDialog();
+        }
+
+        private void unidadeDeMedidaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaUnidadeMedida.ShowDialog();
+        }
+
+        private void marcaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaMarca.ShowDialog();
+        }
+        private void produtoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmConsultaProduto.ShowDialog();
         }
     }
 }

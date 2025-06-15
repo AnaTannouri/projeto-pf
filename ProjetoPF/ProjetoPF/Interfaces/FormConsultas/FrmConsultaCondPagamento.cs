@@ -72,7 +72,7 @@ namespace ProjetoPF.FormConsultas
                     item.SubItems.Add(condicao.TaxaJuros.ToString("F2"));
                     item.SubItems.Add(condicao.Multa.ToString("F2"));
                     item.SubItems.Add(condicao.Desconto.ToString("F2"));
-                    item.SubItems.Add(condicao.Ativo ? "Sim" : "Não");
+                    item.SubItems.Add(condicao.Ativo ? "SIM" : "NÃO");
                     item.SubItems.Add(condicao.DataCriacao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(condicao.DataAtualizacao.ToString("dd/MM/yyyy"));
 

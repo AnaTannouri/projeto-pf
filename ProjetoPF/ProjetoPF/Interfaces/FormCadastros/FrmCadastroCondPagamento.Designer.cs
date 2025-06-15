@@ -75,10 +75,6 @@
             // 
             this.btnVoltar.TabIndex = 0;
             // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -93,7 +89,7 @@
             // 
             this.txtCondPagamento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCondPagamento.Location = new System.Drawing.Point(184, 54);
-            this.txtCondPagamento.MaxLength = 100;
+            this.txtCondPagamento.MaxLength = 50;
             this.txtCondPagamento.Name = "txtCondPagamento";
             this.txtCondPagamento.Size = new System.Drawing.Size(269, 20);
             this.txtCondPagamento.TabIndex = 1;
@@ -373,7 +369,7 @@
             // FrmCadastroCondPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.lblDesconto);
             this.Controls.Add(this.maskedTxtDesconto);
@@ -415,7 +411,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

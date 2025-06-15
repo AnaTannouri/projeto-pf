@@ -35,6 +35,10 @@
             // 
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click_2);
             // 
+            // txtPesquisa
+            // 
+            this.txtPesquisa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            // 
             // btnEditar
             // 
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click_2);
@@ -56,9 +60,9 @@
             // FrmConsultaPais
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
-            this.MaximumSize = new System.Drawing.Size(1360, 728);
             this.Name = "FrmConsultaPais";
             this.Text = "Consulta Países";
             this.Load += new System.EventHandler(this.FrmConsultaPais_Load);

@@ -76,3 +76,11 @@ C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.csproj.CoreCompil
 C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.csproj.Up2Date
 C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.exe
 C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.pdb
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroCategoria.resources
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaCategoria.resources
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroProduto.resources
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroUnidadeMedida.resources
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaUnidadeMedida.resources
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroMarca.resources
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaMarca.resources
+C:\Dev\test\projeto-pf\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaProduto.resources

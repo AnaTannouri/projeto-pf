@@ -42,6 +42,7 @@
             // 
             // txtPesquisa
             // 
+            this.txtPesquisa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPesquisa.Location = new System.Drawing.Point(34, 37);
             // 
             // btnEditar
@@ -67,7 +68,7 @@
             // FrmConsultaFormaPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label2);
             this.Name = "FrmConsultaFormaPagamento";

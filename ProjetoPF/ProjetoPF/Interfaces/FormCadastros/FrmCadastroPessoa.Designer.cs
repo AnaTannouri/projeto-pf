@@ -61,11 +61,6 @@
             // txtCodigo
             // 
             this.txtCodigo.Enabled = false;
-            this.txtCodigo.Location = new System.Drawing.Point(12, 53);
-            // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(118, 647);
             // 
             // comboPessoa
             // 
@@ -302,6 +297,7 @@
             // FrmCadastroPessoa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtComplemento);
@@ -339,7 +335,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.comboPessoa, 0);
             this.Controls.SetChildIndex(this.comboClassificacao, 0);
             this.Controls.SetChildIndex(this.txtNome_RazaoSocial, 0);

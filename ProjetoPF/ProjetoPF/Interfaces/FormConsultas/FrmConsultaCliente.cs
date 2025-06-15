@@ -55,7 +55,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                             cliente.Telefone,
                             cliente.DataCriacao.ToString("dd/MM/yyyy"),
                             cliente.DataAtualizacao.ToString("dd/MM/yyyy"),
-                            cliente.Ativo ? "Sim" : "Não"
+                            cliente.Ativo ? "SIM" : "NÃO"
                         }
                     };
 

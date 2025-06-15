@@ -77,7 +77,7 @@ namespace ProjetoPF.FormConsultas
                         Tag = formaPagamento  
                     };
                     item.SubItems.Add(formaPagamento.Descricao);
-                    item.SubItems.Add(formaPagamento.Ativo ? "Sim" : "Não");
+                    item.SubItems.Add(formaPagamento.Ativo ? "SIM" : "NÃO");
                     item.SubItems.Add(formaPagamento.DataCriacao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(formaPagamento.DataAtualizacao.ToString("dd/MM/yyyy"));
                     listViewFormaPagamento.Items.Add(item);

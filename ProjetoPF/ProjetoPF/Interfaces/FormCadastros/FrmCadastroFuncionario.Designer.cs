@@ -92,6 +92,14 @@
             "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "Física",
             "Jurídica",
             "Física",
@@ -102,49 +110,59 @@
             "Jurídica",
             "Física",
             "Jurídica"});
+            this.comboPessoa.MaxLength = 20;
             // 
             // comboClassificacao
             // 
             this.comboClassificacao.ItemHeight = 13;
             this.comboClassificacao.Location = new System.Drawing.Point(502, 324);
+            this.comboClassificacao.TabIndex = 14;
             // 
             // txtNome_RazaoSocial
             // 
+            this.txtNome_RazaoSocial.MaxLength = 50;
             this.txtNome_RazaoSocial.TabIndex = 1;
             // 
             // txtCep
             // 
             this.txtCep.Location = new System.Drawing.Point(15, 215);
+            this.txtCep.MaxLength = 10;
             this.txtCep.TabIndex = 8;
             // 
             // txtBairro
             // 
+            this.txtBairro.MaxLength = 40;
             this.txtBairro.TabIndex = 6;
             // 
             // txtNumero
             // 
             this.txtNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtNumero.MaxLength = 10;
             this.txtNumero.TabIndex = 5;
             this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTelefone
             // 
             this.txtTelefone.Location = new System.Drawing.Point(294, 273);
+            this.txtTelefone.MaxLength = 20;
             this.txtTelefone.TabIndex = 11;
             // 
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(15, 273);
+            this.txtEmail.MaxLength = 100;
             this.txtEmail.TabIndex = 10;
             // 
             // txtRua
             // 
             this.txtRua.Location = new System.Drawing.Point(15, 157);
+            this.txtRua.MaxLength = 40;
             this.txtRua.TabIndex = 4;
             // 
             // txtRg_InscricaoEstadual
             // 
             this.txtRg_InscricaoEstadual.Location = new System.Drawing.Point(293, 325);
+            this.txtRg_InscricaoEstadual.MaxLength = 15;
             this.txtRg_InscricaoEstadual.Size = new System.Drawing.Size(207, 20);
             this.txtRg_InscricaoEstadual.TabIndex = 13;
             // 
@@ -155,6 +173,7 @@
             // 
             // txtApelido_NomeFantasia
             // 
+            this.txtApelido_NomeFantasia.MaxLength = 40;
             this.txtApelido_NomeFantasia.TabIndex = 2;
             // 
             // dateTimePicker1
@@ -182,15 +201,12 @@
             // txtComplemento
             // 
             this.txtComplemento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtComplemento.MaxLength = 40;
             this.txtComplemento.TabIndex = 7;
             // 
             // label2
             // 
             this.label2.Location = new System.Drawing.Point(171, 36);
-            // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 647);
             // 
             // btnSalvar
             // 
@@ -200,6 +216,10 @@
             // btnVoltar
             // 
             this.btnVoltar.TabIndex = 0;
+            // 
+            // lblAtualizacao
+            // 
+            this.lblAtualizacao.Location = new System.Drawing.Point(124, 669);
             // 
             // btnCadastrarCidade
             // 
@@ -252,6 +272,7 @@
             // txtMatricula
             // 
             this.txtMatricula.Location = new System.Drawing.Point(365, 437);
+            this.txtMatricula.MaxLength = 20;
             this.txtMatricula.Name = "txtMatricula";
             this.txtMatricula.Size = new System.Drawing.Size(135, 20);
             this.txtMatricula.TabIndex = 21;
@@ -261,6 +282,7 @@
             // 
             this.txtCargo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCargo.Location = new System.Drawing.Point(15, 377);
+            this.txtCargo.MaxLength = 20;
             this.txtCargo.Name = "txtCargo";
             this.txtCargo.Size = new System.Drawing.Size(180, 20);
             this.txtCargo.TabIndex = 15;
@@ -276,6 +298,7 @@
             // txtCargaHoraria
             // 
             this.txtCargaHoraria.Location = new System.Drawing.Point(201, 437);
+            this.txtCargaHoraria.MaxLength = 20;
             this.txtCargaHoraria.Name = "txtCargaHoraria";
             this.txtCargaHoraria.Size = new System.Drawing.Size(150, 20);
             this.txtCargaHoraria.TabIndex = 20;
@@ -286,9 +309,10 @@
             this.comboTurno.FormattingEnabled = true;
             this.comboTurno.ItemHeight = 13;
             this.comboTurno.Location = new System.Drawing.Point(15, 437);
+            this.comboTurno.MaxLength = 20;
             this.comboTurno.Name = "comboTurno";
             this.comboTurno.Size = new System.Drawing.Size(180, 21);
-            this.comboTurno.TabIndex = 85;
+            this.comboTurno.TabIndex = 19;
             // 
             // label7
             // 
@@ -560,6 +584,7 @@
             // FrmCadastroFuncionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label25);
@@ -599,7 +624,7 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label36);
             this.Name = "FrmCadastroFuncionario";
-            this.Text = "Cadastro Funcionário";
+            this.Text = "18";
             this.Load += new System.EventHandler(this.FrmCadastroFuncionario_Load);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
@@ -607,7 +632,6 @@
             this.Controls.SetChildIndex(this.checkAtivo, 0);
             this.Controls.SetChildIndex(this.lblDataAtual, 0);
             this.Controls.SetChildIndex(this.DataAtaul, 0);
-            this.Controls.SetChildIndex(this.lblUsuario, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtComplemento, 0);
             this.Controls.SetChildIndex(this.label3, 0);

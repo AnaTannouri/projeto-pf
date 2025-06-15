@@ -50,7 +50,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     item.SubItems.Add(pais.Nome);
                     item.SubItems.Add(pais.Sigla);
                     item.SubItems.Add(pais.DDI);
-                    item.SubItems.Add(pais.Ativo ? "Sim" : "Não"); 
+                    item.SubItems.Add(pais.Ativo ? "SIM" : "NÃO"); 
                     item.SubItems.Add(pais.DataCriacao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(pais.DataAtualizacao.ToString("dd/MM/yyyy"));
 
