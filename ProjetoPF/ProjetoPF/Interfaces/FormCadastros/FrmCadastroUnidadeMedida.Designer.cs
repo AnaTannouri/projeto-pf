@@ -31,10 +31,14 @@
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtSigla = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSalvar
             // 
+            this.btnSalvar.TabIndex = 3;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // txtCodigo
@@ -44,7 +48,7 @@
             // 
             // btnVoltar
             // 
-            this.btnVoltar.TabIndex = 3;
+            this.btnVoltar.TabIndex = 4;
             this.btnVoltar.Click += new System.EventHandler(this.btnVoltar_Click);
             // 
             // txtDescricao
@@ -53,7 +57,7 @@
             this.txtDescricao.Location = new System.Drawing.Point(188, 53);
             this.txtDescricao.MaxLength = 50;
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(1144, 20);
+            this.txtDescricao.Size = new System.Drawing.Size(567, 20);
             this.txtDescricao.TabIndex = 1;
             // 
             // label2
@@ -76,10 +80,42 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "*";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(801, 30);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(15, 20);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "*";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(762, 37);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(33, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Sigla:";
+            // 
+            // txtSigla
+            // 
+            this.txtSigla.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtSigla.Location = new System.Drawing.Point(765, 53);
+            this.txtSigla.MaxLength = 3;
+            this.txtSigla.Name = "txtSigla";
+            this.txtSigla.Size = new System.Drawing.Size(114, 20);
+            this.txtSigla.TabIndex = 2;
+            // 
             // FrmCadastroUnidadeMedida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtSigla);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDescricao);
@@ -98,6 +134,9 @@
             this.Controls.SetChildIndex(this.txtDescricao, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.txtSigla, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -108,5 +147,8 @@
         private System.Windows.Forms.TextBox txtDescricao;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtSigla;
     }
 }

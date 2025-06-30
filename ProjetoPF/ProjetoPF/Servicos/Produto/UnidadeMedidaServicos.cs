@@ -17,6 +17,9 @@ namespace ProjetoPF.Servicos.Produto
             if (string.IsNullOrWhiteSpace(unidade.Descricao))
                 throw new Exception("Descrição é obrigatória!");
 
+            if (string.IsNullOrWhiteSpace(unidade.Sigla))
+                throw new Exception("Sigla é obrigatória!");
+
             unidade.DataCriacao = DateTime.Now;
             unidade.DataAtualizacao = DateTime.Now;
             Criar(unidade);

@@ -90,9 +90,17 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private bool ValidarEntrada()
         {
             string descricao = txtDescricao.Text.Trim();
+            string sigla = txtSigla.Text.Trim();
+
             if (string.IsNullOrEmpty(descricao))
             {
-                MessageBox.Show("Informe a unidade de medida.");
+                MessageBox.Show("Informe a unidade de medida (descrição).");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(sigla))
+            {
+                MessageBox.Show("Informe a sigla da unidade de medida.");
                 return false;
             }
 
@@ -102,11 +110,18 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return false;
             }
 
+            if (unidadeServices.VerificarDuplicidade("Sigla", sigla, unidade))
+            {
+                MessageBox.Show("Já existe uma unidade de medida com essa sigla.");
+                return false;
+            }
+
             return true;
         }
         private void AtualizarObjeto()
         {
             unidade.Descricao = txtDescricao.Text.Trim();
+            unidade.Sigla = txtSigla.Text.Trim();
             unidade.Ativo = checkAtivo.Checked;
 
             if (isEditando || isExcluindo)
@@ -121,6 +136,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             txtCodigo.Text = unidadeMedida.Id.ToString();
             txtDescricao.Text = unidadeMedida.Descricao;
+            txtSigla.Text = unidadeMedida.Sigla;
             checkAtivo.Checked = unidadeMedida.Ativo;
 
             unidade = unidadeMedida;
@@ -132,6 +148,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             txtCodigo.Clear();
             txtDescricao.Clear();
+            txtSigla.Clear();
             unidade = new UnidadeMedida();
             isEditando = false;
             checkAtivo.Checked = true;
@@ -140,12 +157,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
         public void BloquearCampos()
         {
             txtCodigo.Enabled = false;
+            txtSigla.Enabled = false;
             txtDescricao.Enabled = false;
         }
 
         public void DesbloquearCampos()
         {
             txtCodigo.Enabled = false;
+            txtSigla.Enabled = true;
             txtDescricao.Enabled = true;
             btnSalvar.Enabled = true;
         }

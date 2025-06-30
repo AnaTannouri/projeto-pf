@@ -18,6 +18,7 @@ namespace ProjetoPF.Modelos.Produto
         public decimal PrecoCusto { get; set; }
         public decimal PrecoVenda { get; set; }
         public decimal? CustoUltimaCompra { get; set; }
+        public decimal MargemLucro { get; set; }
         public string Observacao { get; set; }
     }
 }

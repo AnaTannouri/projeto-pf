@@ -26,61 +26,62 @@ namespace ProjetoPF
         {
             InitializeComponent();
         }
-        private void formaDePagamentoToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void formaDePagamentoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaFormaPagamento.ShowDialog();
         }
 
-        private void condiçãoDePagamentoToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void condiçãoDePagamentoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaCondPagamento.ShowDialog();
         }
 
-        private void paísToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void paísToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaPais.ShowDialog();
         }
 
-        private void estadoToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void estadoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaEstado.ShowDialog();
         }
 
-        private void cidadeToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void cidadeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaCidade.ShowDialog();
         }
 
-        private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clienteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaCliente.ShowDialog();
         }
 
-        private void funcionárioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void funcionárioToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaFuncionario.ShowDialog();
         }
 
-        private void fornecedorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void fornecedorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaFornecedor.ShowDialog();
         }
 
-        private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void categoriaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaCategoria.ShowDialog();
         }
 
-        private void unidadeDeMedidaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void unidadeDeMedidaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaUnidadeMedida.ShowDialog();
         }
 
-        private void marcaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void marcaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmConsultaMarca.ShowDialog();
         }
-        private void produtoToolStripMenuItem1_Click(object sender, EventArgs e)
+
+        private void produtoToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             frmConsultaProduto.ShowDialog();
         }

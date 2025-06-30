@@ -10,5 +10,6 @@ namespace ProjetoPF.Modelos.Produto
     public class UnidadeMedida : BaseModelos
     {
         public string Descricao { get; set; }
+        public string Sigla { get; set; }
     }
 }

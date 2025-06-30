@@ -30,6 +30,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Unidade de Medida", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Sigla", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
@@ -78,6 +79,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                         Tag = unidade
                     };
                     item.SubItems.Add(unidade.Descricao);
+                    item.SubItems.Add(unidade.Sigla);
                     item.SubItems.Add(unidade.Ativo ? "SIM" : "NÃO");
                     item.SubItems.Add(unidade.DataCriacao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(unidade.DataAtualizacao.ToString("dd/MM/yyyy"));

@@ -465,9 +465,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
-
                 if (!ValidarEntrada())
                     return;
+
+                if (DataDem.Value.Date < Dataadm.Value.Date)
+                {
+                    MessageBox.Show("A data de demissão não pode ser anterior à data de admissão.", "Data inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 AtualizarObjeto();
 
@@ -493,6 +498,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FrmCadastroFuncionario_Load(object sender, EventArgs e)
         {
             label4.Text = "Funcionário";
+
+            CarregarCombosFixos();
 
             if (funcionario != null && funcionario.Id > 0 && (isEditando || isExcluindo))
             {

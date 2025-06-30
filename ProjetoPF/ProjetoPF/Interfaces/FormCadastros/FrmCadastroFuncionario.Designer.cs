@@ -100,6 +100,8 @@
             "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "Física",
             "Jurídica",
             "Física",
@@ -216,10 +218,6 @@
             // btnVoltar
             // 
             this.btnVoltar.TabIndex = 0;
-            // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 669);
             // 
             // btnCadastrarCidade
             // 
@@ -624,7 +622,7 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label36);
             this.Name = "FrmCadastroFuncionario";
-            this.Text = "18";
+            this.Text = "Cadastro Funcionário";
             this.Load += new System.EventHandler(this.FrmCadastroFuncionario_Load);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);

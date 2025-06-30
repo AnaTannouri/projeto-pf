@@ -49,7 +49,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -66,6 +65,8 @@
             this.txtMarca = new System.Windows.Forms.TextBox();
             this.txtCodMarca = new System.Windows.Forms.TextBox();
             this.txtObser = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtMargemLucro = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSalvar
@@ -106,29 +107,31 @@
             this.txtEstoque.Enabled = false;
             this.txtEstoque.Location = new System.Drawing.Point(12, 116);
             this.txtEstoque.Name = "txtEstoque";
-            this.txtEstoque.Size = new System.Drawing.Size(311, 20);
+            this.txtEstoque.Size = new System.Drawing.Size(153, 20);
             this.txtEstoque.TabIndex = 16;
             // 
             // txtPrecoCusto
             // 
             this.txtPrecoCusto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtPrecoCusto.Location = new System.Drawing.Point(350, 116);
+            this.txtPrecoCusto.Enabled = false;
+            this.txtPrecoCusto.Location = new System.Drawing.Point(189, 116);
             this.txtPrecoCusto.MaxLength = 10;
             this.txtPrecoCusto.Name = "txtPrecoCusto";
-            this.txtPrecoCusto.Size = new System.Drawing.Size(311, 20);
+            this.txtPrecoCusto.Size = new System.Drawing.Size(250, 20);
             this.txtPrecoCusto.TabIndex = 3;
             this.txtPrecoCusto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtPrecoCusto.TextChanged += new System.EventHandler(this.txtPrecoCusto_TextChanged);
+
             // 
             // txtPrecoVenda
             // 
             this.txtPrecoVenda.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtPrecoVenda.Location = new System.Drawing.Point(681, 116);
+            this.txtPrecoVenda.Location = new System.Drawing.Point(457, 116);
             this.txtPrecoVenda.MaxLength = 10;
             this.txtPrecoVenda.Name = "txtPrecoVenda";
-            this.txtPrecoVenda.Size = new System.Drawing.Size(311, 20);
+            this.txtPrecoVenda.Size = new System.Drawing.Size(265, 20);
             this.txtPrecoVenda.TabIndex = 4;
             this.txtPrecoVenda.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPrecoVenda.TextChanged += new System.EventHandler(this.txtPrecoVenda_TextChanged);
             // 
             // txtCodCategoria
             // 
@@ -209,7 +212,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(347, 100);
+            this.label5.Location = new System.Drawing.Point(186, 100);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 13);
             this.label5.TabIndex = 28;
@@ -218,7 +221,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(678, 100);
+            this.label6.Location = new System.Drawing.Point(454, 100);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(94, 13);
             this.label6.TabIndex = 29;
@@ -280,23 +283,12 @@
             this.label12.TabIndex = 35;
             this.label12.Text = "*";
             // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.ForeColor = System.Drawing.Color.Red;
-            this.label14.Location = new System.Drawing.Point(437, 95);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(15, 20);
-            this.label14.TabIndex = 37;
-            this.label14.Text = "*";
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(772, 94);
+            this.label15.Location = new System.Drawing.Point(544, 95);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(15, 20);
             this.label15.TabIndex = 38;
@@ -447,10 +439,33 @@
             this.txtObser.Size = new System.Drawing.Size(1315, 155);
             this.txtObser.TabIndex = 8;
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(733, 100);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(116, 13);
+            this.label20.TabIndex = 55;
+            this.label20.Text = "Margem de Lucro (R$):";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtMargemLucro
+            // 
+            this.txtMargemLucro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtMargemLucro.Location = new System.Drawing.Point(735, 116);
+            this.txtMargemLucro.MaxLength = 10;
+            this.txtMargemLucro.Name = "txtMargemLucro";
+            this.txtMargemLucro.Size = new System.Drawing.Size(265, 20);
+            this.txtMargemLucro.TabIndex = 54;
+            this.txtMargemLucro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMargemLucro.TextChanged += new System.EventHandler(this.txtMargemLucro_TextChanged);
+            // 
             // FrmCadastroProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.txtMargemLucro);
             this.Controls.Add(this.txtObser);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label22);
@@ -467,7 +482,6 @@
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -522,7 +536,6 @@
             this.Controls.SetChildIndex(this.label10, 0);
             this.Controls.SetChildIndex(this.label11, 0);
             this.Controls.SetChildIndex(this.label12, 0);
-            this.Controls.SetChildIndex(this.label14, 0);
             this.Controls.SetChildIndex(this.label15, 0);
             this.Controls.SetChildIndex(this.label16, 0);
             this.Controls.SetChildIndex(this.label17, 0);
@@ -539,6 +552,8 @@
             this.Controls.SetChildIndex(this.label22, 0);
             this.Controls.SetChildIndex(this.label21, 0);
             this.Controls.SetChildIndex(this.txtObser, 0);
+            this.Controls.SetChildIndex(this.txtMargemLucro, 0);
+            this.Controls.SetChildIndex(this.label20, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -563,7 +578,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
@@ -584,5 +598,7 @@
         public System.Windows.Forms.TextBox txtFornecedor;
         public System.Windows.Forms.TextBox txtCodFornecedor;
         private System.Windows.Forms.TextBox txtObser;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtMargemLucro;
     }
 }

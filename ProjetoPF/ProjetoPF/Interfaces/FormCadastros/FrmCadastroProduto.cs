@@ -41,6 +41,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtPrecoCusto.KeyPress += SomenteNumerosPontuacao_KeyPress;
             txtPrecoVenda.KeyPress += SomenteNumerosPontuacao_KeyPress;
+
+            txtPrecoVenda.TextChanged += txtPrecoVenda_TextChanged;
         }
         private bool ValidarEntrada()
         {
@@ -53,12 +55,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (string.IsNullOrWhiteSpace(txtUnidadeMedida.Text) || string.IsNullOrWhiteSpace(txtCodUnidadeMedida.Text))
             {
                 MessageBox.Show("Selecione a unidade de medida.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtPrecoCusto.Text))
-            {
-                MessageBox.Show("Informe o preço de custo.");
                 return false;
             }
 
@@ -151,6 +147,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtObser.Text = produto.Observacao;
             checkAtivo.Checked = produto.Ativo;
+            CalcularMargemLucro();
             checkAtivo.Enabled = isEditandoForm;
 
             labelCriacao.Text = produto.DataCriacao.ToString("dd/MM/yyyy");
@@ -170,6 +167,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtCodUnidadeMedida.Enabled = false;
             txtUnidadeMedida.Enabled = false;
+            txtMargemLucro.Enabled = false;
 
             txtEstoque.Enabled = false;
             txtPrecoCusto.Enabled = false;
@@ -199,9 +197,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtCodUnidadeMedida.Enabled = false;
             txtUnidadeMedida.Enabled = false;
+            txtMargemLucro.Enabled = false;
 
             txtEstoque.Enabled = false;
-            txtPrecoCusto.Enabled = true;
+            txtPrecoCusto.Enabled = false;
             txtPrecoVenda.Enabled = true;
             txtUltCompra.Enabled = false;
 
@@ -313,11 +312,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 estoque = 0;
             produto.Estoque = estoque;
 
-            string precoCustoStr = txtPrecoCusto.Text.Replace("R$", "").Trim();
-            if (!decimal.TryParse(precoCustoStr, out decimal precoCusto))
-                throw new Exception("Preço de custo inválido.");
-            produto.PrecoCusto = precoCusto;
-
             string precoVendaStr = txtPrecoVenda.Text.Replace("R$", "").Trim();
             if (!decimal.TryParse(precoVendaStr, out decimal precoVenda))
                 throw new Exception("Preço de venda inválido.");
@@ -365,10 +359,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             frm.ShowDialog();
         }
 
-        private void txtPrecoCusto_TextChanged(object sender, EventArgs e)
-        {
-
-        }
         private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) &&
@@ -379,6 +369,31 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 e.Handled = true;
             }
+        }
+        private void CalcularMargemLucro()
+        {
+            bool custoOk = decimal.TryParse(txtPrecoCusto.Text.Replace("R$", "").Trim(), NumberStyles.Any, new CultureInfo("pt-BR"), out decimal precoCusto);
+            bool vendaOk = decimal.TryParse(txtPrecoVenda.Text.Replace("R$", "").Trim(), NumberStyles.Any, new CultureInfo("pt-BR"), out decimal precoVenda);
+
+            if (custoOk && vendaOk && precoCusto > 0)
+            {
+                decimal margem = ((precoVenda - precoCusto) / precoCusto) * 100;
+                txtMargemLucro.Text = margem.ToString("F2") + " %";
+            }
+            else
+            {
+                txtMargemLucro.Text = "R$ 0,00";
+            }
+        }
+
+        private void txtMargemLucro_TextChanged(object sender, EventArgs e)
+        {
+            CalcularMargemLucro();
+        }
+
+        private void txtPrecoVenda_TextChanged(object sender, EventArgs e)
+        {
+            CalcularMargemLucro();
         }
     }
 }
