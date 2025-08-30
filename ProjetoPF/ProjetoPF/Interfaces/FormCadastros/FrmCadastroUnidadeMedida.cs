@@ -1,4 +1,5 @@
 ﻿using ProjetoPF.Dao;
+using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Produto;
 using ProjetoPF.Servicos;
 using System;
@@ -173,8 +174,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             checkAtivo.Enabled = isEditando;
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = unidade.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = unidade.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = unidade.DataCriacao > DateTime.MinValue ? unidade.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = unidade.DataAtualizacao > DateTime.MinValue ? unidade.DataAtualizacao.ToShortDateString() : "";
         }
 
         private void btnVoltar_Click(object sender, EventArgs e)

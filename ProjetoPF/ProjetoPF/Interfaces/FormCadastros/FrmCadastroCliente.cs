@@ -397,8 +397,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = cliente.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = cliente.DataAtualizacao.ToShortDateString();
+            dateTimePicker1.MaxDate = DateTime.Today;
+            labelCriacao.Text = cliente.DataCriacao > DateTime.MinValue ? cliente.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = cliente.DataAtualizacao > DateTime.MinValue ? cliente.DataAtualizacao.ToShortDateString() : "";
         }
         private void button2_Click(object sender, EventArgs e)
         {

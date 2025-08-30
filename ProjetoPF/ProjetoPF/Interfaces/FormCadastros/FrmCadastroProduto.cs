@@ -15,6 +15,7 @@ using ProjetoPF.Modelos.Produto;
 using ProjetoPF.Servicos.Produto;
 using ProjetoPF.Interfaces.FormConsultas;
 using System.Globalization;
+using System.Linq;
 
 namespace ProjetoPF.Interfaces.FormCadastros
 {
@@ -224,8 +225,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FrmCadastroProduto_Load(object sender, EventArgs e)
         {
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = produto.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = produto.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = produto.DataCriacao > DateTime.MinValue ? produto.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = produto.DataAtualizacao > DateTime.MinValue ? produto.DataAtualizacao.ToShortDateString() : "";
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -361,14 +362,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) &&
-                !char.IsDigit(e.KeyChar) &&
-                e.KeyChar != '.' &&
-                e.KeyChar != '-' &&
-                e.KeyChar != '/')
-            {
-                e.Handled = true;
-            }
+            TextBox txt = sender as TextBox;
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+                return;
+
+            if ((e.KeyChar == ',' || e.KeyChar == '.') && !txt.Text.Contains(',') && !txt.Text.Contains('.'))
+                return;
+            e.Handled = true;
         }
         private void CalcularMargemLucro()
         {

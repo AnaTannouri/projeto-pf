@@ -174,8 +174,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FrmCadastroCidade_Load_1(object sender, EventArgs e)
         {
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = cidade.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = cidade.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = cidade.DataCriacao > DateTime.MinValue ? cidade.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = cidade.DataAtualizacao > DateTime.MinValue ? cidade.DataAtualizacao.ToShortDateString() : "";
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {

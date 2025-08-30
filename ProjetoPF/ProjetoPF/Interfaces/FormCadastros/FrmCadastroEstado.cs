@@ -235,8 +235,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void FrmCadastroEstado_Load(object sender, EventArgs e)
         {
-            labelCriacao.Text = estado.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = estado.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = estado.DataCriacao > DateTime.MinValue ? estado.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = estado.DataAtualizacao > DateTime.MinValue ? estado.DataAtualizacao.ToShortDateString() : "";
         }
     }
 }

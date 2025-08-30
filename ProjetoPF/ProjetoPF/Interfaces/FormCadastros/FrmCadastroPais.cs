@@ -169,8 +169,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void FrmCadastroPais_Load(object sender, EventArgs e)
         {
-            labelCriacao.Text = pais.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = pais.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = pais.DataCriacao > DateTime.MinValue ? pais.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = pais.DataAtualizacao > DateTime.MinValue ? pais.DataAtualizacao.ToShortDateString() : "";
         }
     }
 }

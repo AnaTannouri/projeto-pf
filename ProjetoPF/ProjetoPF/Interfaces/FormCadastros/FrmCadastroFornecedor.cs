@@ -46,7 +46,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtTelefone.KeyPress += Telefone_KeyPress;
             txtCep.KeyPress += SomenteNumerosPontuacao_KeyPress;
             txtNumero.KeyPress += SomenteNumeros_KeyPress;
-            txtValorMin.KeyPress += SomenteNumeros_KeyPress;
+            txtValorMin.KeyPress += SomenteNumerosPontuacao_KeyPress;
         }
         private bool ValidarCpf(string cpf)
         {
@@ -380,9 +380,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FrmCadastroFornecedor_Load(object sender, EventArgs e)
         {
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            dateTimePicker1.MaxDate = DateTime.Today;
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = fornecedor.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = fornecedor.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = fornecedor.DataCriacao > DateTime.MinValue ? fornecedor.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = fornecedor.DataAtualizacao > DateTime.MinValue ? fornecedor.DataAtualizacao.ToShortDateString() : "";
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -516,14 +517,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) &&
-                !char.IsDigit(e.KeyChar) &&
-                e.KeyChar != '.' &&
-                e.KeyChar != '-' &&
-                e.KeyChar != '/')
-            {
-                e.Handled = true;
-            }
+            TextBox txt = sender as TextBox;
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+                return;
+
+            if ((e.KeyChar == ',' || e.KeyChar == '.') && !txt.Text.Contains(',') && !txt.Text.Contains('.'))
+                return;
+            e.Handled = true;
         }
 
         private void Telefone_KeyPress(object sender, KeyPressEventArgs e)

@@ -3,10 +3,7 @@
   "WorkspaceRootPath": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|ProjetoPF||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\pratica-profissional-banca\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastroproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastroproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastroproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -18,7 +15,7 @@
       "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultacondpagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastrocliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\pratica-profissional-banca\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastrocliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastrocliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -272,9 +269,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\projetopf\\modelos\\localizacao\\estado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\localizacao\\estado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\pratica-profissional-banca\\projetopf\\projetopf\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|1e78f8db-6c07-4d61-a18f-7514010abd56"
     }
   ],
   "DocumentGroupContainers": [
@@ -284,7 +278,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -304,19 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProjetoPF",
-              "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\ProjetoPF.csproj",
-              "RelativeDocumentMoniker": "ProjetoPF\\ProjetoPF.csproj",
-              "ToolTip": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\ProjetoPF.csproj",
-              "RelativeToolTip": "ProjetoPF\\ProjetoPF.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-08-30T14:11:36.402Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "FrmCadastroCliente.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCliente.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCliente.cs",
@@ -324,11 +306,12 @@
               "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCliente.cs",
               "ViewState": "AgIAAH4BAAAAAAAAAAAgwJEBAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T23:58:25.332Z"
+              "WhenOpened": "2025-07-02T23:58:25.332Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "FrmCadastroCliente.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCliente.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCliente.cs",
@@ -339,29 +322,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "FrmConsultaCondPagamento.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCondPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCondPagamento.cs",
               "ToolTip": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCondPagamento.cs [Design]",
               "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCondPagamento.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-29T18:43:04.611Z"
+              "WhenOpened": "2025-06-29T18:43:04.611Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "FrmConsultaProduto.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
               "ToolTip": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs [Design]",
               "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-29T19:44:49.411Z"
+              "WhenOpened": "2025-06-29T19:44:49.411Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "FrmCadastroProduto.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
@@ -373,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "FrmCadastroCategoria.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCategoria.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCategoria.cs",
@@ -384,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "FrmCadastroCondPagamento.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs",
@@ -396,7 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "FrmCadastroUnidadeMedida.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs",
@@ -408,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "FuncionarioServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Pessoa\\FuncionarioServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Pessoa\\FuncionarioServicos.cs",
@@ -420,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "FrmCadastroCategoria.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCategoria.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCategoria.cs",
@@ -432,7 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "FrmCadastroFormaPagamento.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
@@ -444,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "FrmCadastroFuncionario.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFuncionario.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFuncionario.cs",
@@ -455,7 +440,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "CondicaoPagamentoDAO.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Dao\\Pagamento\\CondicaoPagamentoDAO.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Pagamento\\CondicaoPagamentoDAO.cs",
@@ -467,7 +452,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "FrmCadastroFuncionario.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFuncionario.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFuncionario.cs",
@@ -479,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "CondicaoPagamentoParcelasDAO.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Dao\\Pagamento\\CondicaoPagamentoParcelasDAO.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Pagamento\\CondicaoPagamentoParcelasDAO.cs",
@@ -491,7 +476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "CondicaoPagamentoParcelasServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Pagamento\\CondicaoPagamentoParcelasServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Pagamento\\CondicaoPagamentoParcelasServicos.cs",
@@ -503,7 +488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "CondicaoPagamentoServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Pagamento\\CondicaoPagamentoServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Pagamento\\CondicaoPagamentoServicos.cs",
@@ -515,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 19,
               "Title": "CidadeServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Localizacao\\CidadeServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Localizacao\\CidadeServicos.cs",
@@ -527,7 +512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "FrmConsultaPais.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPais.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaPais.cs",
@@ -539,7 +524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 23,
               "Title": "FrmCadastroCidade.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCidade.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCidade.cs",
@@ -551,7 +536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 21,
               "Title": "BaseDao.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Dao\\BaseDao.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Dao\\BaseDao.cs",
@@ -563,7 +548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "EstadoServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Localizacao\\EstadoServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Localizacao\\EstadoServicos.cs",
@@ -575,7 +560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 25,
               "Title": "FrmConsultaFuncionario.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFuncionario.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFuncionario.cs",
@@ -587,7 +572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 22,
               "Title": "CidadeDAO.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Dao\\Localizacao\\CidadeDAO.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Localizacao\\CidadeDAO.cs",
@@ -599,7 +584,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 20,
               "Title": "FrmCadastroEstado.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroEstado.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroEstado.cs",
@@ -611,7 +596,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 26,
               "Title": "FormaPagamentoServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Pagamento\\FormaPagamentoServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Pagamento\\FormaPagamentoServicos.cs",
@@ -623,7 +608,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 24,
               "Title": "FrmCadastroCidade.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCidade.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCidade.cs",
@@ -634,7 +619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 28,
               "Title": "FrmConsultaEstado.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaEstado.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaEstado.cs",
@@ -646,7 +631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 27,
               "Title": "FrmCadastroEstado.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroEstado.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroEstado.cs",
@@ -657,7 +642,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 31,
               "Title": "FrmCadastroPessoa.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs",
@@ -669,7 +654,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 30,
               "Title": "FrmCadastroProduto.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
@@ -677,11 +662,12 @@
               "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
               "ViewState": "AgIAAMwAAAAAAAAAAAAAAOQAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-29T17:34:55.923Z"
+              "WhenOpened": "2025-06-29T17:34:55.923Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 29,
               "Title": "FrmCadastroUnidadeMedida.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs",
@@ -692,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 33,
               "Title": "FrmCadastroPais.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPais.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPais.cs",
@@ -704,7 +690,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 34,
               "Title": "FrmCadastroPais.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPais.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPais.cs",
@@ -715,7 +701,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 35,
               "Title": "FrmCadastroPai.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
@@ -727,7 +713,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 36,
               "Title": "FrmCadastroPai.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPai.cs",
@@ -738,7 +724,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 32,
               "Title": "FrmCadastroPessoa.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs",
@@ -749,7 +735,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 37,
               "Title": "FrmCadastroMarca.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroMarca.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroMarca.cs",
@@ -761,7 +747,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 39,
               "Title": "FrmCadastroFornecedor.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
@@ -773,7 +759,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 40,
               "Title": "FrmCadastroFornecedor.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
@@ -784,7 +770,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 38,
               "Title": "FrmCadastroMarca.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroMarca.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroMarca.cs",
@@ -795,7 +781,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 41,
               "Title": "FrmCadastroFormaPagamento.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFormaPagamento.cs",
@@ -806,7 +792,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 42,
               "Title": "FrmCadastroCondPagamento.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs",
@@ -817,7 +803,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 47,
               "Title": "BasePessoa.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Pessoa\\BasePessoa.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pessoa\\BasePessoa.cs",
@@ -829,7 +815,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 48,
               "Title": "Fornecedor.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Pessoa\\Fornecedor.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pessoa\\Fornecedor.cs",
@@ -841,7 +827,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 43,
               "Title": "Produtos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Produto\\Produtos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Produto\\Produtos.cs",
@@ -853,7 +839,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 44,
               "Title": "BaseModelos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\BaseModelos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\BaseModelos.cs",
@@ -865,7 +851,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 45,
               "Title": "ProdutoServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\ProdutoServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Produto\\ProdutoServicos.cs",
@@ -877,7 +863,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 49,
               "Title": "ClienteServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Pessoa\\ClienteServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Pessoa\\ClienteServicos.cs",
@@ -889,7 +875,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 46,
               "Title": "Funcionario.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Pessoa\\Funcionario.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pessoa\\Funcionario.cs",
@@ -901,7 +887,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 50,
               "Title": "FrmConsultaCondPagamento.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCondPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCondPagamento.cs",
@@ -909,11 +895,12 @@
               "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCondPagamento.cs",
               "ViewState": "AgIAAH8AAAAAAAAAAAAswLUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-29T18:44:20.056Z"
+              "WhenOpened": "2025-06-29T18:44:20.056Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 51,
               "Title": "FrmConsultaFuncionario.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFuncionario.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFuncionario.cs",
@@ -924,7 +911,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 52,
               "Title": "CondicaoPagamento.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Pagamento\\CondicaoPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pagamento\\CondicaoPagamento.cs",
@@ -936,7 +923,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 53,
               "Title": "CondicaoPagamentoParcelas.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Pagamento\\CondicaoPagamentoParcelas.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pagamento\\CondicaoPagamentoParcelas.cs",
@@ -948,7 +935,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 60,
               "Title": "FrmPrincipal.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FrmPrincipal.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FrmPrincipal.cs",
@@ -959,7 +946,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 61,
               "Title": "FrmPrincipal.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FrmPrincipal.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FrmPrincipal.cs",
@@ -971,7 +958,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 62,
               "Title": "FrmPrincipal.Designer.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FrmPrincipal.Designer.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FrmPrincipal.Designer.cs",
@@ -983,7 +970,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 54,
               "Title": "FrmCadastroProduto.Designer.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.Designer.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.Designer.cs",
@@ -991,11 +978,12 @@
               "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.Designer.cs",
               "ViewState": "AgIAAGIAAAAAAAAAAAAEwHoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-29T17:54:50.298Z"
+              "WhenOpened": "2025-06-29T17:54:50.298Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 55,
               "Title": "FrmConsultaFormaPagamento.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFormaPagamento.cs",
@@ -1006,7 +994,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 58,
               "Title": "UnidadeMedidaServicos.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\UnidadeMedidaServicos.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Produto\\UnidadeMedidaServicos.cs",
@@ -1018,7 +1006,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 57,
               "Title": "FrmConsultaUnidadeMedida.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaUnidadeMedida.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaUnidadeMedida.cs",
@@ -1030,7 +1018,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 56,
               "Title": "FrmConsultaUnidadeMedida.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaUnidadeMedida.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaUnidadeMedida.cs",
@@ -1041,7 +1029,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 59,
               "Title": "UnidadeMedida.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Produto\\UnidadeMedida.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Produto\\UnidadeMedida.cs",
@@ -1053,7 +1041,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 63,
               "Title": "Cliente.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Pessoa\\Cliente.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pessoa\\Cliente.cs",
@@ -1065,7 +1053,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 64,
               "Title": "FormaPagamento.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Pagamento\\FormaPagamento.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pagamento\\FormaPagamento.cs",
@@ -1077,7 +1065,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 65,
               "Title": "Pais.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Localizacao\\Pais.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Localizacao\\Pais.cs",
@@ -1089,7 +1077,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 66,
               "Title": "Estado.cs",
               "DocumentMoniker": "C:\\Dev\\pratica-profissional-banca\\ProjetoPF\\ProjetoPF\\Modelos\\Localizacao\\Estado.cs",
               "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Localizacao\\Estado.cs",

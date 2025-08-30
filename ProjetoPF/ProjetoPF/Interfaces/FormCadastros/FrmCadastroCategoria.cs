@@ -1,4 +1,5 @@
 ﻿using ProjetoPF.Dao;
+using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Produto;
 using ProjetoPF.Servicos;
 using System;
@@ -156,8 +157,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 btnSalvar.Text = "Salvar";
             }
-            labelCriacao.Text = categoria.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = categoria.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = categoria.DataCriacao > DateTime.MinValue ? categoria.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = categoria.DataAtualizacao > DateTime.MinValue ? categoria.DataAtualizacao.ToShortDateString() : "";
         }
 
         private void btnVoltar_Click(object sender, EventArgs e)

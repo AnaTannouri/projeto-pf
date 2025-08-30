@@ -54,8 +54,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCep.KeyPress += SomenteNumerosPontuacao_KeyPress;
             txtTelefone.KeyPress += Telefone_KeyPress;
             txtNumero.KeyPress += SomenteNumeros_KeyPress;
-            txtSalario.KeyPress += SomenteNumeros_KeyPress;
-            txtCargaHoraria.KeyPress += SomenteNumeros_KeyPress;
+            txtSalario.KeyPress += SomenteNumerosPontuacao_KeyPress;
+            txtCargaHoraria.KeyPress += SomenteNumerosPontuacao_KeyPress;
         }
         private bool ValidarEntrada()
         {
@@ -507,12 +507,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
             }
 
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            dateTimePicker1.MaxDate = DateTime.Today;
             DataDem.ValueChanged += DataDem_ValueChanged;
             Dataadm.ValueChanged += Dataadm_ValueChanged;
+            
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = funcionario.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = funcionario.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = funcionario.DataCriacao > DateTime.MinValue ? funcionario.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = funcionario.DataAtualizacao > DateTime.MinValue ? funcionario.DataAtualizacao.ToShortDateString() : "";
             if (comboPessoa.Items.Count == 0)
             {
                 comboPessoa.Items.Add("FÍSICA");
@@ -559,14 +561,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) &&
-                !char.IsDigit(e.KeyChar) &&
-                e.KeyChar != '.' &&
-                e.KeyChar != '-' &&
-                e.KeyChar != '/')
-            {
-                e.Handled = true;
-            }
+            TextBox txt = sender as TextBox;
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+                return;
+
+            if ((e.KeyChar == ',' || e.KeyChar == '.') && !txt.Text.Contains(',') && !txt.Text.Contains('.'))
+                return;
+            e.Handled = true;
         }
 
         private void Telefone_KeyPress(object sender, KeyPressEventArgs e)
@@ -616,6 +617,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
             digito += resto.ToString();
 
             return cpf.EndsWith(digito);
+        }
+
+        private void txtCargaHoraria_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ProjetoPF.Dao;
+using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Produto;
 using ProjetoPF.Servicos;
 using System;
@@ -29,8 +30,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             checkAtivo.Enabled = isEditando;
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = marca.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = marca.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = marca.DataCriacao > DateTime.MinValue ? marca.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = marca.DataAtualizacao > DateTime.MinValue ? marca.DataAtualizacao.ToShortDateString() : "";
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

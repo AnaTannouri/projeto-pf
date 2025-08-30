@@ -10,6 +10,7 @@ using System.Linq;
 using System.Globalization;
 using System.Windows.Forms;
 using ProjetoPF.Modelos.Pessoa;
+using ProjetoPF.Modelos.Localizacao;
 
 namespace ProjetoPF.Interfaces.FormCadastros
 {
@@ -126,8 +127,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             listView1.FullRowSelect = true;
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            labelCriacao.Text = condicaoPagamento.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = condicaoPagamento.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = condicaoPagamento.DataCriacao > DateTime.MinValue ? condicaoPagamento.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = condicaoPagamento.DataAtualizacao > DateTime.MinValue ? condicaoPagamento.DataAtualizacao.ToShortDateString() : "";
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {

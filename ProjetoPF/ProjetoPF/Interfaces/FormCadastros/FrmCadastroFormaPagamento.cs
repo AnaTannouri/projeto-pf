@@ -1,6 +1,7 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.FormConsultas;
 using ProjetoPF.Interfaces.FormCadastros;
+using ProjetoPF.Modelos.Localizacao;
 using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Servicos;
 using System;
@@ -161,8 +162,8 @@ namespace ProjetoPF.FormCadastros
             {
                 btnSalvar.Text = "Salvar";
             }
-            labelCriacao.Text = formaPagamento.DataCriacao.ToShortDateString();
-            lblAtualizacao.Text = formaPagamento.DataAtualizacao.ToShortDateString();
+            labelCriacao.Text = formaPagamento.DataCriacao > DateTime.MinValue ? formaPagamento.DataCriacao.ToShortDateString() : "";
+            lblAtualizacao.Text = formaPagamento.DataAtualizacao > DateTime.MinValue ? formaPagamento.DataAtualizacao.ToShortDateString() : "";
         }
 
         private void btnVoltar_Click(object sender, EventArgs e)
