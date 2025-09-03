@@ -28,7 +28,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             frmCadastroProduto.LimparFormulario();
             frmCadastroProduto.DesbloquearCampos();
             frmCadastroProduto.FormClosed += FrmCadastroProduto_FormClosed;
-            frmCadastroProduto.ShowDialog(); 
+            frmCadastroProduto.ShowDialog();
         }
         private void AjustarLarguraColunas()
         {
@@ -158,33 +158,34 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
             }
 
-            //listViewFormaPagamento.MouseDoubleClick += listViewFormaPagamento_MouseDoubleClick;
+            listViewFormaPagamento.MouseDoubleClick += listViewFormaPagamento_MouseDoubleClick;
             AjustarLarguraColunas();
             PopularListView(string.Empty);
         }
-        //private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
-        //{
-        //    if (listViewFormaPagamento.SelectedItems.Count > 0)
-        //    {
-        //        var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
-        //        Produtos produtoSelecionado = (Produtos)itemSelecionado.Tag;
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listViewFormaPagamento.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                Produtos produtoSelecionado = (Produtos)itemSelecionado.Tag;
 
-        //        if (!produtoSelecionado.Ativo)
-        //        {
-        //            MessageBox.Show("Este produto está inativo e não pode ser selecionado.",
-        //                            "Produto inativo",
-        //                            MessageBoxButtons.OK,
-        //                            MessageBoxIcon.Warning);
-        //            return;
-        //        }
+                if (!produtoSelecionado.Ativo)
+                {
+                    MessageBox.Show("Este produto está inativo e não pode ser selecionado.",
+                                    "Produto inativo",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    return;
+                }
 
-        //        if (this.Owner is FrmCadastroProduto frmCadastroProduto)
-        //        {
-        //            frmCadastroProduto.txtProduto.Text = produtoSelecionado.Nome;
-        //            frmCadastroProduto.txtCodigo.Text = produtoSelecionado.Id.ToString();
-        //            this.Close();
-        //        }
-        //    }
-        //}
+                if (this.Owner is FrmCadastroCompra frmCadastroCompra)
+                {
+                    frmCadastroCompra.txtProduto.Text = produtoSelecionado.Nome;
+                    frmCadastroCompra.txtCodProduto.Text = produtoSelecionado.Id.ToString();
+                    this.Close();
+                }
+            }
+
+        }
     }
 }

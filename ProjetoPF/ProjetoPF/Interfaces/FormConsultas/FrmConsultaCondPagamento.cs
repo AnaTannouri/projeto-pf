@@ -180,7 +180,7 @@ namespace ProjetoPF.FormConsultas
                     this.Close();
                 }
             }
-            else if (this.Owner is FrmCadastroFornecedor frmCadastroFornecedor)
+            if (this.Owner is FrmCadastroFornecedor frmCadastroFornecedor)
             {
                 if (listViewFormaPagamento.SelectedItems.Count > 0)
                 {
@@ -196,6 +196,25 @@ namespace ProjetoPF.FormConsultas
                     frmCadastroFornecedor.txtCondicao.Text = condicaoSelecionado.Descricao;
                     frmCadastroFornecedor.txtCodigoCondicao.Text = condicaoSelecionado.Id.ToString();
                     frmCadastroFornecedor.Tag = condicaoSelecionado;
+                    this.Close();
+                }
+            }
+            else if (this.Owner is FrmCadastroCompra frmCadastroCompra)
+            {
+                if (listViewFormaPagamento.SelectedItems.Count > 0)
+                {
+                    var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                    var condicaoSelecionado = (CondicaoPagamento)itemSelecionado.Tag;
+
+                    if (!condicaoSelecionado.Ativo)
+                    {
+                        MessageBox.Show("Esta condição de pagamento está inativa e não pode ser selecionada.", "Condição Inativa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    frmCadastroCompra.txtCondicao.Text = condicaoSelecionado.Descricao;
+                    frmCadastroCompra.txtCodCondicao.Text = condicaoSelecionado.Id.ToString();
+                    frmCadastroCompra.Tag = condicaoSelecionado;
                     this.Close();
                 }
             }

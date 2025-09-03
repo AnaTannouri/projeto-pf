@@ -21,7 +21,9 @@ namespace ProjetoPF
         FrmConsultaCategoria frmConsultaCategoria = new FrmConsultaCategoria();
         FrmConsultaUnidadeMedida frmConsultaUnidadeMedida = new FrmConsultaUnidadeMedida();
         FrmConsultaMarca frmConsultaMarca = new FrmConsultaMarca();
-        FrmConsultaProduto frmConsultaProduto = new FrmConsultaProduto();  
+        FrmConsultaProduto frmConsultaProduto = new FrmConsultaProduto();
+
+        FrmConsultaCompra frmConsultaCompra = new FrmConsultaCompra(); 
         public FrmPrincipal()
         {
             InitializeComponent();
@@ -84,6 +86,11 @@ namespace ProjetoPF
         private void produtoToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             frmConsultaProduto.ShowDialog();
+        }
+
+        private void compraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaCompra.ShowDialog();
         }
     }
 }

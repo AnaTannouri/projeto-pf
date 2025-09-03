@@ -67,6 +67,7 @@
             this.txtObser = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.txtMargemLucro = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSalvar
@@ -120,7 +121,6 @@
             this.txtPrecoCusto.Size = new System.Drawing.Size(250, 20);
             this.txtPrecoCusto.TabIndex = 3;
             this.txtPrecoCusto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-
             // 
             // txtPrecoVenda
             // 
@@ -460,10 +460,21 @@
             this.txtMargemLucro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtMargemLucro.TextChanged += new System.EventHandler(this.txtMargemLucro_TextChanged);
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(11, 6);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(81, 20);
+            this.label14.TabIndex = 56;
+            this.label14.Text = "Produtos";
+            // 
             // FrmCadastroProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.txtMargemLucro);
             this.Controls.Add(this.txtObser);
@@ -554,6 +565,7 @@
             this.Controls.SetChildIndex(this.txtObser, 0);
             this.Controls.SetChildIndex(this.txtMargemLucro, 0);
             this.Controls.SetChildIndex(this.label20, 0);
+            this.Controls.SetChildIndex(this.label14, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -600,5 +612,6 @@
         private System.Windows.Forms.TextBox txtObser;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtMargemLucro;
+        private System.Windows.Forms.Label label14;
     }
 }

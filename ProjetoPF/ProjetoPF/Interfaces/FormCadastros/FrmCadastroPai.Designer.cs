@@ -159,7 +159,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button btnSalvar;
         public System.Windows.Forms.TextBox txtCodigo;
         public System.Windows.Forms.Button btnVoltar;
@@ -169,5 +168,6 @@
         public System.Windows.Forms.Label labelDataCriacao;
         public System.Windows.Forms.Label labelCriacao;
         public System.Windows.Forms.Label lblAtualizacao;
+        public System.Windows.Forms.Label label1;
     }
 }

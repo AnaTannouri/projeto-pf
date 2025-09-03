@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\BaseDao.cs" />
+    <Compile Include="Dao\Compra\CompraDAO.cs" />
     <Compile Include="Dao\Localizacao\CidadeDAO.cs" />
     <Compile Include="Dao\Localizacao\EstadoDAO.cs" />
     <Compile Include="Dao\Localizacao\PaisDAO.cs" />
@@ -76,6 +77,12 @@
     </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroCliente.Designer.cs">
       <DependentUpon>FrmCadastroCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroCompra.Designer.cs">
+      <DependentUpon>FrmCadastroCompra.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.cs">
       <SubType>Form</SubType>
@@ -167,11 +174,23 @@
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCliente.Designer.cs">
       <DependentUpon>FrmConsultaCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCompra.Designer.cs">
+      <DependentUpon>FrmConsultaCompra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCondPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCondPagamento.Designer.cs">
       <DependentUpon>FrmConsultaCondPagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCondPagamentoFiltrado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaCondPagamentoFiltrado.Designer.cs">
+      <DependentUpon>FrmConsultaCondPagamentoFiltrado.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaEstado.cs">
       <SubType>Form</SubType>
@@ -221,6 +240,12 @@
     <Compile Include="Interfaces\FormConsultas\FrmConsultaProduto.Designer.cs">
       <DependentUpon>FrmConsultaProduto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaProdutoFiltrado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaProdutoFiltrado.Designer.cs">
+      <DependentUpon>FrmConsultaProdutoFiltrado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaUnidadeMedida.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,6 +259,9 @@
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\BaseModelos.cs" />
+    <Compile Include="Modelos\Compra\Compra.cs" />
+    <Compile Include="Modelos\Compra\ItemCompra.cs" />
+    <Compile Include="Modelos\Compra\ParcelaCompra.cs" />
     <Compile Include="Modelos\Pessoa\Cliente.cs" />
     <Compile Include="Modelos\Pessoa\BasePessoa.cs" />
     <Compile Include="Modelos\Localizacao\Cidade.cs" />
@@ -256,6 +284,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Servicos\BaseServicos.cs" />
+    <Compile Include="Servicos\Compra\CompraServicos.cs" />
     <Compile Include="Servicos\Localizacao\CidadeServicos.cs" />
     <Compile Include="Servicos\Localizacao\EstadoServicos.cs" />
     <Compile Include="Servicos\Localizacao\PaisServicos.cs" />
@@ -275,6 +304,9 @@
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCliente.resx">
       <DependentUpon>FrmCadastroCliente.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCompra.resx">
+      <DependentUpon>FrmCadastroCompra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.resx">
       <DependentUpon>FrmCadastroCondPagamento.cs</DependentUpon>
@@ -321,6 +353,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCliente.resx">
       <DependentUpon>FrmConsultaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCompra.resx">
+      <DependentUpon>FrmConsultaCompra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCondPagamento.resx">
       <DependentUpon>FrmConsultaCondPagamento.cs</DependentUpon>

@@ -1,5 +1,6 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.Interfaces.FormCadastros;
+using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Modelos.Produto;
 using ProjetoPF.Servicos;
@@ -14,6 +15,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
     {
         private FrmCadastroFornecedor frmCadastroFornecedor = new FrmCadastroFornecedor();
         private BaseServicos<Fornecedor> fornecedorServices = new BaseServicos<Fornecedor>(new BaseDao<Fornecedor>("Fornecedores"));
+        private BaseServicos<CondicaoPagamento> condicaoPagamentoServices = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"));
 
         public FrmConsultaFornecedor()
         {
@@ -190,6 +192,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 {
                     frmCadastroProduto.txtFornecedor.Text = fornecedorSelecionado.NomeRazaoSocial;
                     frmCadastroProduto.txtCodFornecedor.Text = fornecedorSelecionado.Id.ToString();
+                    this.Close();
+                }
+                if (this.Owner is FrmCadastroCompra frmCadastroCompra)
+                {
+                    frmCadastroCompra.txtFornecedor.Text = fornecedorSelecionado.NomeRazaoSocial;
+                    frmCadastroCompra.txtCodFornecedor.Text = fornecedorSelecionado.Id.ToString();
                     this.Close();
                 }
             }
