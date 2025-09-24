@@ -21,7 +21,7 @@ namespace ProjetoPF.Modelos.Compra
         public decimal ValorSeguro { get; set; }
         public decimal OutrasDespesas { get; set; }
         public decimal ValorTotal { get; set; }
-
+        public string MotivoCancelamento { get; set; }
         public List<ItemCompra> Itens { get; set; } = new List<ItemCompra>();
         public List<ParcelaCompra> Parcelas { get; set; } = new List<ParcelaCompra>();
     }

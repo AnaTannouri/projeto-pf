@@ -34,6 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Transactions" />
@@ -239,12 +243,6 @@
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaProduto.Designer.cs">
       <DependentUpon>FrmConsultaProduto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\FormConsultas\FrmConsultaProdutoFiltrado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Interfaces\FormConsultas\FrmConsultaProdutoFiltrado.Designer.cs">
-      <DependentUpon>FrmConsultaProdutoFiltrado.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaUnidadeMedida.cs">
       <SubType>Form</SubType>

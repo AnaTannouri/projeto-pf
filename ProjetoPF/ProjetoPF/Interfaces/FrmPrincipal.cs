@@ -87,8 +87,7 @@ namespace ProjetoPF
         {
             frmConsultaProduto.ShowDialog();
         }
-
-        private void compraToolStripMenuItem_Click(object sender, EventArgs e)
+        private void comprasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmConsultaCompra.ShowDialog();
         }

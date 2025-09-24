@@ -49,14 +49,14 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     ListViewItem item = new ListViewItem(cliente.Id.ToString())
                     {
                         SubItems =
-                        {
-                            cliente.TipoPessoa,
-                            cliente.NomeRazaoSocial,
-                            cliente.Telefone,
-                            cliente.DataCriacao.ToString("dd/MM/yyyy"),
-                            cliente.DataAtualizacao.ToString("dd/MM/yyyy"),
-                            cliente.Ativo ? "SIM" : "NÃO"
-                        }
+    {
+        cliente.TipoPessoa,
+        cliente.NomeRazaoSocial,
+        cliente.Telefone,
+        cliente.Ativo ? "SIM" : "NÃO",
+        cliente.DataCriacao.ToString("dd/MM/yyyy"),
+        cliente.DataAtualizacao.ToString("dd/MM/yyyy")
+    }
                     };
 
                     if (!cliente.Ativo)

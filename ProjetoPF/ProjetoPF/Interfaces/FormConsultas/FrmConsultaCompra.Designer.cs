@@ -34,11 +34,20 @@
             // 
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click_1);
             // 
+            // btnEditar
+            // 
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click_1);
+            // 
+            // btnExcluir
+            // 
+            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+            // 
             // FrmConsultaCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Name = "FrmConsultaCompra";
+            this.Load += new System.EventHandler(this.FrmConsultaCompra_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

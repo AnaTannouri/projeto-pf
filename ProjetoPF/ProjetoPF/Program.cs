@@ -12,7 +12,7 @@ namespace ProjetoPF
         /// </summary>
         [STAThread]
         static void Main()
-        {
+     {
             CultureInfo ci = new CultureInfo("pt-BR");
             Thread.CurrentThread.CurrentCulture = ci;
             Thread.CurrentThread.CurrentUICulture = ci;

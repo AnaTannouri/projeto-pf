@@ -15,6 +15,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
 {
     public partial class FrmConsultaProduto : ProjetoPF.FormConsultas.FrmConsultaPai
     {
+        public Produtos ProdutoSelecionado { get; private set; }
         private FrmCadastroProduto frmCadastroProduto = new FrmCadastroProduto();
         private BaseServicos<Produtos> produtoServices = new BaseServicos<Produtos>(new BaseDao<Produtos>("Produtos"));
         public FrmConsultaProduto()
@@ -178,14 +179,10 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     return;
                 }
 
-                if (this.Owner is FrmCadastroCompra frmCadastroCompra)
-                {
-                    frmCadastroCompra.txtProduto.Text = produtoSelecionado.Nome;
-                    frmCadastroCompra.txtCodProduto.Text = produtoSelecionado.Id.ToString();
-                    this.Close();
-                }
+                this.ProdutoSelecionado = produtoSelecionado;
+                this.DialogResult = DialogResult.OK; 
+                this.Close();
             }
-
         }
     }
 }

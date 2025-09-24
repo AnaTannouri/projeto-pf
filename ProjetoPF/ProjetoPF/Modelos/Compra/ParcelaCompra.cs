@@ -1,6 +1,7 @@
 ﻿using ProjetoPF.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,5 +14,9 @@ namespace ProjetoPF.Modelos.Compra
         public int NumeroParcela { get; set; }
         public DateTime DataVencimento { get; set; }
         public decimal ValorParcela { get; set; }
+        public int IdFormaPagamento { get; set; }
+
+        [NotMapped] 
+        public string FormaPagamentoDescricao { get; set; }
     }
 }
