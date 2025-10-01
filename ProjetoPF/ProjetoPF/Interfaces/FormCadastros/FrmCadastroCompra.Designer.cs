@@ -90,11 +90,13 @@
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
+            this.txtObservacao = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSalvar
             // 
-            this.btnSalvar.TabIndex = 15;
+            this.btnSalvar.TabIndex = 17;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // txtCodigo
@@ -428,7 +430,7 @@
             this.btnGerarParcelas.Location = new System.Drawing.Point(439, 439);
             this.btnGerarParcelas.Name = "btnGerarParcelas";
             this.btnGerarParcelas.Size = new System.Drawing.Size(100, 23);
-            this.btnGerarParcelas.TabIndex = 0;
+            this.btnGerarParcelas.TabIndex = 15;
             this.btnGerarParcelas.Text = "Gerar Parcelas";
             this.btnGerarParcelas.UseVisualStyleBackColor = true;
             this.btnGerarParcelas.Click += new System.EventHandler(this.btnGerarParcelas_Click);
@@ -701,10 +703,30 @@
             this.label34.TabIndex = 73;
             this.label34.Text = "-";
             // 
+            // txtObservacao
+            // 
+            this.txtObservacao.Location = new System.Drawing.Point(671, 397);
+            this.txtObservacao.MaxLength = 100;
+            this.txtObservacao.Multiline = true;
+            this.txtObservacao.Name = "txtObservacao";
+            this.txtObservacao.Size = new System.Drawing.Size(658, 65);
+            this.txtObservacao.TabIndex = 16;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(668, 381);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(68, 13);
+            this.label35.TabIndex = 75;
+            this.label35.Text = "Observação:";
+            // 
             // FrmCadastroCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.label35);
+            this.Controls.Add(this.txtObservacao);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
@@ -842,6 +864,8 @@
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);
             this.Controls.SetChildIndex(this.label33, 0);
             this.Controls.SetChildIndex(this.label34, 0);
+            this.Controls.SetChildIndex(this.txtObservacao, 0);
+            this.Controls.SetChildIndex(this.label35, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -851,7 +875,6 @@
 
         private System.Windows.Forms.TextBox txtSerie;
         private System.Windows.Forms.TextBox txtNumeroNota;
-        private System.Windows.Forms.Button btPesquisarFornecedor;
         private System.Windows.Forms.DateTimePicker dtpEmissao;
         private System.Windows.Forms.DateTimePicker dtpEntrega;
         private System.Windows.Forms.Button btnPesquisarProduto;
@@ -911,5 +934,8 @@
         private System.Windows.Forms.Label label32;
         public System.Windows.Forms.Label label33;
         public System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TextBox txtObservacao;
+        private System.Windows.Forms.Label label35;
+        public System.Windows.Forms.Button btPesquisarFornecedor;
     }
 }

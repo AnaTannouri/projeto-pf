@@ -26,6 +26,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private BaseServicos<CondicaoPagamento> condicaoPagamentoServices = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"));
         private List<ItemCompra> itensCompra = new List<ItemCompra>();
         private List<ParcelaCompra> parcelas = new List<ParcelaCompra>();
+
+        private bool notaDuplicada = false;
         public bool ModoSomenteLeitura { get; set; } = false;
 
         public FrmCadastroCompra()
@@ -33,12 +35,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             InitializeComponent();
             label1.Text = "Modelo:";
             checkAtivo.Visible = false;
-
-            dtpEmissao.Format = DateTimePickerFormat.Custom;
-            dtpEmissao.CustomFormat = " ";
-
-            dtpEntrega.Format = DateTimePickerFormat.Custom;
-            dtpEntrega.CustomFormat = " "; 
 
             dtpEmissao.ValueChanged += (s, e) =>
             {
@@ -160,10 +156,38 @@ namespace ProjetoPF.Interfaces.FormCadastros
             frmConsultaFornecedor.Owner = this;
             frmConsultaFornecedor.ShowDialog();
 
+            bool fornecedorSelecionado = false; 
             if (int.TryParse(txtCodFornecedor.Text, out var idForn))
             {
                 PreencherCondicaoPadraoDoFornecedor(idForn);
+                fornecedorSelecionado = true;
             }
+            if (fornecedorSelecionado)
+            {
+                TentarLiberarItens(); 
+            }
+        }
+        private void BloquearTudoExcetoCabecalho()
+        {
+            txtCodigo.Enabled = true;
+            txtSerie.Enabled = true;
+            txtNumeroNota.Enabled = true;
+            txtCodFornecedor.Enabled = true;
+
+            dtpEmissao.Enabled = false;
+            dtpEntrega.Enabled = false;
+
+            SetItensEnabled(false);
+            SetTotaisEnabled(false);
+            SetCondicaoEnabled(false);
+            SetSalvarEnabled(false);
+
+            listViewProduto.Enabled = false;
+            listViewParcelas.Enabled = false;
+
+            btnPesquisarCondicao.Enabled = false;
+            btnGerarParcelas.Enabled = false;
+            btnLimparParcelas.Enabled = false;
         }
 
         private void dtpEmissao_ValueChanged(object sender, EventArgs e)
@@ -285,47 +309,81 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (itensCompra.Count == 1)
             {
                 SetCabecalhoEnabled(false);
-                SetCondicaoEnabled(true);
-                btnLimparParcelas.Enabled = true;
+                SetItensEnabled(true);
+                SetTotaisEnabled(true);    
+                SetCondicaoEnabled(false); 
+                btnLimparParcelas.Enabled = false;
                 SetSalvarEnabled(false);
             }
             AtualizarValorTotalCompra();
         }
-
         private void FrmCadastroCompra_Load(object sender, EventArgs e)
         {
             label33.Visible = false;
             label34.Visible = false;
+            checkAtivo.Visible = false;
+            txtObservacao.Enabled = false;
+
+            if (ModoSomenteLeitura)
+            {
+                btPesquisarFornecedor.Enabled = false;
+            }
 
             var hoje = DateTime.Today;
+
+            dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
             dtpEmissao.MaxDate = hoje;
+
             dtpEntrega.MinDate = hoje;
-            dtpEmissao.Format = DateTimePickerFormat.Custom;
-            dtpEmissao.CustomFormat = " ";
-            dtpEntrega.Format = DateTimePickerFormat.Custom;
-            dtpEntrega.CustomFormat = " ";
-            dtpEmissao.ValueChanged += (s, ev) =>
+            dtpEntrega.MaxDate = hoje.AddYears(10);
+
+            if (!idCompra.HasValue || idCompra.Value == 0)
             {
-                dtpEmissao.Format = DateTimePickerFormat.Short;
-            };
-            dtpEntrega.ValueChanged += (s, ev) =>
-            {
-                dtpEntrega.Format = DateTimePickerFormat.Short;
-            };
+                dtpEmissao.Format = DateTimePickerFormat.Custom;
+                dtpEmissao.CustomFormat = " ";
+
+                dtpEntrega.Format = DateTimePickerFormat.Custom;
+                dtpEntrega.CustomFormat = " ";
+            }
 
             dtpEmissao.ValueChanged += (s, ev) =>
             {
-                dtpEmissao.Format = DateTimePickerFormat.Short;
+                if (dtpEmissao.CustomFormat == " ")
+                {
+                    dtpEmissao.Format = DateTimePickerFormat.Short;
+                    dtpEmissao.CustomFormat = null;
+                }
             };
+            dtpEmissao.CloseUp += (s, ev) =>
+            {
+                if (dtpEmissao.CustomFormat == " ")
+                {
+                    dtpEmissao.Format = DateTimePickerFormat.Short;
+                    dtpEmissao.CustomFormat = null;
+                }
+            };
+
             dtpEntrega.ValueChanged += (s, ev) =>
             {
-                dtpEntrega.Format = DateTimePickerFormat.Short;
+                if (dtpEntrega.CustomFormat == " ")
+                {
+                    dtpEntrega.Format = DateTimePickerFormat.Short;
+                    dtpEntrega.CustomFormat = null;
+                    TentarLiberarItens();
+                }
             };
+            dtpEntrega.CloseUp += (s, ev) =>
+            {
+                if (dtpEntrega.CustomFormat == " ")
+                {
+                    dtpEntrega.Format = DateTimePickerFormat.Short;
+                    dtpEntrega.CustomFormat = null;
+                    TentarLiberarItens();
+                }
+            };
+            txtNumeroNota.Leave += (_, __) => ValidarNotaDuplicada();
 
             listViewProduto.View = View.Details;
-            listViewProduto.FullRowSelect = true;
-            listViewProduto.GridLines = true;
-
             listViewProduto.Columns.Clear();
             listViewProduto.Columns.Add("Cód. Produto", 100, HorizontalAlignment.Right);
             listViewProduto.Columns.Add("Descrição", 250, HorizontalAlignment.Left);
@@ -334,9 +392,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             listViewProduto.Columns.Add("Total (R$)", 150, HorizontalAlignment.Right);
 
             listViewParcelas.View = View.Details;
-            listViewParcelas.FullRowSelect = true;
-            listViewParcelas.GridLines = true;
-
             listViewParcelas.Columns.Clear();
             listViewParcelas.Columns.Add("Nº Parcela", 80, HorizontalAlignment.Right);
             listViewParcelas.Columns.Add("Vencimento", 150, HorizontalAlignment.Left);
@@ -345,16 +400,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtQuantidade.TextChanged += txtQuantidade_TextChanged;
             txtValorUnitario.TextChanged += txtValorUnitario_TextChanged;
-            txtValorFrete.TextChanged += (s, ev) => AtualizarValorTotalCompra();
-            txtSeguro.TextChanged += (s, ev) => AtualizarValorTotalCompra();
-            txtDespesas.TextChanged += (s, ev) => AtualizarValorTotalCompra();
-
+            txtValorFrete.TextChanged += (s, ev) => { AtualizarValorTotalCompra(); SetCondicaoEnabled(true); };
+            txtSeguro.TextChanged += (s, ev) => { AtualizarValorTotalCompra(); SetCondicaoEnabled(true); };
+            txtDespesas.TextChanged += (s, ev) => { AtualizarValorTotalCompra(); SetCondicaoEnabled(true); };
 
             SetCabecalhoEnabled(true);
             SetItensEnabled(false);
             SetCondicaoEnabled(false);
             SetSalvarEnabled(false);
-
             listViewProduto.Enabled = false;
             listViewParcelas.Enabled = false;
             SetTotaisEnabled(false);
@@ -362,143 +415,180 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodigo.Leave += (_, __) => TentarLiberarItens();
             txtSerie.Leave += (_, __) => TentarLiberarItens();
             txtNumeroNota.Leave += (_, __) => TentarLiberarItens();
-            dtpEmissao.ValueChanged += (_, __) => TentarLiberarItens();
-            dtpEntrega.ValueChanged += (_, __) => TentarLiberarItens();
+            txtCodFornecedor.Leave += (_, __) => TentarLiberarItens();
+
+            txtCodigo.TextChanged += (_, __) => ValidarNotaDuplicada();
+            txtSerie.TextChanged += (_, __) => ValidarNotaDuplicada();
+            txtNumeroNota.TextChanged += (_, __) => ValidarNotaDuplicada();
+            txtCodFornecedor.TextChanged += (_, __) => ValidarNotaDuplicada();
+
+            dtpEntrega.ValueChanged += (s, ev) =>
+            {
+                if (dtpEntrega.CustomFormat == " ")
+                {
+                    dtpEntrega.Format = DateTimePickerFormat.Short;
+                    dtpEntrega.CustomFormat = null;
+                }
+                TentarLiberarItens(); 
+            };
+            dtpEntrega.CloseUp += (s, ev) =>
+            {
+                if (dtpEntrega.CustomFormat == " ")
+                {
+                    dtpEntrega.Format = DateTimePickerFormat.Short;
+                    dtpEntrega.CustomFormat = null;
+                }
+                TentarLiberarItens(); 
+            };
+
+            dtpEmissao.ValueChanged += (s, ev) =>
+            {
+                if (dtpEmissao.CustomFormat == " ")
+                {
+                    dtpEmissao.Format = DateTimePickerFormat.Short;
+                    dtpEmissao.CustomFormat = null;
+                }
+                TentarLiberarItens(); 
+            };
+            dtpEmissao.CloseUp += (s, ev) =>
+            {
+                if (dtpEmissao.CustomFormat == " ")
+                {
+                    dtpEmissao.Format = DateTimePickerFormat.Short;
+                    dtpEmissao.CustomFormat = null;
+                }
+                TentarLiberarItens(); 
+            };
+
 
             TravarCamposDeCodigo();
 
             txtValorFrete.KeyPress += ApenasNumerosDecimais;
             txtValorFrete.Leave += FormatarMoedaAoSair;
-
             txtSeguro.KeyPress += ApenasNumerosDecimais;
             txtSeguro.Leave += FormatarMoedaAoSair;
-
             txtDespesas.KeyPress += ApenasNumerosDecimais;
             txtDespesas.Leave += FormatarMoedaAoSair;
-
             txtValorUnitario.KeyPress += ApenasNumerosDecimais;
             txtValorUnitario.Leave += FormatarMoedaAoSair;
-
             txtTotal.KeyPress += ApenasNumerosDecimais;
             txtTotal.Leave += FormatarMoedaAoSair;
-
             txtValorTotal.KeyPress += ApenasNumerosDecimais;
             txtValorTotal.Leave += FormatarMoedaAoSair;
+
 
             txtCodigo.KeyPress += ApenasNumeros;
             txtSerie.KeyPress += ApenasNumeros;
             txtNumeroNota.KeyPress += ApenasNumeros;
-
             txtQuantidade.KeyPress += ApenasNumerosDecimais;
-
 
             if (idCompra.HasValue && idCompra.Value > 0)
             {
                 var compraDao = new CompraDao();
-                var compra = compraDao.BuscarPorId(idCompra.Value); // ✅ Primeiro busca a compra
+                var compra = compraDao.BuscarPorId(idCompra.Value);
 
                 if (compra != null)
                 {
-                    // 🔹 Cabeçalho
                     txtCodigo.Text = compra.Id.ToString();
                     txtSerie.Text = compra.Serie;
                     txtNumeroNota.Text = compra.NumeroNota;
+
+                    dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
+                    dtpEntrega.MinDate = DateTimePicker.MinimumDateTime;
+                    dtpEntrega.MaxDate = DateTimePicker.MaximumDateTime;
+
+                    dtpEmissao.Format = DateTimePickerFormat.Short;
+                    dtpEntrega.Format = DateTimePickerFormat.Short;
+
                     dtpEmissao.Value = compra.DataEmissao;
                     dtpEntrega.Value = compra.DataEntrega;
+
                     txtValorFrete.Text = compra.ValorFrete.ToString("N2");
                     txtSeguro.Text = compra.ValorSeguro.ToString("N2");
                     txtDespesas.Text = compra.OutrasDespesas.ToString("N2");
                     txtValorTotal.Text = compra.ValorTotal.ToString("N2");
+                    txtObservacao.Text = compra.Observacao ?? "";
 
                     labelCriacao.Text = compra.DataCriacao != DateTime.MinValue
-                        ? compra.DataCriacao.ToString("dd/MM/yyyy HH:mm")
-                        : "-";
+                        ? compra.DataCriacao.ToString("dd/MM/yyyy HH:mm") : "-";
 
                     lblAtualizacao.Text = compra.DataAtualizacao != DateTime.MinValue
-                        ? compra.DataAtualizacao.ToString("dd/MM/yyyy HH:mm")
-                        : "-";
+                        ? compra.DataAtualizacao.ToString("dd/MM/yyyy HH:mm") : "-";
 
-                    // 🔹 Fornecedor
                     var fornecedor = new BaseServicos<Fornecedor>(new BaseDao<Fornecedor>("Fornecedores"))
                                         .BuscarPorId(compra.IdFornecedor);
                     txtCodFornecedor.Text = fornecedor?.Id.ToString();
                     txtFornecedor.Text = fornecedor?.NomeRazaoSocial ?? "Desconhecido";
 
-                    // 🔹 Condição de Pagamento
                     var condicao = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"))
                                         .BuscarPorId(compra.IdCondicaoPagamento);
                     txtCodCondicao.Text = condicao?.Id.ToString();
                     txtCondicao.Text = condicao?.Descricao ?? "Desconhecida";
 
-                    // 🔹 Itens da compra
                     listViewProduto.Items.Clear();
                     var itens = new ItemCompraDao().BuscarPorCompraId(compra.Id);
-                    itensCompra = itens; // mantém na lista interna
+                    itensCompra = itens;
+
                     foreach (var it in itens)
                     {
-                        var lvi = new ListViewItem(it.IdProduto.ToString());
-
                         var produto = new BaseServicos<Produtos>(new BaseDao<Produtos>("Produtos"))
-                                            .BuscarPorId(it.IdProduto);
-
+                                         .BuscarPorId(it.IdProduto);
+                        var lvi = new ListViewItem(it.IdProduto.ToString());
                         lvi.SubItems.Add(produto?.Nome ?? "Desconhecido");
                         lvi.SubItems.Add(it.Quantidade.ToString("N2"));
                         lvi.SubItems.Add(it.ValorUnitario.ToString("C2"));
                         lvi.SubItems.Add(it.Total.ToString("C2"));
-
                         listViewProduto.Items.Add(lvi);
                     }
-                    AtualizarTotalProdutos(); // ✅ agora atualiza o label de produtos
+                    AtualizarTotalProdutos();
 
-                    // 🔹 Parcelas
                     listViewParcelas.Items.Clear();
                     var listaParcelas = new ParcelaCompraDao().BuscarPorCompraId(compra.Id);
-                    parcelas = listaParcelas; // mantém na lista interna
+                    parcelas = listaParcelas;
+
                     foreach (var p in listaParcelas)
                     {
+                        var forma = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"))
+                                         .BuscarPorId(p.IdFormaPagamento);
+
                         var lvi = new ListViewItem(p.NumeroParcela.ToString());
                         lvi.SubItems.Add(p.DataVencimento.ToString("dd/MM/yyyy"));
                         lvi.SubItems.Add(p.ValorParcela.ToString("C2"));
-
-                        var forma = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"))
-                                            .BuscarPorId(p.IdFormaPagamento);
                         lvi.SubItems.Add(forma?.Descricao ?? p.IdFormaPagamento.ToString());
-
                         listViewParcelas.Items.Add(lvi);
                     }
                     AtualizarTotalParcelas();
 
-                    // 🔹 Bloquear campos de identificação
                     label1.Text = "Modelo";
                     txtCodigo.Enabled = false;
                     txtSerie.Enabled = false;
                     txtNumeroNota.Enabled = false;
-
                     dtpEmissao.Enabled = false;
                     dtpEntrega.Enabled = false;
 
-                    this.btnVoltar.Text = "Cancelar";
+                    btnVoltar.Text = compra.Ativo ? "Cancelar" : "Voltar";
+
+                    if (!compra.Ativo)
+                    {
+                        label33.Visible = true;
+                        label34.Visible = true;
+                        label34.Text = compra.MotivoCancelamento ?? "Não informado";
+                    }
+                    else
+                    {
+                        label33.Visible = false;
+                        label34.Visible = false;
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Compra não encontrada!", "Erro",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                if (!compra.Ativo)
+                if (ModoSomenteLeitura)
                 {
-                    label33.Visible = true;
-                    label34.Visible = true;
-                    label34.Text = compra.MotivoCancelamento ?? "Não informado";
-
-                    // troca botão Voltar
-                    this.btnVoltar.Text = "Voltar";
+                    AplicarSomenteLeitura();
                 }
-                else
-                {
-                    label33.Visible = false;
-                    label34.Visible = false;
-                }
-
             }
         }
         private void AtualizarTotalParcelas()
@@ -513,6 +603,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
             this.idCompra = idCompra;
 
             
+        }
+        private bool DataEstaVazia(DateTimePicker dtp)
+        {
+            return dtp.Format == DateTimePickerFormat.Custom && dtp.CustomFormat == " ";
         }
         private void ApenasNumerosDecimais(object sender, KeyPressEventArgs e)
         {
@@ -652,11 +746,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         }
 
-
-
         private void btnGerarParcelas_Click(object sender, EventArgs e)
         {
             GerarParcelasCondicaoPagamento();
+
             if (listViewParcelas.Items.Count > 0)
             {
                 btnGerarParcelas.Enabled = false;
@@ -664,8 +757,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 SetItensEnabled(false);
                 SetCondicaoEnabled(true);
                 SetSalvarEnabled(true);
-            }
 
+                txtObservacao.Enabled = true;
+
+            }
         }
         private void AtualizarValorTotalCompra()
         {
@@ -676,6 +771,16 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             decimal totalCompra = totalProdutos + frete + seguro + despesas;
             txtValorTotal.Text = totalCompra.ToString("C2");
+
+            bool totaisPreenchidos =
+                !string.IsNullOrWhiteSpace(txtValorFrete.Text) &&
+                !string.IsNullOrWhiteSpace(txtSeguro.Text) &&
+                !string.IsNullOrWhiteSpace(txtDespesas.Text);
+
+            if (totaisPreenchidos && itensCompra.Count > 0)
+                SetCondicaoEnabled(true);
+            else
+                SetCondicaoEnabled(false);
         }
         private void btnLimparParcelas_Click(object sender, EventArgs e)
         {
@@ -683,6 +788,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             listViewParcelas.Items.Clear();
             label21.Text = "R$ 0,00";
             btnGerarParcelas.Enabled = itensCompra.Count > 0 && !string.IsNullOrWhiteSpace(txtCodCondicao.Text);
+
+            txtObservacao.Text = string.Empty; 
+            txtObservacao.Enabled = false;
 
             SetTotaisEnabled(true);   
             SetSalvarEnabled(false);
@@ -757,6 +865,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtQuantidade.Text = string.Empty;
             txtValorUnitario.Text = string.Empty;
             txtTotal.Text = "R$ 0,00";
+            txtObservacao.Text = string.Empty;
 
             itensCompra.Clear();
             listViewProduto.Items.Clear();
@@ -771,9 +880,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtDespesas.Text = string.Empty;
             txtValorTotal.Text = "R$ 0,00";
 
-            txtCondicao.Text = string.Empty;
-            txtCodCondicao.Text = string.Empty;
-
             SetTotaisEnabled(false);
             SetCondicaoEnabled(false);
             btnLimparParcelas.Enabled = false;
@@ -787,7 +893,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void btnLimparProduto_Click(object sender, EventArgs e)
         {
             LimparCompra();          
-            LimparParcelasUiOnly();   
+            LimparParcelasUiOnly();
+
+            if (int.TryParse(txtCodFornecedor.Text, out int idForn))
+                PreencherCondicaoPadraoDoFornecedor(idForn);
 
             SetCondicaoEnabled(false);
             btnLimparParcelas.Enabled = false;
@@ -825,6 +934,15 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     MessageBox.Show("Selecione o fornecedor.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
+                // 🚨 Checagem de duplicidade
+                if (NotaJaExiste(modelo, txtSerie.Text, txtNumeroNota.Text, idFornecedor))
+                {
+                    MessageBox.Show("Já existe uma compra cadastrada com esse Modelo, Série, Número e Fornecedor.",
+                                    "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 if (dtpEmissao.CustomFormat == " ")
                 {
                     MessageBox.Show("Informe a data de emissão.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -852,45 +970,47 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     MessageBox.Show("Gere ao menos uma parcela.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 decimal TryMoeda(string s)
-                {
-                    if (string.IsNullOrWhiteSpace(s)) return 0m;
-                    s = s.Replace("R$", "").Trim();
-                    decimal.TryParse(s, out var v);
-                    return v;
-                }
+        {
+            if (string.IsNullOrWhiteSpace(s)) return 0m;
+            s = s.Replace("R$", "").Trim();
+            decimal.TryParse(s, out var v);
+            return v;
+        }
 
-                var compra = new Compra
-                {
-                    Modelo = modelo,
-                    Serie = txtSerie.Text,
-                    NumeroNota = txtNumeroNota.Text,
-                    DataEmissao = dtpEmissao.Value.Date,
-                    DataEntrega = dtpEntrega.Value.Date,
-                    IdFornecedor = idFornecedor,
-                    IdCondicaoPagamento = idCond,
-                    ValorFrete = TryMoeda(txtValorFrete.Text),
-                    ValorSeguro = TryMoeda(txtSeguro.Text),
-                    OutrasDespesas = TryMoeda(txtDespesas.Text),
-                    ValorTotal = TryMoeda(txtValorTotal.Text),
-                    Itens = itensCompra,
-                    Parcelas = parcelas,
-                    DataCriacao = DateTime.Now,
-                    DataAtualizacao = DateTime.Now,
-                    Ativo = true
-                };
+        var compra = new Compra
+        {
+            Modelo = modelo,
+            Serie = txtSerie.Text,
+            NumeroNota = txtNumeroNota.Text,
+            DataEmissao = dtpEmissao.Value.Date,
+            DataEntrega = dtpEntrega.Value.Date,
+            IdFornecedor = idFornecedor,
+            IdCondicaoPagamento = idCond,
+            ValorFrete = TryMoeda(txtValorFrete.Text),
+            ValorSeguro = TryMoeda(txtSeguro.Text),
+            OutrasDespesas = TryMoeda(txtDespesas.Text),
+            ValorTotal = TryMoeda(txtValorTotal.Text),
+            Itens = itensCompra,
+            Parcelas = parcelas,
+            DataCriacao = DateTime.Now,
+            DataAtualizacao = DateTime.Now,
+            Ativo = true,
+            Observacao = txtObservacao.Text?.Trim()
+        };
 
-                var dao = new CompraDao();
-                dao.SalvarCompraComItensParcelas(compra, compra.Itens, compra.Parcelas);
+        var compraService = new CompraServicos();
+        compraService.CriarCompraCompleta(compra); 
 
-                MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                AbrirConsultaCompras();
-                Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        AbrirConsultaCompras();
+        Close();
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
         }
         private void LimparCabecalho()
         {
@@ -914,6 +1034,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtSeguro.Text = string.Empty;
             txtDespesas.Text = string.Empty;
             txtValorTotal.Text = string.Empty;
+            txtObservacao.Text = string.Empty;
         }
 
 
@@ -966,51 +1087,55 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 txtCondicao.Text = string.Empty;
                 txtCodCondicao.Text = string.Empty;
             }
-        }
-        private void SetCabecalhoEnabled(bool on)
-        {
-            txtCodigo.Enabled = on;
-            txtSerie.Enabled = on;
-            txtNumeroNota.Enabled = on;
-
-            txtCodFornecedor.Enabled = false;
-
-            btPesquisarFornecedor.Enabled = on;
-
-            dtpEmissao.Enabled = on;
-            dtpEntrega.Enabled = on;
-        }
-        private void SetItensEnabled(bool on)
-        {
-            txtCodProduto.Enabled = false; 
-            txtProduto.Enabled = false; 
-            btnPesquisarProduto.Enabled = on;
-            txtQuantidade.Enabled = on;
-            txtValorUnitario.Enabled = on;
-            btnAdicionar.Enabled = on;
-            btnEditar.Enabled = on && listViewProduto.Items.Count > 0;
-            btnRemover.Enabled = on && listViewProduto.Items.Count > 0;
-            btnLimparProduto.Enabled = on;
-
-            listViewProduto.Enabled = on;    
-            SetTotaisEnabled(on);
-        }
-
-        private void SetCondicaoEnabled(bool on)
-        {
-            txtCodCondicao.Enabled = false;
             txtCondicao.Enabled = false;
-            btnPesquisarCondicao.Enabled = on;
-
-            btnGerarParcelas.Enabled = on && parcelas.Count == 0;
-            btnLimparParcelas.Enabled = on && parcelas.Count > 0;
-
-            listViewParcelas.Enabled = on && parcelas.Count > 0;
+            txtCodCondicao.Enabled = false;
+            btnPesquisarCondicao.Enabled = false;
+        }
+        private void SetCabecalhoEnabled(bool enabled)
+        {
+            txtCodigo.Enabled = enabled;
+            txtSerie.Enabled = enabled;
+            txtNumeroNota.Enabled = enabled;
+            dtpEmissao.Enabled = enabled;
+            dtpEntrega.Enabled = enabled;
+        }
+        private void SetItensEnabled(bool enabled)
+        {
+            btnPesquisarProduto.Enabled = enabled;
+            txtQuantidade.Enabled = enabled;
+            txtValorUnitario.Enabled = enabled;
+            btnAdicionar.Enabled = enabled;
+            btnEditar.Enabled = enabled && listViewProduto.Items.Count > 0;
+            btnRemover.Enabled = enabled && listViewProduto.Items.Count > 0;
+            listViewProduto.Enabled = enabled;
         }
 
-        private void SetSalvarEnabled(bool on)
+        private void SetCondicaoEnabled(bool enabled)
         {
-            btnSalvar.Enabled = on;
+            bool totaisPreenchidos =
+        !string.IsNullOrWhiteSpace(txtValorFrete.Text) &&
+        !string.IsNullOrWhiteSpace(txtSeguro.Text) &&
+        !string.IsNullOrWhiteSpace(txtDespesas.Text);
+
+            txtCondicao.Enabled = false;
+            txtCodCondicao.Enabled = false;
+
+            btnPesquisarCondicao.Enabled = enabled && totaisPreenchidos;
+
+            listViewParcelas.Enabled = enabled && totaisPreenchidos;
+
+            btnGerarParcelas.Enabled =
+                enabled &&
+                totaisPreenchidos &&
+                itensCompra.Count > 0 &&
+                !string.IsNullOrWhiteSpace(txtCodCondicao.Text);
+
+            btnLimparParcelas.Enabled = enabled && listViewParcelas.Items.Count > 0;
+        }
+
+        private void SetSalvarEnabled(bool enabled)
+        {
+            btnSalvar.Enabled = enabled;
         }
 
         private bool CabecalhoPreenchidoValido(out int modelo, out string serie, out string numero,
@@ -1025,7 +1150,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             if (!int.TryParse(txtCodFornecedor.Text, out idFornecedor)) return false;
 
-            if (dtpEmissao.CustomFormat == " " || dtpEntrega.CustomFormat == " ") return false;
+            if (DataEstaVazia(dtpEmissao) || DataEstaVazia(dtpEntrega)) return false;
 
             emissao = dtpEmissao.Value.Date;
             entrega = dtpEntrega.Value.Date;
@@ -1038,25 +1163,39 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void TentarLiberarItens()
         {
-            if (!CabecalhoPreenchidoValido(out var modelo, out var serie, out var numero,
-                                           out var idFornecedor, out _, out _))
-                return;
-
-            if (NotaJaExiste(modelo, serie, numero, idFornecedor))
+            if (notaDuplicada)
             {
-                MessageBox.Show("Já existe uma compra lançada com este Modelo/Série/Nº e Fornecedor.",
-                                "Nota já lançada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                SetItensEnabled(false);
-                SetCondicaoEnabled(false);
-                SetSalvarEnabled(false);
-                SetCabecalhoEnabled(true);
+                BloquearTudoExcetoCabecalho();
                 return;
             }
 
-            SetItensEnabled(true);
-            SetCondicaoEnabled(false);
-            txtCodProduto.Focus();
+            if (idCompra.HasValue && idCompra.Value > 0)
+            {
+                SetItensEnabled(true);
+                return;
+            }
+
+            bool cabecalhoPreenchido = !string.IsNullOrWhiteSpace(txtCodFornecedor.Text) &&
+                                       !string.IsNullOrWhiteSpace(txtSerie.Text) &&
+                                       !string.IsNullOrWhiteSpace(txtNumeroNota.Text) &&
+                                       !string.IsNullOrWhiteSpace(txtCodigo.Text) &&
+                                       !DataEstaVazia(dtpEmissao) &&
+                                       !DataEstaVazia(dtpEntrega);
+
+            if (cabecalhoPreenchido)
+            {
+                SetCabecalhoEnabled(false);
+                SetItensEnabled(true);
+                SetTotaisEnabled(false);
+                SetCondicaoEnabled(false);
+            }
+            else
+            {
+                SetCabecalhoEnabled(true);
+                SetItensEnabled(false);
+                SetTotaisEnabled(false);
+                SetCondicaoEnabled(false);
+            }
         }
         private void LimparAbaixoDoProduto()
         {
@@ -1078,7 +1217,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private bool NotaJaExiste(int modelo, string serie, string numero, int idFornecedor)
         {
             var dao = new CompraDao();
-            return dao.NotaJaExiste(modelo, serie, numero, idFornecedor);
+            return dao.NotaJaExiste(modelo, serie, numero, idFornecedor, idCompra);
         }
         private void LimparParcelasUiOnly()
         {
@@ -1086,14 +1225,70 @@ namespace ProjetoPF.Interfaces.FormCadastros
             listViewParcelas.Items.Clear();
             label21.Text = "R$ 0,00";
         }
-        private void SetTotaisEnabled(bool on)
+        private void SetTotaisEnabled(bool enabled)
         {
-            txtValorFrete.Enabled = on;
-            txtSeguro.Enabled = on;
-            txtDespesas.Enabled = on;
-
-            txtValorTotal.ReadOnly = true;
-            txtValorTotal.TabStop = false;
+            txtValorFrete.Enabled = enabled;
+            txtSeguro.Enabled = enabled;
+            txtDespesas.Enabled = enabled;
         }
+        private void AplicarSomenteLeitura()
+        {
+           
+            SetCabecalhoEnabled(false);
+            btPesquisarFornecedor.Enabled = false;
+
+        
+            SetItensEnabled(false);
+            listViewProduto.Enabled = false;
+
+
+            SetTotaisEnabled(false);
+
+ 
+            SetCondicaoEnabled(false);
+            btnPesquisarCondicao.Enabled = false;
+            btnGerarParcelas.Enabled = false;
+            btnLimparParcelas.Enabled = false;
+            listViewParcelas.Enabled = false;
+
+
+            txtObservacao.Enabled = false;
+
+            btnSalvar.Enabled = false;
+        }
+        private void ValidarNotaDuplicada()
+        {
+            if (!int.TryParse(txtCodigo.Text, out int modelo) || modelo <= 0) return;
+            if (string.IsNullOrWhiteSpace(txtSerie.Text)) return;
+            if (string.IsNullOrWhiteSpace(txtNumeroNota.Text)) return;
+            if (!int.TryParse(txtCodFornecedor.Text, out int idFornecedor)) return;
+
+            var dao = new CompraDao();
+            if (dao.NotaJaExiste(modelo, txtSerie.Text.Trim(), txtNumeroNota.Text.Trim(), idFornecedor, idCompra))
+            {
+                MessageBox.Show("Já existe uma compra com este Modelo, Série, Número e Fornecedor.",
+                                "Duplicidade", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                notaDuplicada = true;
+                BloquearTudoExcetoCabecalho();
+            }
+            else
+            {
+                notaDuplicada = false;
+                TentarLiberarItens(); 
+            }
+        }
+        private void DispararValidacaoDuplicidade()
+        {
+            if (!string.IsNullOrWhiteSpace(txtCodigo.Text) &&
+                !string.IsNullOrWhiteSpace(txtSerie.Text) &&
+                !string.IsNullOrWhiteSpace(txtNumeroNota.Text) &&
+                !string.IsNullOrWhiteSpace(txtCodFornecedor.Text))
+            {
+                ValidarNotaDuplicada();
+            }
+        }
+
+
     }
 }

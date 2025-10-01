@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Transactions;
-using ProjetoPF.Modelos.Localizacao;
-using static System.Windows.Forms.LinkLabel;
-using System.Security.Cryptography;
+
 
 namespace ProjetoPF.Dao.Compras
 {
@@ -24,9 +22,10 @@ namespace ProjetoPF.Dao.Compras
         public decimal ValorSeguro { get; set; }
         public decimal OutrasDespesas { get; set; }
         public decimal ValorTotal { get; set; }
+        public string Observacao { get; set; }
     }
 
-    public class CompraDao : BaseDao<Compra>
+    public class CompraDao : BaseDao<ProjetoPF.Modelos.Compra.Compra>
     {
         public CompraDao() : base("Compras") { }
         public List<CompraCabecalho> BuscarTodosCabecalho(string filtro = "")
@@ -34,14 +33,14 @@ namespace ProjetoPF.Dao.Compras
             var dao = new BaseDao<CompraCabecalho>("Compras");
             return dao.BuscarTodos(filtro);
         }
-        public void SalvarCompraComItensParcelas(Compra compra, List<ItemCompra> itens, List<ParcelaCompra> parcelas)
+        public void SalvarCompraComItensParcelas(ProjetoPF.Modelos.Compra.Compra compra, List<ProjetoPF.Modelos.Compra.ItemCompra> itens, List<ProjetoPF.Modelos.Compra.ParcelaCompra> parcelas)
         {
             using (var scope = new TransactionScope(
-           TransactionScopeOption.Required,
-           new TransactionOptions
-           {
-               IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted
-           }))
+              TransactionScopeOption.Required,
+              new TransactionOptions
+              {
+                  IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted
+              }))
             {
                 if (itens == null || itens.Count == 0)
                     throw new Exception("Inclua ao menos um item na compra.");
@@ -63,7 +62,8 @@ namespace ProjetoPF.Dao.Compras
                     ValorFrete = compra.ValorFrete,
                     ValorSeguro = compra.ValorSeguro,
                     OutrasDespesas = compra.OutrasDespesas,
-                    ValorTotal = compra.ValorTotal
+                    ValorTotal = compra.ValorTotal,
+                    Observacao = compra.Observacao
                 };
 
                 var cabDao = new BaseDao<CompraCabecalho>("Compras");
@@ -92,12 +92,14 @@ namespace ProjetoPF.Dao.Compras
                         parcelaDao.Criar(p);
                     }
                 }
-
                 scope.Complete();
             }
         }
 
-        public void AtualizarCompraComItensParcelas(Compra compra, List<ItemCompra> itens, List<ParcelaCompra> parcelas)
+        public void AtualizarCompraComItensParcelas(
+    ProjetoPF.Modelos.Compra.Compra compra,
+    List<ProjetoPF.Modelos.Compra.ItemCompra> itens,
+    List<ProjetoPF.Modelos.Compra.ParcelaCompra> parcelas)
         {
             using (var scope = new TransactionScope(
            TransactionScopeOption.Required,
@@ -128,7 +130,8 @@ namespace ProjetoPF.Dao.Compras
                     ValorFrete = compra.ValorFrete,
                     ValorSeguro = compra.ValorSeguro,
                     OutrasDespesas = compra.OutrasDespesas,
-                    ValorTotal = compra.ValorTotal
+                    ValorTotal = compra.ValorTotal,
+                    Observacao = compra.Observacao
                 };
 
                 var cabDao = new BaseDao<CompraCabecalho>("Compras");
@@ -220,37 +223,47 @@ namespace ProjetoPF.Dao.Compras
             }
         }
 
-        public bool NotaJaExiste(int modelo, string serie, string numero, int idFornecedor)
+        public bool NotaJaExiste(int modelo, string serie, string numero, int idFornecedor, int? idIgnorar = null)
         {
             using (var conn = new SqlConnection(_connectionString))
-            using (var cmd = new SqlCommand(@"
-        SELECT TOP 1 1
-        FROM Compras
-        WHERE Modelo = @Modelo
-          AND Serie = @Serie
-          AND NumeroNota = @Numero
-          AND IdFornecedor = @Fornecedor
-          AND Ativo = 1;", conn))
             {
-                cmd.Parameters.AddWithValue("@Modelo", modelo);
+                string sql = @"
+            SELECT TOP 1 1
+            FROM Compras
+            WHERE Modelo = @Modelo
+              AND Serie = @Serie
+              AND NumeroNota = @Numero
+              AND IdFornecedor = @Fornecedor
+              AND Ativo = 1";
 
-                if (string.IsNullOrEmpty(serie))
-                    cmd.Parameters.AddWithValue("@Serie", DBNull.Value);
-                else
-                    cmd.Parameters.AddWithValue("@Serie", serie.Trim());
+                if (idIgnorar.HasValue)
+                    sql += " AND Id <> @IdIgnorar";  
 
-                if (string.IsNullOrEmpty(numero))
-                    cmd.Parameters.AddWithValue("@Numero", DBNull.Value);
-                else
-                    cmd.Parameters.AddWithValue("@Numero", numero.Trim());
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Modelo", modelo);
 
-                cmd.Parameters.AddWithValue("@Fornecedor", idFornecedor);
+                    if (string.IsNullOrEmpty(serie))
+                        cmd.Parameters.AddWithValue("@Serie", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@Serie", serie.Trim());
 
-                conn.Open();
-                return cmd.ExecuteScalar() != null;
+                    if (string.IsNullOrEmpty(numero))
+                        cmd.Parameters.AddWithValue("@Numero", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@Numero", numero.Trim());
+
+                    cmd.Parameters.AddWithValue("@Fornecedor", idFornecedor);
+
+                    if (idIgnorar.HasValue)
+                        cmd.Parameters.AddWithValue("@IdIgnorar", idIgnorar.Value);
+
+                    conn.Open();
+                    return cmd.ExecuteScalar() != null;
+                }
             }
         }
-        public Compra BuscarPorId(int idCompra)
+        public ProjetoPF.Modelos.Compra.Compra BuscarPorId(int idCompra)
         {
             using (var cn = new SqlConnection(_connectionString))
             using (var cmd = new SqlCommand("SELECT * FROM Compras WHERE Id = @Id", cn))
@@ -262,7 +275,7 @@ namespace ProjetoPF.Dao.Compras
                 {
                     if (reader.Read())
                     {
-                        return new Compra
+                        return new ProjetoPF.Modelos.Compra.Compra
                         {
                             Id = (int)reader["Id"],
                             Modelo = (int)reader["Modelo"],
@@ -280,8 +293,11 @@ namespace ProjetoPF.Dao.Compras
                             DataAtualizacao = (DateTime)reader["DataAtualizacao"],
                             Ativo = (bool)reader["Ativo"],
                             MotivoCancelamento = reader["MotivoCancelamento"] == DBNull.Value
-                                         ? null
-                                         : reader["MotivoCancelamento"].ToString()
+                                ? null
+                                : reader["MotivoCancelamento"].ToString(),
+                            Observacao = reader["Observacao"] == DBNull.Value
+                                ? null
+                                : reader["Observacao"].ToString()
                         };
                     }
                 }

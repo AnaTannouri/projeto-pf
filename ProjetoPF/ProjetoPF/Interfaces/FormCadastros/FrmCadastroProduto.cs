@@ -127,10 +127,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtEstoque.Text = produto.Estoque.ToString();
             txtPrecoCusto.Text = produto.PrecoCusto.ToString("C2", new CultureInfo("pt-BR"));
-            txtPrecoVenda.Text = produto.PrecoVenda.ToString("C2", new CultureInfo("pt-BR"));
             txtUltCompra.Text = produto.CustoUltimaCompra.HasValue
                               ? produto.CustoUltimaCompra.Value.ToString("C2", new CultureInfo("pt-BR"))
                               : 0m.ToString("C2", new CultureInfo("pt-BR"));
+            txtPrecoVenda.Text = produto.PrecoVenda.ToString("C2", new CultureInfo("pt-BR"));
+
+
 
             txtCodCategoria.Text = produto.IdCategoria.ToString();
             var categoria = categoriaServices.BuscarPorId(produto.IdCategoria);
@@ -375,15 +377,16 @@ namespace ProjetoPF.Interfaces.FormCadastros
             bool custoOk = decimal.TryParse(txtPrecoCusto.Text.Replace("R$", "").Trim(), NumberStyles.Any, new CultureInfo("pt-BR"), out decimal precoCusto);
             bool vendaOk = decimal.TryParse(txtPrecoVenda.Text.Replace("R$", "").Trim(), NumberStyles.Any, new CultureInfo("pt-BR"), out decimal precoVenda);
 
-            if (custoOk && vendaOk && precoCusto > 0)
+            if (custoOk && vendaOk && precoVenda > 0)
             {
-                decimal margem = ((precoVenda - precoCusto) / precoCusto) * 100;
-                txtMargemLucro.Text = margem.ToString("F2") + " %";
+                decimal lucroBruto = precoVenda - precoCusto;
+                txtMargemLucro.Text = lucroBruto.ToString("C2", new CultureInfo("pt-BR")); 
             }
             else
             {
                 txtMargemLucro.Text = "R$ 0,00";
             }
+
         }
 
         private void txtMargemLucro_TextChanged(object sender, EventArgs e)
@@ -394,6 +397,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void txtPrecoVenda_TextChanged(object sender, EventArgs e)
         {
             CalcularMargemLucro();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

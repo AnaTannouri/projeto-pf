@@ -214,9 +214,10 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(186, 100);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(90, 13);
+            this.label5.Size = new System.Drawing.Size(92, 13);
             this.label5.TabIndex = 28;
-            this.label5.Text = "Preço custo (R$):";
+            this.label5.Text = "Custo Médio (R$):";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -444,9 +445,9 @@
             this.label20.AutoSize = true;
             this.label20.Location = new System.Drawing.Point(733, 100);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(116, 13);
+            this.label20.Size = new System.Drawing.Size(88, 13);
             this.label20.TabIndex = 55;
-            this.label20.Text = "Margem de Lucro (R$):";
+            this.label20.Text = "Lucro Bruto (R$):";
             this.label20.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtMargemLucro
@@ -517,6 +518,7 @@
             this.Name = "FrmCadastroProduto";
             this.Text = "Cadastro Produto";
             this.Load += new System.EventHandler(this.FrmCadastroProduto_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

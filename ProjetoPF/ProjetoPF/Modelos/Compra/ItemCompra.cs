@@ -13,6 +13,7 @@ namespace ProjetoPF.Modelos.Compra
         public int IdProduto { get; set; }
         public decimal Quantidade { get; set; }
         public decimal ValorUnitario { get; set; }
+        private decimal _valorCustoUnitarioReal;
         public decimal Total { get; set; }
     }
 }

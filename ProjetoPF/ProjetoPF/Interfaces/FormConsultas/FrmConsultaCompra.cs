@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using ProjetoPF.Modelos.Compra;
 using ProjetoPF.Servicos.Pessoa;
+using System.Linq;
 
 namespace ProjetoPF.Interfaces.FormConsultas
 {
@@ -66,7 +67,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     else if (ctrl is NumericUpDown nud) nud.Enabled = false;
                 }
 
-                btnAdicionar.Enabled = false; // não deixa salvar
+                btnAdicionar.Enabled = false; 
             }
 
             PopularListView(string.Empty);
@@ -77,9 +78,24 @@ namespace ProjetoPF.Interfaces.FormConsultas
         public override void PopularListView(string pesquisa)
         {
             listViewFormaPagamento.Items.Clear();
-            List<CompraCabecalho> compras = compraDao.BuscarTodosCabecalho(pesquisa);
 
-            if (compras != null && compras.Count > 0)
+            List<CompraCabecalho> compras = compraDao.BuscarTodosCabecalho("");
+
+            if (!string.IsNullOrWhiteSpace(pesquisa))
+            {
+                compras = compras.Where(compra =>
+    compra.Id.ToString().Contains(pesquisa) ||
+    compra.Modelo.ToString().Contains(pesquisa) ||
+    (compra.Serie?.IndexOf(pesquisa, StringComparison.OrdinalIgnoreCase) >= 0) ||
+    (compra.NumeroNota?.IndexOf(pesquisa, StringComparison.OrdinalIgnoreCase) >= 0) ||
+    (fornecedorServices.BuscarPorId(compra.IdFornecedor)?.NomeRazaoSocial?
+        .IndexOf(pesquisa, StringComparison.OrdinalIgnoreCase) >= 0) ||
+    (pesquisa.Equals("ativo", StringComparison.OrdinalIgnoreCase) && compra.Ativo) ||
+    (pesquisa.Equals("cancelado", StringComparison.OrdinalIgnoreCase) && !compra.Ativo)
+).ToList();
+            }
+
+            if (compras.Count > 0)
             {
                 foreach (var compra in compras)
                 {
@@ -102,7 +118,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
-            else if (!string.IsNullOrEmpty(pesquisa))
+            else
             {
                 MessageBox.Show("Nenhuma compra encontrada!", "Aviso",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -129,14 +145,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // 🔹 Primeiro: abre o cadastro em modo somente leitura
             using (var frm = new FrmCadastroCompra(compra.Id))
             {
                 frm.ModoSomenteLeitura = true;
                 frm.ShowDialog();
             }
 
-            // 🔹 Pergunta se deseja cancelar
             DialogResult confirmar = MessageBox.Show(
                 "Deseja realmente cancelar esta compra?",
                 "Confirmar Cancelamento",

@@ -56,7 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\BaseDao.cs" />
-    <Compile Include="Dao\Compra\CompraDAO.cs" />
+    <Compile Include="Dao\Compras\CompraDao.cs" />
+    <Compile Include="Dao\Compras\ProdutoFornecedorDAO.cs" />
     <Compile Include="Dao\Localizacao\CidadeDAO.cs" />
     <Compile Include="Dao\Localizacao\EstadoDAO.cs" />
     <Compile Include="Dao\Localizacao\PaisDAO.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Modelos\Compra\Compra.cs" />
     <Compile Include="Modelos\Compra\ItemCompra.cs" />
     <Compile Include="Modelos\Compra\ParcelaCompra.cs" />
+    <Compile Include="Modelos\Compra\ProdutoFornecedor.cs" />
     <Compile Include="Modelos\Pessoa\Cliente.cs" />
     <Compile Include="Modelos\Pessoa\BasePessoa.cs" />
     <Compile Include="Modelos\Localizacao\Cidade.cs" />
@@ -283,6 +285,7 @@
     </Compile>
     <Compile Include="Servicos\BaseServicos.cs" />
     <Compile Include="Servicos\Compra\CompraServicos.cs" />
+    <Compile Include="Servicos\Compra\ProdutoFornecedorService.cs" />
     <Compile Include="Servicos\Localizacao\CidadeServicos.cs" />
     <Compile Include="Servicos\Localizacao\EstadoServicos.cs" />
     <Compile Include="Servicos\Localizacao\PaisServicos.cs" />

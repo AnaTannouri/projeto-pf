@@ -152,7 +152,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             {
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Nome", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Preço Custo", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Custo Última Compra", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Preço Venda", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
