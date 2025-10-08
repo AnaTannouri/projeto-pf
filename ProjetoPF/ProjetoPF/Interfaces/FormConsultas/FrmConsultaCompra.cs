@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using ProjetoPF.Modelos.Compra;
 using ProjetoPF.Servicos.Pessoa;
 using System.Linq;
+using ProjetoPF.Servicos.Compra;
 
 namespace ProjetoPF.Interfaces.FormConsultas
 {
@@ -157,19 +158,33 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            if (confirmar == DialogResult.Yes)
+            if (confirmar != DialogResult.Yes)
+                return;
+
+            string motivo = InputBox.Show("Digite o motivo do cancelamento:", "Cancelar Nota");
+
+            if (string.IsNullOrWhiteSpace(motivo))
             {
-                string motivo = InputBox.Show("Digite o motivo do cancelamento:", "Cancelar Nota");
-                if (string.IsNullOrWhiteSpace(motivo))
-                {
-                    MessageBox.Show("Cancelamento abortado. Motivo não informado.");
-                    return;
-                }
+                MessageBox.Show("Cancelamento abortado. Motivo não informado.",
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                compraDao.CancelarCompra(compra.Id, motivo);
+            try
+            {
+ 
+                var compraService = new CompraServicos();
+                compraService.CancelarCompra(compra.Id, motivo);
 
-                MessageBox.Show("Compra cancelada com sucesso!");
+                MessageBox.Show("Compra cancelada com sucesso!",
+                                "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 PopularListView(string.Empty);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao cancelar compra: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         public static class InputBox

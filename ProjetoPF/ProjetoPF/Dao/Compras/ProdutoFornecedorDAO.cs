@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace ProjetoPF.Dao.Compra
 {
@@ -22,31 +23,36 @@ namespace ProjetoPF.Dao.Compra
             UPDATE ProdutoFornecedor
             SET PrecoUltimaCompra = @PrecoUltimaCompra,
                 DataUltimaCompra = @DataUltimaCompra,
-                Observacao = @Observacao,
-                DataAtualizacao = GETDATE()
-            WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor
+                Ativo = 1
+            WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor;
         END
         ELSE
         BEGIN
-            INSERT INTO ProdutoFornecedor (IdProduto, IdFornecedor, PrecoUltimaCompra, DataUltimaCompra, Observacao, DataCriacao, DataAtualizacao)
-            VALUES (@IdProduto, @IdFornecedor, @PrecoUltimaCompra, @DataUltimaCompra, @Observacao, GETDATE(), GETDATE())
-        END
-    ", conn))
+            INSERT INTO ProdutoFornecedor (IdProduto, IdFornecedor, PrecoUltimaCompra, DataUltimaCompra, Ativo)
+            VALUES (@IdProduto, @IdFornecedor, @PrecoUltimaCompra, @DataUltimaCompra, 1);
+        END", conn))
             {
                 cmd.Parameters.AddWithValue("@IdProduto", associacao.IdProduto);
                 cmd.Parameters.AddWithValue("@IdFornecedor", associacao.IdFornecedor);
                 cmd.Parameters.AddWithValue("@PrecoUltimaCompra", associacao.PrecoUltimaCompra);
-                if (associacao.DataUltimaCompra.HasValue && associacao.DataUltimaCompra.Value >= new DateTime(1753, 1, 1))
-                    cmd.Parameters.AddWithValue("@DataUltimaCompra", associacao.DataUltimaCompra.Value);
-                else
-                    cmd.Parameters.AddWithValue("@DataUltimaCompra", DBNull.Value);
-                if (string.IsNullOrWhiteSpace(associacao.Observacao))
-                    cmd.Parameters.AddWithValue("@Observacao", DBNull.Value);
-                else
-                    cmd.Parameters.AddWithValue("@Observacao", associacao.Observacao);
-
+                cmd.Parameters.AddWithValue("@DataUltimaCompra", associacao.DataUltimaCompra ?? (object)DBNull.Value);
                 conn.Open();
                 cmd.ExecuteNonQuery();
+            }
+        }
+        public void InativarPorCompra(int idProduto, int idFornecedor)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand(@"
+        UPDATE ProdutoFornecedor
+        SET Ativo = 0
+        WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor", conn))
+            {
+                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
+                cmd.Parameters.AddWithValue("@IdFornecedor", idFornecedor);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
             }
         }
         public ProdutoFornecedor BuscarPorProdutoFornecedor(int idProduto, int idFornecedor)
@@ -60,5 +66,174 @@ namespace ProjetoPF.Dao.Compra
             var resultados = BuscarTodos(filtro);
             return resultados != null && resultados.Count > 0;
         }
+        public List<ProdutoFornecedor> ListarPorProduto(int idProduto)
+        {
+            var lista = new List<ProdutoFornecedor>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand(@"
+                SELECT pf.*, f.NomeRazaoSocial AS NomeFornecedor
+                FROM ProdutoFornecedor pf
+                INNER JOIN Fornecedores f ON f.Id = pf.IdFornecedor
+                WHERE pf.IdProduto = @IdProduto
+                ORDER BY pf.DataAtualizacao DESC", conn))
+            {
+                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var pf = new ProdutoFornecedor
+                        {
+                            Id = (int)reader["Id"],
+                            IdProduto = (int)reader["IdProduto"],
+                            IdFornecedor = (int)reader["IdFornecedor"],
+                            PrecoUltimaCompra = reader["PrecoUltimaCompra"] != DBNull.Value ? Convert.ToDecimal(reader["PrecoUltimaCompra"]) : 0,
+                            DataUltimaCompra = reader["DataUltimaCompra"] != DBNull.Value ? Convert.ToDateTime(reader["DataUltimaCompra"]) : (DateTime?)null,
+                            DataCriacao = reader["DataCriacao"] != DBNull.Value ? Convert.ToDateTime(reader["DataCriacao"]) : DateTime.MinValue,
+                            DataAtualizacao = reader["DataAtualizacao"] != DBNull.Value ? Convert.ToDateTime(reader["DataAtualizacao"]) : DateTime.MinValue
+                        };
+
+                        lista.Add(pf);
+                    }
+                }
+            }
+
+            return lista;
+        }
+        public bool ExisteCompraVinculada(int idProduto, int idFornecedor)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand(@"
+        SELECT COUNT(*) 
+        FROM ItensCompra ic
+        INNER JOIN Compras c ON c.Id = ic.IdCompra
+        WHERE ic.IdProduto = @IdProduto 
+          AND c.IdFornecedor = @IdFornecedor", conn))
+            {
+                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
+                cmd.Parameters.AddWithValue("@IdFornecedor", idFornecedor);
+
+                conn.Open();
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+        }
+        public void RemoverVinculo(int idProduto, int idFornecedor)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand(@"
+                DELETE FROM ProdutoFornecedor 
+                WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor", conn))
+            {
+                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
+                cmd.Parameters.AddWithValue("@IdFornecedor", idFornecedor);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public List<ProdutoFornecedor> BuscarPorFornecedor(int idFornecedor)
+        {
+            var lista = new List<ProdutoFornecedor>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("SELECT * FROM ProdutoFornecedor WHERE IdFornecedor = @id", conn))
+            {
+                cmd.Parameters.AddWithValue("@id", idFornecedor);
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(new ProdutoFornecedor
+                        {
+                            Id = (int)reader["Id"],
+                            IdProduto = (int)reader["IdProduto"],
+                            IdFornecedor = (int)reader["IdFornecedor"],
+                            PrecoUltimaCompra = reader["PrecoUltimaCompra"] != DBNull.Value ? (decimal)reader["PrecoUltimaCompra"] : 0,
+                            DataUltimaCompra = reader["DataUltimaCompra"] != DBNull.Value ? (DateTime?)reader["DataUltimaCompra"] : null
+                        });
+                    }
+                }
+            }
+            return lista;
+        }
+        public void RemoverTodosDoProduto(int idProduto)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("DELETE FROM ProdutoFornecedor WHERE IdProduto = @IdProduto", conn))
+            {
+                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void AtualizarPrecoUltimaCompra(int idProduto, int idFornecedor, decimal novoPreco)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand(@"
+        IF EXISTS (
+            SELECT 1 FROM ProdutoFornecedor
+            WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor
+        )
+        BEGIN
+            UPDATE ProdutoFornecedor
+            SET PrecoUltimaCompra = @Preco,
+                DataUltimaCompra = @DataAtualizacao,
+                DataAtualizacao = @DataAtualizacao,
+                Ativo = 1
+            WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor;
+        END
+        ELSE
+        BEGIN
+            INSERT INTO ProdutoFornecedor (IdProduto, IdFornecedor, PrecoUltimaCompra, DataUltimaCompra, DataCriacao, DataAtualizacao, Ativo)
+            VALUES (@IdProduto, @IdFornecedor, @Preco, @DataAtualizacao, @DataAtualizacao, @DataAtualizacao, 1);
+        END", conn))
+            {
+                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
+                cmd.Parameters.AddWithValue("@IdFornecedor", idFornecedor);
+                cmd.Parameters.AddWithValue("@Preco", novoPreco);
+                cmd.Parameters.AddWithValue("@DataAtualizacao", DateTime.Now);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public ProdutoFornecedor BuscarUltimaCompraValida(int idProduto)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand(@"
+        SELECT TOP 1 *
+        FROM ProdutoFornecedor
+        WHERE IdProduto = @IdProduto
+        ORDER BY DataUltimaCompra DESC", conn))
+            {
+                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new ProdutoFornecedor
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            IdProduto = Convert.ToInt32(reader["IdProduto"]),
+                            IdFornecedor = Convert.ToInt32(reader["IdFornecedor"]),
+                            PrecoUltimaCompra = Convert.ToDecimal(reader["PrecoUltimaCompra"]),
+                            DataUltimaCompra = reader["DataUltimaCompra"] as DateTime?
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+
     }
 }
+

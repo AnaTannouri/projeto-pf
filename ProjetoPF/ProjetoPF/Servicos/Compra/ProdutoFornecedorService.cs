@@ -26,7 +26,6 @@ namespace ProjetoPF.Servicos.Compra
                 IdFornecedor = idFornecedor,
                 PrecoUltimaCompra = preco,
                 DataUltimaCompra = dataCompra,
-                Observacao = observacao,
                 DataAtualizacao = DateTime.Now
             };
 

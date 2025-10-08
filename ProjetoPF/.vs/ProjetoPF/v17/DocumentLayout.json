@@ -1,7 +1,156 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\servicos\\compra\\compraservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\compra\\compraservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\compras\\compradao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\compras\\compradao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\dao\\basedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\basedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\dao\\compras\\produtofornecedordao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\compras\\produtofornecedordao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastrocompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastrocompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastroproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastroproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formconsultas\\frmconsultaproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultaproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\interfaces\\formconsultas\\frmconsultacompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultacompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\interfaces\\formconsultas\\frmconsultafornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultafornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\servicos\\produto\\categoriaservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\produto\\categoriaservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\servicos\\compra\\produtofornecedorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\compra\\produtofornecedorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\servicos\\produto\\marcaservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\produto\\marcaservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastroproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastroproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastrocompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastrocompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\modelos\\compra\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\compra\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\interfaces\\formconsultas\\frmconsultacompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultacompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\servicos\\baseservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\baseservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\modelos\\compra\\contasapagar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\compra\\contasapagar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\modelos\\compra\\itemcompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\compra\\itemcompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\interfaces\\formconsultas\\frmconsultaproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formconsultas\\frmconsultaproduto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\servicos\\produto\\produtoservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\servicos\\produto\\produtoservicos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\interfaces\\formcadastros\\frmcadastropessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastropessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\modelos\\compra\\produtofornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\compra\\produtofornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\modelos\\produto\\produtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\produto\\produtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\produto\\produtodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\produto\\produtodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\produto\\unidademedidadao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\produto\\unidademedidadao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\modelos\\pessoa\\fornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\modelos\\pessoa\\fornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastrounidademedida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastrounidademedida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\produto\\marcadao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\produto\\marcadao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\produto\\categoriadao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\produto\\categoriadao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\localizacao\\paisdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\localizacao\\paisdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\localizacao\\estadodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\localizacao\\estadodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|c:\\dev\\projetopf2\\projetopf\\projetopf\\dao\\localizacao\\cidadedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\dao\\localizacao\\cidadedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastrofornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastrofornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastroproduto.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastroproduto.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastrofornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastrofornecedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|C:\\Dev\\ProjetoPF2\\ProjetoPF\\projetopf\\interfaces\\formcadastros\\frmcadastrocondpagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B4EE6A91-C9CC-4D86-8386-56BED599589A}|ProjetoPF\\ProjetoPF.csproj|solutionrelative:projetopf\\interfaces\\formcadastros\\frmcadastrocondpagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +158,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +175,478 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{74946827-37a0-11d2-a273-00c04f8ef4ff}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CompraServicos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Compra\\CompraServicos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Compra\\CompraServicos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Compra\\CompraServicos.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\Compra\\CompraServicos.cs",
+              "ViewState": "AQIAAG0AAAAAAAAAAAAnwJgAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:28:56.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CategoriaServicos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\CategoriaServicos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Produto\\CategoriaServicos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\CategoriaServicos.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\Produto\\CategoriaServicos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T15:46:52.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FrmConsultaProduto.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADQAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:42:41.697Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FrmConsultaFornecedor.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFornecedor.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFornecedor.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFornecedor.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaFornecedor.cs",
+              "ViewState": "AQIAALcAAAAAAAAAAAAkwBwAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:30:01.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FrmConsultaCompra.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAJMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:21:51.252Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FrmCadastroProduto.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAAwJYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:26:24.927Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FrmCadastroCompra.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs",
+              "ViewState": "AQIAAE0FAAAAAAAAAAAgwGgFAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:20:05.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CompraDao.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Compras\\CompraDao.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Compras\\CompraDao.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Compras\\CompraDao.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Compras\\CompraDao.cs",
+              "ViewState": "AQIAAPsAAAAAAAAAAAAnwB4BAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:19:55.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MarcaServicos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\MarcaServicos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Produto\\MarcaServicos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\MarcaServicos.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\Produto\\MarcaServicos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T19:52:21.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProdutoFornecedorDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Compras\\ProdutoFornecedorDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Compras\\ProdutoFornecedorDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Compras\\ProdutoFornecedorDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Compras\\ProdutoFornecedorDAO.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAewCoAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:44:08.132Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "FrmCadastroCompra.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCompra.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:02:03.593Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BaseDao.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\BaseDao.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\BaseDao.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\BaseDao.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\BaseDao.cs",
+              "ViewState": "AQIAALAAAAAAAAAAAAAewLoAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:43:21.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProdutoFornecedorService.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Compra\\ProdutoFornecedorService.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Compra\\ProdutoFornecedorService.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Compra\\ProdutoFornecedorService.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\Compra\\ProdutoFornecedorService.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAIwCgAAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:31:12.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FrmCadastroProduto.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:24:39.954Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ContasAPagar.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\ContasAPagar.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Compra\\ContasAPagar.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\ContasAPagar.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\Compra\\ContasAPagar.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T17:07:50.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Compra.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\Compra.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Compra\\Compra.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\Compra.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\Compra\\Compra.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T17:16:39.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "BaseServicos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\BaseServicos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\BaseServicos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\BaseServicos.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\BaseServicos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T17:16:04.28Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FrmConsultaCompra.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaCompra.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T17:17:39.935Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ItemCompra.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\ItemCompra.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Compra\\ItemCompra.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\ItemCompra.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\Compra\\ItemCompra.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:59:19.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "FrmConsultaProduto.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormConsultas\\FrmConsultaProduto.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:40:55.743Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ProdutoServicos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\ProdutoServicos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Servicos\\Produto\\ProdutoServicos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Servicos\\Produto\\ProdutoServicos.cs",
+              "RelativeToolTip": "ProjetoPF\\Servicos\\Produto\\ProdutoServicos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:31:42.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Produtos.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Produto\\Produtos.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Produto\\Produtos.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Produto\\Produtos.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\Produto\\Produtos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T13:51:28.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ProdutoFornecedor.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\ProdutoFornecedor.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Compra\\ProdutoFornecedor.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Compra\\ProdutoFornecedor.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\Compra\\ProdutoFornecedor.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:31:19.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "UnidadeMedidaDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\UnidadeMedidaDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Produto\\UnidadeMedidaDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\UnidadeMedidaDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Produto\\UnidadeMedidaDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:45:25.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "FrmCadastroPessoa.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroPessoa.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T16:17:46.63Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ProdutoDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\ProdutoDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Produto\\ProdutoDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\ProdutoDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Produto\\ProdutoDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T15:59:50.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Fornecedor.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Pessoa\\Fornecedor.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Modelos\\Pessoa\\Fornecedor.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Modelos\\Pessoa\\Fornecedor.cs",
+              "RelativeToolTip": "ProjetoPF\\Modelos\\Pessoa\\Fornecedor.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T13:38:12.076Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "FrmCadastroUnidadeMedida.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroUnidadeMedida.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T01:02:36.242Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "CidadeDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Localizacao\\CidadeDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Localizacao\\CidadeDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Localizacao\\CidadeDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Localizacao\\CidadeDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:45:19.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "EstadoDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Localizacao\\EstadoDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Localizacao\\EstadoDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Localizacao\\EstadoDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Localizacao\\EstadoDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:45:20.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "PaisDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Localizacao\\PaisDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Localizacao\\PaisDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Localizacao\\PaisDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Localizacao\\PaisDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:45:21.178Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "CategoriaDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\CategoriaDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Produto\\CategoriaDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\CategoriaDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Produto\\CategoriaDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:45:22.61Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "MarcaDAO.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\MarcaDAO.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Dao\\Produto\\MarcaDAO.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Dao\\Produto\\MarcaDAO.cs",
+              "RelativeToolTip": "ProjetoPF\\Dao\\Produto\\MarcaDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-08T11:45:24.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "FrmCadastroFornecedor.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:12:57.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "FrmCadastroProduto.Designer.cs",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.Designer.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.Designer.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.Designer.cs",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroProduto.Designer.cs",
+              "ViewState": "AQIAAMQAAAAAAAAAAAAgwNsAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T01:02:38.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "FrmCadastroFornecedor.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroFornecedor.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:12:50.093Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "FrmCadastroCondPagamento.cs [Design]",
+              "DocumentMoniker": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs",
+              "RelativeDocumentMoniker": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs",
+              "ToolTip": "C:\\Dev\\ProjetoPF2\\ProjetoPF\\ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs [Design]",
+              "RelativeToolTip": "ProjetoPF\\Interfaces\\FormCadastros\\FrmCadastroCondPagamento.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T00:09:34.969Z"
             }
           ]
         },

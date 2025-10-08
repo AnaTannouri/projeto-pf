@@ -25,9 +25,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private BaseServicos<Fornecedor> fornecedorServices = new BaseServicos<Fornecedor>(new BaseDao<Fornecedor>("Fornecedores"));
         private BaseServicos<CondicaoPagamento> condicaoPagamentoServices = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"));
         private List<ItemCompra> itensCompra = new List<ItemCompra>();
-        private List<ParcelaCompra> parcelas = new List<ParcelaCompra>();
+        private List<ContasAPagar> parcelas = new List<ContasAPagar>();
+
+        private bool carregandoDuplicada = false;
 
         private bool notaDuplicada = false;
+
         public bool ModoSomenteLeitura { get; set; } = false;
 
         public FrmCadastroCompra()
@@ -391,6 +394,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
             listViewProduto.Columns.Add("Valor Unitário", 150, HorizontalAlignment.Right);
             listViewProduto.Columns.Add("Total (R$)", 150, HorizontalAlignment.Right);
 
+            listViewProduto.View = View.Details;
+            listViewProduto.FullRowSelect = true;
+            listViewProduto.MultiSelect = false;
+            listViewProduto.HideSelection = false;
+            listViewProduto.GridLines = true;
+
+            listViewProduto.MouseClick += (s, ev) =>
+            {
+                if (listViewProduto.SelectedItems.Count > 0)
+                    listViewProduto.Focus();
+            };
+
+
             listViewParcelas.View = View.Details;
             listViewParcelas.Columns.Clear();
             listViewParcelas.Columns.Add("Nº Parcela", 80, HorizontalAlignment.Right);
@@ -543,8 +559,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     AtualizarTotalProdutos();
 
                     listViewParcelas.Items.Clear();
-                    var listaParcelas = new ParcelaCompraDao().BuscarPorCompraId(compra.Id);
+                    List<ContasAPagar> listaParcelas;
+
+                    if (compra.Ativo)
+                    {
+                        listaParcelas = new ContasAPagarDao().BuscarPorCompraId(compra.Id);
+                    }
+                    else
+                    {
+                        listaParcelas = new ContasAPagarDao().BuscarParcelasCanceladas(compra.Id);
+                    }
+
                     parcelas = listaParcelas;
+
 
                     foreach (var p in listaParcelas)
                     {
@@ -590,6 +617,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     AplicarSomenteLeitura();
                 }
             }
+            listViewProduto.SelectedIndexChanged += (s, ev) =>
+            {
+                bool selecionado = listViewProduto.SelectedItems.Count > 0;
+                btnEditar.Enabled = selecionado;
+                btnRemover.Enabled = selecionado;
+            };
         }
         private void AtualizarTotalParcelas()
         {
@@ -708,7 +741,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 decimal porcentagem = p.Porcentagem / 100m;
 
-                parcelas.Add(new ParcelaCompra
+                parcelas.Add(new ContasAPagar
                 {
                     NumeroParcela = p.NumParcela,
                     DataVencimento = dataBase.AddDays(p.Prazo),
@@ -726,7 +759,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             var forma = servicoForma.BuscarPorId(idForma);
             return forma?.Descricao ?? "";
         }
-        private void AtualizarListViewParcelas(List<ParcelaCompra> parcelas)
+        private void AtualizarListViewParcelas(List<ContasAPagar> parcelas)
         {
             listViewParcelas.Items.Clear();
             decimal totalParcelas = 0;
@@ -935,7 +968,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
-                // 🚨 Checagem de duplicidade
                 if (NotaJaExiste(modelo, txtSerie.Text, txtNumeroNota.Text, idFornecedor))
                 {
                     MessageBox.Show("Já existe uma compra cadastrada com esse Modelo, Série, Número e Fornecedor.",
@@ -972,45 +1004,45 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
 
                 decimal TryMoeda(string s)
-        {
-            if (string.IsNullOrWhiteSpace(s)) return 0m;
-            s = s.Replace("R$", "").Trim();
-            decimal.TryParse(s, out var v);
-            return v;
-        }
+                {
+                    if (string.IsNullOrWhiteSpace(s)) return 0m;
+                    s = s.Replace("R$", "").Trim();
+                    decimal.TryParse(s, out var v);
+                    return v;
+                }
 
-        var compra = new Compra
-        {
-            Modelo = modelo,
-            Serie = txtSerie.Text,
-            NumeroNota = txtNumeroNota.Text,
-            DataEmissao = dtpEmissao.Value.Date,
-            DataEntrega = dtpEntrega.Value.Date,
-            IdFornecedor = idFornecedor,
-            IdCondicaoPagamento = idCond,
-            ValorFrete = TryMoeda(txtValorFrete.Text),
-            ValorSeguro = TryMoeda(txtSeguro.Text),
-            OutrasDespesas = TryMoeda(txtDespesas.Text),
-            ValorTotal = TryMoeda(txtValorTotal.Text),
-            Itens = itensCompra,
-            Parcelas = parcelas,
-            DataCriacao = DateTime.Now,
-            DataAtualizacao = DateTime.Now,
-            Ativo = true,
-            Observacao = txtObservacao.Text?.Trim()
-        };
+                var compra = new Compra
+                {
+                    Modelo = modelo,
+                    Serie = txtSerie.Text,
+                    NumeroNota = txtNumeroNota.Text,
+                    DataEmissao = dtpEmissao.Value.Date,
+                    DataEntrega = dtpEntrega.Value.Date,
+                    IdFornecedor = idFornecedor,
+                    IdCondicaoPagamento = idCond,
+                    ValorFrete = TryMoeda(txtValorFrete.Text),
+                    ValorSeguro = TryMoeda(txtSeguro.Text),
+                    OutrasDespesas = TryMoeda(txtDespesas.Text),
+                    ValorTotal = TryMoeda(txtValorTotal.Text),
+                    Itens = itensCompra,
+                    Parcelas = parcelas,
+                    DataCriacao = DateTime.Now,
+                    DataAtualizacao = DateTime.Now,
+                    Ativo = true,
+                    Observacao = txtObservacao.Text?.Trim()
+                };
 
-        var compraService = new CompraServicos();
-        compraService.CriarCompraCompleta(compra); 
+                var compraService = new CompraServicos();
+                compraService.CriarCompraCompleta(compra);
 
-        MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        AbrirConsultaCompras();
-        Close();
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show("Erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
+                AbrirConsultaCompras();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
         private void LimparCabecalho()
         {
@@ -1258,24 +1290,82 @@ namespace ProjetoPF.Interfaces.FormCadastros
         }
         private void ValidarNotaDuplicada()
         {
+            if (carregandoDuplicada) return;
+
             if (!int.TryParse(txtCodigo.Text, out int modelo) || modelo <= 0) return;
             if (string.IsNullOrWhiteSpace(txtSerie.Text)) return;
             if (string.IsNullOrWhiteSpace(txtNumeroNota.Text)) return;
             if (!int.TryParse(txtCodFornecedor.Text, out int idFornecedor)) return;
 
             var dao = new CompraDao();
-            if (dao.NotaJaExiste(modelo, txtSerie.Text.Trim(), txtNumeroNota.Text.Trim(), idFornecedor, idCompra))
+            var compraDuplicada = dao.BuscarPorNota(modelo, txtSerie.Text.Trim(), txtNumeroNota.Text.Trim(), idFornecedor);
+
+            if (compraDuplicada != null)
             {
-                MessageBox.Show("Já existe uma compra com este Modelo, Série, Número e Fornecedor.",
-                                "Duplicidade", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                carregandoDuplicada = true; 
+
+                MessageBox.Show(
+                    "Já existe uma compra com este Modelo, Série, Número e Fornecedor.\n" +
+                    "Os dados dessa compra foram carregados para conferência.",
+                    "Duplicidade Detectada",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
 
                 notaDuplicada = true;
-                BloquearTudoExcetoCabecalho();
+
+                txtCodigo.Text = compraDuplicada.Modelo.ToString();
+                txtSerie.Text = compraDuplicada.Serie;
+                txtNumeroNota.Text = compraDuplicada.NumeroNota;
+                txtCodFornecedor.Text = compraDuplicada.IdFornecedor.ToString();
+                txtCodCondicao.Text = compraDuplicada.IdCondicaoPagamento.ToString();
+
+                dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
+                dtpEntrega.MinDate = DateTimePicker.MinimumDateTime;
+                dtpEmissao.MaxDate = DateTimePicker.MaximumDateTime;
+                dtpEntrega.MaxDate = DateTimePicker.MaximumDateTime;
+
+                dtpEmissao.Format = DateTimePickerFormat.Short;
+                dtpEmissao.Value = compraDuplicada.DataEmissao;
+
+                dtpEntrega.Format = DateTimePickerFormat.Short;
+                dtpEntrega.Value = compraDuplicada.DataEntrega;
+
+                
+                txtValorFrete.Text = compraDuplicada.ValorFrete.ToString("N2");
+                txtSeguro.Text = compraDuplicada.ValorSeguro.ToString("N2");
+                txtDespesas.Text = compraDuplicada.OutrasDespesas.ToString("N2");
+                txtValorTotal.Text = compraDuplicada.ValorTotal.ToString("N2");
+                txtObservacao.Text = compraDuplicada.Observacao ?? "";
+
+               
+                var itemDao = new ItemCompraDao();
+                itensCompra = itemDao.BuscarPorCompraId(compraDuplicada.Id);
+                AtualizarListViewItens();
+
+            
+                var parcelaDao = new ContasAPagarDao();
+                parcelas = parcelaDao.BuscarPorCompraId(compraDuplicada.Id);
+                AtualizarListViewParcelas(parcelas);
+
+                
+                labelCriacao.Text = compraDuplicada.DataCriacao != DateTime.MinValue
+                    ? compraDuplicada.DataCriacao.ToString("dd/MM/yyyy HH:mm")
+                    : "-";
+
+                lblAtualizacao.Text = compraDuplicada.DataAtualizacao != DateTime.MinValue
+                    ? compraDuplicada.DataAtualizacao.ToString("dd/MM/yyyy HH:mm")
+                    : "-";
+
+             
+                AplicarSomenteLeitura();
+
+                carregandoDuplicada = false;
             }
             else
             {
                 notaDuplicada = false;
-                TentarLiberarItens(); 
+                TentarLiberarItens();
             }
         }
         private void DispararValidacaoDuplicidade()

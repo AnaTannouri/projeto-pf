@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoPF.Modelos.Compra
 {
-    public class ParcelaCompra : BaseModelos
+    public class ContasAPagar : BaseModelos
     {
         public int IdCompra { get; set; }
         public int NumeroParcela { get; set; }

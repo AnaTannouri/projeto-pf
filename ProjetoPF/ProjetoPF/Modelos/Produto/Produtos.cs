@@ -12,7 +12,6 @@ namespace ProjetoPF.Modelos.Produto
         public string Nome { get; set; }
         public int IdUnidadeMedida { get; set; }
         public int IdCategoria { get; set; }
-        public int IdFornecedor { get; set; }
         public int? IdMarca { get; set; }
         public decimal Estoque { get; set; }
         public decimal PrecoCusto { get; set; }

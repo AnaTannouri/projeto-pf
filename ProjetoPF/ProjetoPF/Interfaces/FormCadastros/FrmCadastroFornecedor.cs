@@ -36,6 +36,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private bool isEditando = false;
         private bool isExcluindo = false;
+
         public FrmCadastroFornecedor()
         {
             InitializeComponent();
@@ -227,11 +228,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (string.IsNullOrWhiteSpace(txtCondicao.Text))
             {
                 MessageBox.Show("Informe a condição de pagamento do fornecedor.");
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(txtValorMin.Text))
-            {
-                MessageBox.Show("Informe o valor minímo de pedido do fornecedor.");
                 return false;
             }
             if (servicoFornecedor.DocumentoDuplicado(fornecedor))

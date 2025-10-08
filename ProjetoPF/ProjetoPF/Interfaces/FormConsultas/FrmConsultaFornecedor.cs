@@ -1,4 +1,5 @@
 ﻿using ProjetoPF.Dao;
+using ProjetoPF.Dao.Compra;
 using ProjetoPF.Interfaces.FormCadastros;
 using ProjetoPF.Modelos.Pagamento;
 using ProjetoPF.Modelos.Pessoa;
@@ -16,6 +17,8 @@ namespace ProjetoPF.Interfaces.FormConsultas
         private FrmCadastroFornecedor frmCadastroFornecedor = new FrmCadastroFornecedor();
         private BaseServicos<Fornecedor> fornecedorServices = new BaseServicos<Fornecedor>(new BaseDao<Fornecedor>("Fornecedores"));
         private BaseServicos<CondicaoPagamento> condicaoPagamentoServices = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"));
+
+        public Fornecedor FornecedorSelecionado { get; private set; }
 
         public FrmConsultaFornecedor()
         {
@@ -132,10 +135,8 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     return;
                 }
 
-                var daoProdutos = new BaseDao<Produtos>("Produtos");
-                var produtosVinculados = daoProdutos.BuscarTodos()
-                    .Where(p => p.IdFornecedor == fornecedorSelecionado.Id)
-                    .ToList();
+                var daoProdutoFornecedor = new ProdutoFornecedorDAO();
+                var produtosVinculados = daoProdutoFornecedor.BuscarPorFornecedor(fornecedorSelecionado.Id);
 
                 if (produtosVinculados.Any())
                 {
@@ -187,6 +188,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                                     MessageBoxIcon.Warning);
                     return;
                 }
+                FornecedorSelecionado = fornecedorSelecionado;
 
                 if (this.Owner is FrmCadastroProduto frmCadastroProduto)
                 {
@@ -194,10 +196,14 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     frmCadastroProduto.txtCodFornecedor.Text = fornecedorSelecionado.Id.ToString();
                     this.Close();
                 }
-                if (this.Owner is FrmCadastroCompra frmCadastroCompra)
+                else if (this.Owner is FrmCadastroCompra frmCadastroCompra)
                 {
                     frmCadastroCompra.txtFornecedor.Text = fornecedorSelecionado.NomeRazaoSocial;
                     frmCadastroCompra.txtCodFornecedor.Text = fornecedorSelecionado.Id.ToString();
+                    this.Close();
+                }
+                else
+                {
                     this.Close();
                 }
             }

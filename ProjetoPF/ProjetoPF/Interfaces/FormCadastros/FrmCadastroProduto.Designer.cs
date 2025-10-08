@@ -68,6 +68,8 @@
             this.label20 = new System.Windows.Forms.Label();
             this.txtMargemLucro = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.listFornecedoresProduto = new System.Windows.Forms.ListView();
+            this.btnRemover = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSalvar
@@ -164,11 +166,11 @@
             // 
             // btnFornecedor
             // 
-            this.btnFornecedor.Location = new System.Drawing.Point(481, 253);
+            this.btnFornecedor.Location = new System.Drawing.Point(481, 255);
             this.btnFornecedor.Name = "btnFornecedor";
             this.btnFornecedor.Size = new System.Drawing.Size(180, 23);
             this.btnFornecedor.TabIndex = 7;
-            this.btnFornecedor.Text = "Selecionar Fornecedor";
+            this.btnFornecedor.Text = "Adicionar";
             this.btnFornecedor.UseVisualStyleBackColor = true;
             this.btnFornecedor.Click += new System.EventHandler(this.btnFornecedor_Click);
             // 
@@ -176,7 +178,7 @@
             // 
             this.txtFornecedor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtFornecedor.Enabled = false;
-            this.txtFornecedor.Location = new System.Drawing.Point(189, 253);
+            this.txtFornecedor.Location = new System.Drawing.Point(189, 255);
             this.txtFornecedor.Name = "txtFornecedor";
             this.txtFornecedor.Size = new System.Drawing.Size(268, 20);
             this.txtFornecedor.TabIndex = 0;
@@ -185,7 +187,7 @@
             // 
             this.txtCodFornecedor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodFornecedor.Enabled = false;
-            this.txtCodFornecedor.Location = new System.Drawing.Point(12, 253);
+            this.txtCodFornecedor.Location = new System.Drawing.Point(12, 256);
             this.txtCodFornecedor.Name = "txtCodFornecedor";
             this.txtCodFornecedor.Size = new System.Drawing.Size(153, 20);
             this.txtCodFornecedor.TabIndex = 0;
@@ -217,7 +219,6 @@
             this.label5.Size = new System.Drawing.Size(92, 13);
             this.label5.TabIndex = 28;
             this.label5.Text = "Custo Médio (R$):";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -258,7 +259,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(9, 237);
+            this.label10.Location = new System.Drawing.Point(12, 236);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(97, 13);
             this.label10.TabIndex = 33;
@@ -320,7 +321,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(9, 310);
+            this.label18.Location = new System.Drawing.Point(12, 567);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(68, 13);
             this.label18.TabIndex = 42;
@@ -433,11 +434,11 @@
             // txtObser
             // 
             this.txtObser.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtObser.Location = new System.Drawing.Point(12, 338);
+            this.txtObser.Location = new System.Drawing.Point(12, 583);
             this.txtObser.MaxLength = 500;
             this.txtObser.Multiline = true;
             this.txtObser.Name = "txtObser";
-            this.txtObser.Size = new System.Drawing.Size(1315, 155);
+            this.txtObser.Size = new System.Drawing.Size(1315, 62);
             this.txtObser.TabIndex = 8;
             // 
             // label20
@@ -471,10 +472,31 @@
             this.label14.TabIndex = 56;
             this.label14.Text = "Produtos";
             // 
+            // listFornecedoresProduto
+            // 
+            this.listFornecedoresProduto.HideSelection = false;
+            this.listFornecedoresProduto.Location = new System.Drawing.Point(12, 300);
+            this.listFornecedoresProduto.Name = "listFornecedoresProduto";
+            this.listFornecedoresProduto.Size = new System.Drawing.Size(1315, 264);
+            this.listFornecedoresProduto.TabIndex = 57;
+            this.listFornecedoresProduto.UseCompatibleStateImageBehavior = false;
+            // 
+            // btnRemover
+            // 
+            this.btnRemover.Location = new System.Drawing.Point(681, 255);
+            this.btnRemover.Name = "btnRemover";
+            this.btnRemover.Size = new System.Drawing.Size(180, 23);
+            this.btnRemover.TabIndex = 58;
+            this.btnRemover.Text = "Remover";
+            this.btnRemover.UseVisualStyleBackColor = true;
+            this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
+            // 
             // FrmCadastroProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(1344, 689);
+            this.Controls.Add(this.btnRemover);
+            this.Controls.Add(this.listFornecedoresProduto);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.txtMargemLucro);
@@ -568,6 +590,8 @@
             this.Controls.SetChildIndex(this.txtMargemLucro, 0);
             this.Controls.SetChildIndex(this.label20, 0);
             this.Controls.SetChildIndex(this.label14, 0);
+            this.Controls.SetChildIndex(this.listFornecedoresProduto, 0);
+            this.Controls.SetChildIndex(this.btnRemover, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -615,5 +639,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtMargemLucro;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ListView listFornecedoresProduto;
+        private System.Windows.Forms.Button btnRemover;
     }
 }

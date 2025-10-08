@@ -42,12 +42,17 @@ namespace ProjetoPF.Interfaces.FormConsultas
         public override void PopularListView(string pesquisa)
         {
             listViewFormaPagamento.Items.Clear();
-            if (!string.IsNullOrWhiteSpace(pesquisa) && pesquisa.All(char.IsDigit))
+            List<Produtos> produtos;
+
+            if (!string.IsNullOrWhiteSpace(pesquisa) && int.TryParse(pesquisa, out int codigo))
             {
-                MessageBox.Show("A pesquisa só pode ser feita pelo nome do produto.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                var produto = produtoServices.BuscarPorId(codigo);
+                produtos = produto != null ? new List<Produtos> { produto } : new List<Produtos>();
             }
-            List<Produtos> produtos = produtoServices.BuscarTodos(pesquisa);
+            else
+            {
+                produtos = produtoServices.BuscarTodos(pesquisa);
+            }
 
             if (produtos != null && produtos.Count > 0)
             {
@@ -56,18 +61,18 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     ListViewItem item = new ListViewItem(produto.Id.ToString())
                     {
                         SubItems =
-                        {
-                            produto.Nome,
-                            produto.PrecoCusto.ToString("C2"),
-                            produto.PrecoVenda.ToString("C2"),
-                            produto.Ativo ? "SIM" : "NÃO",
-                            produto.DataCriacao.ToString("dd/MM/yyyy"),
-                            produto.DataAtualizacao.ToString("dd/MM/yyyy")
-                        }
+                {
+                    produto.Nome,
+                    produto.PrecoCusto.ToString("C2"),
+                    produto.PrecoVenda.ToString("C2"),
+                    produto.Ativo ? "SIM" : "NÃO",
+                    produto.DataCriacao.ToString("dd/MM/yyyy"),
+                    produto.DataAtualizacao.ToString("dd/MM/yyyy")
+                }
                     };
 
                     if (!produto.Ativo)
-                        item.ForeColor = System.Drawing.Color.Red;
+                        item.ForeColor = Color.Red;
 
                     item.Tag = produto;
                     listViewFormaPagamento.Items.Add(item);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjetoPF.Modelos.Compra;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;

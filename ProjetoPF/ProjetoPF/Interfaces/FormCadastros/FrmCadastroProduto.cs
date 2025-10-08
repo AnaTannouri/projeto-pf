@@ -16,6 +16,9 @@ using ProjetoPF.Servicos.Produto;
 using ProjetoPF.Interfaces.FormConsultas;
 using System.Globalization;
 using System.Linq;
+using ProjetoPF.Modelos.Compra;
+using ProjetoPF.Dao.Compra;
+using System.Data.SqlClient;
 
 namespace ProjetoPF.Interfaces.FormCadastros
 {
@@ -29,6 +32,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private BaseServicos<Fornecedor> fornecedorServicos = new BaseServicos<Fornecedor>(new BaseDao<Fornecedor>("Fornecedores"));
 
         private ProdutoServicos servicoProduto = new ProdutoServicos();
+
+        private List<ProdutoFornecedor> fornecedoresSelecionados = new List<ProdutoFornecedor>();
 
         private bool carregandoCondicoes = false;
         private bool carregandoCidades = false;
@@ -71,14 +76,15 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(txtFornecedor.Text) || string.IsNullOrWhiteSpace(txtCodFornecedor.Text))
+            if (listFornecedoresProduto.Items.Count == 0)
             {
-                MessageBox.Show("Selecione o fornecedor.");
+                MessageBox.Show("Adicione ao menos um fornecedor para o produto.");
                 return false;
             }
 
             return true;
         }
+
         public void LimparFormulario()
         {
             txtCodigo.Clear();
@@ -142,11 +148,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
             Marca marca = null;
             if (produto.IdMarca.HasValue)
                 marca = marcaServices.BuscarPorId(produto.IdMarca.Value);
-            txtMarca.Text = marca != null ? marca.Descricao : "Desconhecida";
 
-            txtCodFornecedor.Text = produto.IdFornecedor.ToString();
-            var fornecedor = fornecedorServicos.BuscarPorId(produto.IdFornecedor);
-            txtFornecedor.Text = fornecedor != null ? fornecedor.NomeRazaoSocial : "Desconhecido";
+            txtMarca.Text = marca != null ? marca.Descricao : string.Empty;
+
+            txtFornecedor.ReadOnly = isExcluindoForm;
+            txtCodFornecedor.ReadOnly = isExcluindoForm;
 
             txtObser.Text = produto.Observacao;
             checkAtivo.Checked = produto.Ativo;
@@ -162,6 +168,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 BloquearCampos();
             else
                 DesbloquearCampos();
+            listFornecedoresProduto.Enabled = !isExcluindo;
+            CarregarFornecedoresDoProduto(produto.Id);
+
         }
         public void BloquearCampos()
         {
@@ -192,6 +201,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             btnCategoria.Enabled = false;
             btnMarca.Enabled = false;
             btnFornecedor.Enabled = false;
+            btnRemover.Enabled = false;
         }
         public void DesbloquearCampos()
         {
@@ -229,10 +239,23 @@ namespace ProjetoPF.Interfaces.FormCadastros
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
             labelCriacao.Text = produto.DataCriacao > DateTime.MinValue ? produto.DataCriacao.ToShortDateString() : "";
             lblAtualizacao.Text = produto.DataAtualizacao > DateTime.MinValue ? produto.DataAtualizacao.ToShortDateString() : "";
+
+            listFornecedoresProduto.View = View.Details;
+            listFornecedoresProduto.FullRowSelect = true;
+            listFornecedoresProduto.GridLines = true;
+
+            listFornecedoresProduto.Columns.Add("Código", 80);
+            listFornecedoresProduto.Columns.Add("Fornecedor", 250);
+            listFornecedoresProduto.Columns.Add("Tipo", 120);
+
+            listFornecedoresProduto.Items.Clear();
+
+            CarregarFornecedoresDoProduto(produto.Id);
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+
             try
             {
                 if (isExcluindo)
@@ -241,10 +264,28 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     {
                         if (MessageBox.Show("Deseja realmente remover este produto?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
-                            servicoProduto.Remover(produto.Id);
-                            MessageBox.Show("Produto removido com sucesso!");
-                            LimparFormulario();
-                            Sair();
+                            try
+                            {
+                                servicoProduto.Remover(produto.Id);
+                                MessageBox.Show("Produto removido com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                LimparFormulario();
+                                Sair();
+                            }
+                            catch (Exception ex)
+                            {
+                                if (ex.Message.Contains("FK_ItensCompra_Produtos"))
+                                {
+                                    MessageBox.Show(
+                                        "Não é possível remover este produto, pois ele está vinculado a uma ou mais compras.",
+                                        "Aviso",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Erro ao remover o produto: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
                         }
                     }
                     return;
@@ -266,13 +307,60 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 if (isEditando)
                 {
                     servicoProduto.Atualizar(produto);
-                    MessageBox.Show("Produto atualizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     servicoProduto.Criar(produto);
-                    MessageBox.Show("Produto cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
+                var produtoFornecedorDao = new ProjetoPF.Dao.Compra.ProdutoFornecedorDAO();
+                var atuais = produtoFornecedorDao.ListarPorProduto(produto.Id);
+
+                foreach (var forn in fornecedoresSelecionados)
+                {
+                    bool jaExiste = atuais.Any(a => a.IdFornecedor == forn.IdFornecedor);
+                    if (!jaExiste)
+                    {
+                        var associacao = new ProjetoPF.Modelos.Compra.ProdutoFornecedor
+                        {
+                            IdProduto = produto.Id == 0 ? servicoProduto.BuscarUltimoId() : produto.Id,
+                            IdFornecedor = forn.IdFornecedor,
+                            PrecoUltimaCompra = forn.PrecoUltimaCompra,
+                            DataUltimaCompra = forn.DataUltimaCompra,
+                            DataCriacao = DateTime.Now,
+                            DataAtualizacao = DateTime.Now,
+                            Ativo = true
+                        };
+
+                        produtoFornecedorDao.CriarOuAtualizarProdutoFornecedor(associacao);
+                    }
+                }
+
+      
+                foreach (var antigo in atuais)
+                {
+                    bool aindaExiste = fornecedoresSelecionados.Any(f => f.IdFornecedor == antigo.IdFornecedor);
+                    if (!aindaExiste)
+                    {
+                        if (produtoFornecedorDao.ExisteCompraVinculada(produto.Id, antigo.IdFornecedor))
+                        {
+
+                            var daoFornecedor = new BaseDao<Fornecedor>("Fornecedores");
+                            var nomeForn = daoFornecedor.BuscarPorId(antigo.IdFornecedor)?.NomeRazaoSocial ?? "Fornecedor";
+
+                            MessageBox.Show(
+                                $"O fornecedor '{nomeForn}' não pôde ser removido pois há compras vinculadas.",
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            continue;
+                        }
+                        produtoFornecedorDao.RemoverVinculo(produto.Id, antigo.IdFornecedor);
+                    }
+                }
+
+                MessageBox.Show(isEditando
+                    ? "Produto atualizado com sucesso!"
+                    : "Produto cadastrado com sucesso!",
+                    "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LimparFormulario();
                 Sair();
@@ -304,11 +392,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (int.TryParse(txtCodMarca.Text, out int idMarca))
                 produto.IdMarca = idMarca;
             else
-                produto.IdMarca = null; 
-
-            if (!int.TryParse(txtCodFornecedor.Text, out int idFornecedor))
-                throw new Exception("Código do fornecedor inválido.");
-            produto.IdFornecedor = idFornecedor;
+                produto.IdMarca = null;
 
             string estoqueStr = txtEstoque.Text.Replace("R$", "").Trim();
             if (!decimal.TryParse(estoqueStr, out decimal estoque))
@@ -357,9 +441,46 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void btnFornecedor_Click(object sender, EventArgs e)
         {
-            FrmConsultaFornecedor frm = new FrmConsultaFornecedor();
+            var frm = new FrmConsultaFornecedor();
             frm.Owner = this;
             frm.ShowDialog();
+
+            if (frm.FornecedorSelecionado != null)
+            {
+                int idFornecedor = frm.FornecedorSelecionado.Id;
+
+                if (fornecedoresSelecionados.Any(f => f.IdFornecedor == idFornecedor))
+                {
+                    MessageBox.Show("Este fornecedor já foi adicionado a este produto.",
+                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                fornecedoresSelecionados.Add(new ProdutoFornecedor
+                {
+                    IdProduto = produto.Id, 
+                    IdFornecedor = idFornecedor,
+                });
+
+                AtualizarListViewFornecedores();
+            }
+        }
+        private void AtualizarListViewFornecedores()
+        {
+            listFornecedoresProduto.Items.Clear();
+            var daoFornecedor = new BaseDao<Fornecedor>("Fornecedores");
+
+            foreach (var pf in fornecedoresSelecionados)
+            {
+                var fornecedor = daoFornecedor.BuscarPorId(pf.IdFornecedor);
+                if (fornecedor != null)
+                {
+                    var item = new ListViewItem(fornecedor.Id.ToString());
+                    item.SubItems.Add(fornecedor.NomeRazaoSocial);
+                    item.SubItems.Add(fornecedor.TipoPessoa == "F" ? "Física" : "Jurídica");
+                    listFornecedoresProduto.Items.Add(item);
+                }
+            }
         }
 
         private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
@@ -380,7 +501,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (custoOk && vendaOk && precoVenda > 0)
             {
                 decimal lucroBruto = precoVenda - precoCusto;
-                txtMargemLucro.Text = lucroBruto.ToString("C2", new CultureInfo("pt-BR")); 
+                txtMargemLucro.Text = lucroBruto.ToString("C2", new CultureInfo("pt-BR"));
             }
             else
             {
@@ -398,10 +519,69 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             CalcularMargemLucro();
         }
-
-        private void label5_Click(object sender, EventArgs e)
+        private void CarregarFornecedoresDoProduto(int idProduto)
         {
+            try
+            {
+                fornecedoresSelecionados.Clear(); 
+                listFornecedoresProduto.Items.Clear();
 
+                if (idProduto <= 0)
+                    return;
+
+                var daoProdutoFornecedor = new ProdutoFornecedorDAO();
+                var lista = daoProdutoFornecedor.ListarPorProduto(idProduto);
+
+                var daoFornecedor = new BaseDao<Fornecedor>("Fornecedores");
+
+                foreach (var pf in lista)
+                {
+                    var fornecedor = daoFornecedor.BuscarPorId(pf.IdFornecedor);
+
+                    if (fornecedor != null)
+                    {
+                        fornecedoresSelecionados.Add(new ProdutoFornecedor
+                        {
+                            IdProduto = idProduto,
+                            IdFornecedor = fornecedor.Id,
+                            PrecoUltimaCompra = pf.PrecoUltimaCompra,
+                            DataUltimaCompra = pf.DataUltimaCompra,
+                        });
+
+                        var item = new ListViewItem(fornecedor.Id.ToString());
+                        item.SubItems.Add(fornecedor.NomeRazaoSocial);
+                        string tipo = fornecedor.TipoPessoa == "F" ? "FÍSICA" : "JURÍDICA";
+                        item.SubItems.Add(tipo);
+                        listFornecedoresProduto.Items.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar fornecedores do produto: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+            if (listFornecedoresProduto.SelectedItems.Count == 0)
+                return;
+
+            var itemSelecionado = listFornecedoresProduto.SelectedItems[0];
+            int idFornecedor = int.Parse(itemSelecionado.SubItems[0].Text);
+
+            if (MessageBox.Show("Deseja realmente remover este fornecedor da lista?",
+                "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            var fornecedorARemover = fornecedoresSelecionados
+                .FirstOrDefault(f => f.IdFornecedor == idFornecedor);
+
+            if (fornecedorARemover != null)
+                fornecedoresSelecionados.Remove(fornecedorARemover);
+
+            listFornecedoresProduto.Items.Remove(itemSelecionado);
         }
     }
 }

@@ -63,7 +63,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.TabIndex = 7;
+            this.btnSalvar.TabIndex = 9;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // txtCodigo
@@ -118,7 +118,7 @@
             this.txtCod.Location = new System.Drawing.Point(15, 103);
             this.txtCod.Name = "txtCod";
             this.txtCod.Size = new System.Drawing.Size(100, 20);
-            this.txtCod.TabIndex = 8;
+            this.txtCod.TabIndex = 0;
             this.txtCod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label5
@@ -154,7 +154,7 @@
             this.txtParcela.Location = new System.Drawing.Point(14, 154);
             this.txtParcela.Name = "txtParcela";
             this.txtParcela.Size = new System.Drawing.Size(103, 20);
-            this.txtParcela.TabIndex = 18;
+            this.txtParcela.TabIndex = 0;
             this.txtParcela.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtRestante
@@ -217,7 +217,7 @@
             this.txtPorcentagem.Location = new System.Drawing.Point(299, 155);
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(206, 20);
-            this.txtPorcentagem.TabIndex = 6;
+            this.txtPorcentagem.TabIndex = 7;
             this.txtPorcentagem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPrazo
@@ -225,7 +225,7 @@
             this.txtPrazo.Location = new System.Drawing.Point(128, 154);
             this.txtPrazo.Name = "txtPrazo";
             this.txtPrazo.Size = new System.Drawing.Size(159, 20);
-            this.txtPrazo.TabIndex = 5;
+            this.txtPrazo.TabIndex = 6;
             this.txtPrazo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnGerarParcela
@@ -233,7 +233,7 @@
             this.btnGerarParcela.Location = new System.Drawing.Point(810, 143);
             this.btnGerarParcela.Name = "btnGerarParcela";
             this.btnGerarParcela.Size = new System.Drawing.Size(123, 23);
-            this.btnGerarParcela.TabIndex = 7;
+            this.btnGerarParcela.TabIndex = 8;
             this.btnGerarParcela.Text = "Gerar Parcela";
             this.btnGerarParcela.UseVisualStyleBackColor = true;
             this.btnGerarParcela.Click += new System.EventHandler(this.btnGerarParcela_Click_1);
@@ -243,7 +243,7 @@
             this.btnFormasPagamento.Location = new System.Drawing.Point(414, 100);
             this.btnFormasPagamento.Name = "btnFormasPagamento";
             this.btnFormasPagamento.Size = new System.Drawing.Size(177, 23);
-            this.btnFormasPagamento.TabIndex = 4;
+            this.btnFormasPagamento.TabIndex = 5;
             this.btnFormasPagamento.Text = "Selecionar Forma de Pagamento";
             this.btnFormasPagamento.UseVisualStyleBackColor = true;
             this.btnFormasPagamento.Click += new System.EventHandler(this.btnCadastrar_Click);
@@ -269,7 +269,7 @@
             this.btnRemover.Location = new System.Drawing.Point(811, 168);
             this.btnRemover.Name = "btnRemover";
             this.btnRemover.Size = new System.Drawing.Size(123, 23);
-            this.btnRemover.TabIndex = 35;
+            this.btnRemover.TabIndex = 0;
             this.btnRemover.Text = "Remover Parcela";
             this.btnRemover.UseVisualStyleBackColor = true;
             this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
@@ -354,7 +354,7 @@
             this.maskedTxtDesconto.Location = new System.Drawing.Point(778, 54);
             this.maskedTxtDesconto.Name = "maskedTxtDesconto";
             this.maskedTxtDesconto.Size = new System.Drawing.Size(139, 20);
-            this.maskedTxtDesconto.TabIndex = 43;
+            this.maskedTxtDesconto.TabIndex = 4;
             this.maskedTxtDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblDesconto
@@ -405,6 +405,7 @@
             this.Name = "FrmCadastroCondPagamento";
             this.Text = "Cadastro Condição de Pagamento";
             this.Load += new System.EventHandler(this.FrmCadastroCondPagamento_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);

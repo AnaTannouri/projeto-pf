@@ -20,7 +20,15 @@ namespace ProjetoPF.Servicos
 
             Criar(produto);
         }
-
+        public int BuscarUltimoId()
+        {
+            var lista = BuscarTodos();
+            if (lista != null && lista.Count > 0)
+            {
+                return lista.Max(p => p.Id);
+            }
+            return 0;
+        }
         public void AtualizarProduto(Produtos produto)
         {
             if (produto.Id == 0)
@@ -39,7 +47,7 @@ namespace ProjetoPF.Servicos
             if (string.IsNullOrWhiteSpace(produto.Nome))
                 return false;
 
-            if (produto.IdUnidadeMedida <= 0 || produto.IdCategoria <= 0 || produto.IdFornecedor <= 0 || produto.IdMarca <= 0)
+            if (produto.IdUnidadeMedida <= 0 || produto.IdCategoria <= 0 || produto.IdMarca <= 0)
                 return false;
 
             if (produto.PrecoCusto <= 0 || produto.PrecoVenda <= 0)

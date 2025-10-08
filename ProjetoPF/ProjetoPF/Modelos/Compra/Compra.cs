@@ -1,6 +1,7 @@
 ﻿using ProjetoPF.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,9 @@ namespace ProjetoPF.Modelos.Compra
         public decimal ValorTotal { get; set; }
         public string MotivoCancelamento { get; set; }
         public string Observacao { get; set; }
+        [NotMapped]
         public List<ItemCompra> Itens { get; set; } = new List<ItemCompra>();
-        public List<ParcelaCompra> Parcelas { get; set; } = new List<ParcelaCompra>();
+        [NotMapped]
+        public List<ContasAPagar> Parcelas { get; set; } = new List<ContasAPagar>();
     }
 }

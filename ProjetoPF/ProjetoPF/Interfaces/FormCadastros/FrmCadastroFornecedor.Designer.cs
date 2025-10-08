@@ -51,7 +51,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.txtCidade = new System.Windows.Forms.TextBox();
             this.txtCondicao = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.txtUF = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -60,6 +59,8 @@
             // comboPessoa
             // 
             this.comboPessoa.Items.AddRange(new object[] {
+            "FÍSICA",
+            "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
             "FÍSICA",
@@ -440,17 +441,6 @@
             this.txtCondicao.Size = new System.Drawing.Size(234, 20);
             this.txtCondicao.TabIndex = 100;
             // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.Red;
-            this.label21.Location = new System.Drawing.Point(127, 429);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(15, 20);
-            this.label21.TabIndex = 101;
-            this.label21.Text = "*";
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -487,7 +477,6 @@
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.txtUF);
-            this.Controls.Add(this.label21);
             this.Controls.Add(this.txtCondicao);
             this.Controls.Add(this.txtCidade);
             this.Controls.Add(this.label18);
@@ -514,6 +503,7 @@
             this.Name = "FrmCadastroFornecedor";
             this.Text = "Cadastro Fornecedor";
             this.Load += new System.EventHandler(this.FrmCadastroFornecedor_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);
@@ -567,7 +557,6 @@
             this.Controls.SetChildIndex(this.label18, 0);
             this.Controls.SetChildIndex(this.txtCidade, 0);
             this.Controls.SetChildIndex(this.txtCondicao, 0);
-            this.Controls.SetChildIndex(this.label21, 0);
             this.Controls.SetChildIndex(this.txtUF, 0);
             this.Controls.SetChildIndex(this.label25, 0);
             this.Controls.SetChildIndex(this.label26, 0);
@@ -601,7 +590,6 @@
         public System.Windows.Forms.TextBox txtCodigoCidade;
         public System.Windows.Forms.TextBox txtCodigoCondicao;
         public System.Windows.Forms.TextBox txtCondicao;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label25;
         public System.Windows.Forms.TextBox txtUF;
         private System.Windows.Forms.Label label26;

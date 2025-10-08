@@ -260,7 +260,7 @@
     <Compile Include="Modelos\BaseModelos.cs" />
     <Compile Include="Modelos\Compra\Compra.cs" />
     <Compile Include="Modelos\Compra\ItemCompra.cs" />
-    <Compile Include="Modelos\Compra\ParcelaCompra.cs" />
+    <Compile Include="Modelos\Compra\ContasAPagar.cs" />
     <Compile Include="Modelos\Compra\ProdutoFornecedor.cs" />
     <Compile Include="Modelos\Pessoa\Cliente.cs" />
     <Compile Include="Modelos\Pessoa\BasePessoa.cs" />
