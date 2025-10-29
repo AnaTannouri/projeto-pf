@@ -10,13 +10,29 @@ namespace ProjetoPF.Modelos.Compra
 {
     public class ContasAPagar : BaseModelos
     {
-        public int IdCompra { get; set; }
+        public int Modelo { get; set; }
+        public string Serie { get; set; }
+        public string NumeroNota { get; set; }
+        public int IdFornecedor { get; set; }
         public int NumeroParcela { get; set; }
         public DateTime DataVencimento { get; set; }
+        public DateTime DataEmissao { get; set; }
         public decimal ValorParcela { get; set; }
         public int IdFormaPagamento { get; set; }
+        public DateTime DataPagamento { get; set; }
+        public decimal ValorFinalParcela { get; set; }
+        public string Observacao { get; set; }
+        public decimal Multa { get; set; }
+        public decimal Juros { get; set; }
+        public decimal Desconto { get; set; }
+        public string Situacao { get; set; } = "Em Aberto";
+        public string MotivoCancelamento { get; set; }
 
-        [NotMapped] 
+
+
+
+        [NotMapped]
         public string FormaPagamentoDescricao { get; set; }
+        public string NomeFornecedor { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.Dao.Compra;
 using ProjetoPF.Dao.Compras;
+using ProjetoPF.Modelos;
 using ProjetoPF.Modelos.Compra;
 using ProjetoPF.Modelos.Produto;
 using System;
@@ -33,7 +34,7 @@ namespace ProjetoPF.Servicos.Compra
             var custosRateados = RatearCustosAdicionais(compra);
 
             var compraDao = new CompraDao();
-            compra.Id = compraDao.SalvarCompraComItensParcelas(compra, compra.Itens, compra.Parcelas);
+            compraDao.SalvarCompraComItensParcelas(compra, compra.Itens, compra.Parcelas);
 
             var produtoFornecedorDao = new ProdutoFornecedorDAO();
             var produtoDao = new BaseDao<Produtos>("Produtos");
@@ -79,22 +80,22 @@ namespace ProjetoPF.Servicos.Compra
                 }
             }
         }
-        public void CancelarCompra(int idCompra, string motivo)
+        public void CancelarCompra(CompraKey compraKey, string motivo)
         {
-            if (idCompra <= 0)
-                throw new ArgumentException("ID de compra inválido.");
-
             var compraDao = new CompraDao();
             var itemDao = new ItemCompraDao();
             var contasDao = new ContasAPagarDao();
             var produtoDao = new BaseDao<Produtos>("Produtos");
             var produtoFornecedorDao = new ProdutoFornecedorDAO();
 
-            var compra = compraDao.BuscarPorId(idCompra);
+            var compra = compraDao.BuscarPorChave(compraKey);
             if (compra == null)
                 throw new Exception("Compra não encontrada.");
 
-            var itensCompra = itemDao.BuscarPorCompraId(idCompra);
+            var itensCompra = itemDao.BuscarPorChaveCompra(compra.Modelo,
+                                                           compra.Serie,
+                                                           compra.NumeroNota,
+                                                           compra.IdFornecedor);
 
             foreach (var item in itensCompra)
             {
@@ -106,7 +107,7 @@ namespace ProjetoPF.Servicos.Compra
                 if (produto.Estoque < 0)
                     produto.Estoque = 0;
 
-                decimal novoCustoMedio = compraDao.CalcularCustoMedioProduto(item.IdProduto, idCompra);
+                decimal novoCustoMedio = compraDao.CalcularCustoMedioProduto(item.IdProduto, compraKey);
                 produto.PrecoCusto = novoCustoMedio > 0 ? novoCustoMedio : 0;
 
                 produtoFornecedorDao.InativarPorCompra(item.IdProduto, compra.IdFornecedor);
@@ -149,7 +150,7 @@ namespace ProjetoPF.Servicos.Compra
             compraLimpa.Itens = null;
             compraLimpa.Parcelas = null;
 
-            compraDao.CancelarCompra(compraLimpa.Id, "Cancelamento não informado");
+            compraDao.CancelarCompra(compraKey, motivo);
         }
 
 
@@ -179,15 +180,5 @@ namespace ProjetoPF.Servicos.Compra
 
             return custosReais;
         }
-    }
-    
-    public class ItemCompraService : BaseServicos<ProjetoPF.Modelos.Compra.ItemCompra>
-    {
-        public ItemCompraService() : base(new ItemCompraDao()) { }
-    }
-
-    public class ParcelaCompraService : BaseServicos<ProjetoPF.Modelos.Compra.ContasAPagar>
-    {
-        public ParcelaCompraService() : base(new ContasAPagarDao()) { }
     }
 }

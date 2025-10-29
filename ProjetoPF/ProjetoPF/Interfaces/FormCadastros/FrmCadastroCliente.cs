@@ -352,8 +352,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             else
                 DesbloquearCampos();
         }
-
-
         public void BloquearCampos()
         {
             txtCodigo.Enabled = false;

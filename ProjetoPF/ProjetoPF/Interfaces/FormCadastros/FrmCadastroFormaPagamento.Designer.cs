@@ -30,7 +30,6 @@
         {
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.lblFormaPagamento = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -67,16 +66,6 @@
             this.lblFormaPagamento.TabIndex = 5;
             this.lblFormaPagamento.Text = "Forma de Pagamento :";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(181, 20);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Forma de Pagamento";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -94,13 +83,13 @@
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblFormaPagamento);
             this.Controls.Add(this.txtDescricao);
             this.Name = "FrmCadastroFormaPagamento";
             this.Text = "  Cadastro Formas de Pagamento";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FrmCadastroFormaPagamento_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);
@@ -110,7 +99,6 @@
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.txtDescricao, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);
-            this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.label3, 0);
@@ -123,7 +111,6 @@
 
         private System.Windows.Forms.TextBox txtDescricao;
         private System.Windows.Forms.Label lblFormaPagamento;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
     }
 }

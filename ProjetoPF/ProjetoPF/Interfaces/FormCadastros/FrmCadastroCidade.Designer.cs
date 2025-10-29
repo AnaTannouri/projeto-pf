@@ -38,7 +38,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtNome = new System.Windows.Forms.Label();
             this.btnCadastrar = new System.Windows.Forms.Button();
             this.txtEstado = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -156,16 +155,6 @@
             this.label8.TabIndex = 15;
             this.label8.Text = "*";
             // 
-            // txtNome
-            // 
-            this.txtNome.AutoSize = true;
-            this.txtNome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNome.Location = new System.Drawing.Point(12, 6);
-            this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(65, 20);
-            this.txtNome.TabIndex = 16;
-            this.txtNome.Text = "Cidade";
-            // 
             // btnCadastrar
             // 
             this.btnCadastrar.Location = new System.Drawing.Point(508, 122);
@@ -192,7 +181,6 @@
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.txtEstado);
             this.Controls.Add(this.btnCadastrar);
-            this.Controls.Add(this.txtNome);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -206,6 +194,7 @@
             this.Name = "FrmCadastroCidade";
             this.Text = "Cadasto Cidade";
             this.Load += new System.EventHandler(this.FrmCadastroCidade_Load_1);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);
@@ -225,7 +214,6 @@
             this.Controls.SetChildIndex(this.label6, 0);
             this.Controls.SetChildIndex(this.label7, 0);
             this.Controls.SetChildIndex(this.label8, 0);
-            this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.btnCadastrar, 0);
             this.Controls.SetChildIndex(this.txtEstado, 0);
             this.ResumeLayout(false);
@@ -244,7 +232,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label txtNome;
         private System.Windows.Forms.Button btnCadastrar;
         public System.Windows.Forms.TextBox txtEstado;
         public System.Windows.Forms.TextBox txtCodEstado;

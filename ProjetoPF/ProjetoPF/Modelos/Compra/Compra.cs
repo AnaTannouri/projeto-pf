@@ -10,7 +10,7 @@ namespace ProjetoPF.Modelos.Compra
 {
     public class Compra : BaseModelos
     {
-        public int Modelo { get; set; }
+        public string Modelo { get; set; }
         public string Serie { get; set; }
         public string NumeroNota { get; set; }
         public DateTime DataEmissao { get; set; }

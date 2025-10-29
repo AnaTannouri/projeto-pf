@@ -15,43 +15,6 @@ namespace ProjetoPF.Servicos.Compra
 
         public ProdutoFornecedorService() : base(new ProdutoFornecedorDAO())
         {
-            _dao = new ProdutoFornecedorDAO();
-        }
-
-        public void CriarOuAtualizar(int idProduto, int idFornecedor, decimal preco, DateTime dataCompra, string observacao = null)
-        {
-            var pf = new ProdutoFornecedor
-            {
-                IdProduto = idProduto,
-                IdFornecedor = idFornecedor,
-                PrecoUltimaCompra = preco,
-                DataUltimaCompra = dataCompra,
-                DataAtualizacao = DateTime.Now
-            };
-
-            _dao.CriarOuAtualizarProdutoFornecedor(pf);
-        }
-
-        public ProdutoFornecedor BuscarPorProdutoFornecedor(int idProduto, int idFornecedor)
-        {
-            string filtro = $"IdProduto = {idProduto} AND IdFornecedor = {idFornecedor}";
-            var resultado = BuscarTodos(filtro);
-            return resultado.FirstOrDefault();
-        }
-        public void InserirSeNaoExistir(int idProduto, int idFornecedor)
-        {
-            if (!_dao.ExisteVinculo(idProduto, idFornecedor))
-            {
-                var novo = new ProdutoFornecedor
-                {
-                    IdProduto = idProduto,
-                    IdFornecedor = idFornecedor,
-                    DataCriacao = DateTime.Now,
-                    DataAtualizacao = DateTime.Now,
-                    Ativo = true
-                };
-                _dao.Criar(novo);
-            }
         }
     }
 }

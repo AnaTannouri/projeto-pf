@@ -39,7 +39,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.btnPaís = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
             this.txtPais = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -163,16 +162,6 @@
             this.btnPaís.UseVisualStyleBackColor = true;
             this.btnPaís.Click += new System.EventHandler(this.btnCadastrar_Click);
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(12, 7);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 20);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "Estado";
-            // 
             // txtPais
             // 
             this.txtPais.Enabled = false;
@@ -187,7 +176,6 @@
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.txtPais);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.btnPaís);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
@@ -202,6 +190,7 @@
             this.Name = "FrmCadastroEstado";
             this.Text = "Cadastro Estado";
             this.Load += new System.EventHandler(this.FrmCadastroEstado_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);
@@ -222,7 +211,6 @@
             this.Controls.SetChildIndex(this.label7, 0);
             this.Controls.SetChildIndex(this.label9, 0);
             this.Controls.SetChildIndex(this.btnPaís, 0);
-            this.Controls.SetChildIndex(this.label8, 0);
             this.Controls.SetChildIndex(this.txtPais, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -241,7 +229,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnPaís;
-        private System.Windows.Forms.Label label8;
         public System.Windows.Forms.TextBox txtPais;
         public System.Windows.Forms.TextBox txtCodPais;
     }

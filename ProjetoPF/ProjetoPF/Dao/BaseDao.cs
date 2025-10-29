@@ -1,8 +1,12 @@
 ﻿using ProjetoPF.Modelos.Compra;
+using ProjetoPF.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 
 namespace ProjetoPF.Dao
 {
@@ -134,6 +138,7 @@ namespace ProjetoPF.Dao
                     T obj = new T();
                     foreach (var prop in typeof(T).GetProperties())
                     {
+                        if (!reader.HasColumn(prop.Name)) continue;
                         if (reader[prop.Name] != DBNull.Value)
                         {
                             var value = reader[prop.Name];
@@ -215,6 +220,187 @@ namespace ProjetoPF.Dao
                     }
                 }
             }
+        }
+
+        public List<T> BuscarTodosWithoutId<T>(string filtro = null, string orderBy = null) where T : new()
+        {
+            var lista = new List<T>();
+            using (var conn = CriarConexao())
+            {
+                conn.Open();
+
+                // Base SELECT
+                var query = $"SELECT * FROM [{_tabela}]";
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    var whereConditions = new List<string>();
+                    int paramIndex = 0;
+
+                    var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    var propsByName = props.ToDictionary(p => p.Name, p => p, StringComparer.OrdinalIgnoreCase);
+
+                    // ===== 1) Filtro modo key=value (exato, ideal p/ PK composta) =====
+                    if (!string.IsNullOrWhiteSpace(filtro) && filtro.Contains('='))
+                    {
+                        var pairs = filtro.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var raw in pairs)
+                        {
+                            var idx = raw.IndexOf('=');
+                            if (idx <= 0) continue;
+
+                            var key = raw.Substring(0, idx).Trim();
+                            var valStr = raw.Substring(idx + 1).Trim();
+
+                            if (!propsByName.TryGetValue(key, out var prop))
+                                continue; // ignora chave inexistente na entidade
+
+                            var paramName = "@k" + paramIndex++;
+                            var typedValue = ConvertTo(valStr, prop.PropertyType);
+                            cmd.Parameters.AddWithValue(paramName, typedValue ?? DBNull.Value);
+                            whereConditions.Add($"[{prop.Name}] = {paramName}");
+                        }
+                    }
+                    // ===== 2) Filtro amplo (sem '=') =====
+                    else if (!string.IsNullOrWhiteSpace(filtro))
+                    {
+                        // Strings -> LIKE
+                        var propsTexto = props.Where(p => p.PropertyType == typeof(string));
+                        foreach (var prop in propsTexto)
+                        {
+                            var paramName = "@p" + paramIndex++;
+                            whereConditions.Add($"[{prop.Name}] LIKE {paramName}");
+                            cmd.Parameters.AddWithValue(paramName, $"%{filtro}%");
+                        }
+
+                        // Integrais -> igualdade se conseguir converter
+                        if (long.TryParse(filtro, out var inteiro))
+                        {
+                            var propsInteiros = props.Where(p =>
+                                p.PropertyType == typeof(byte) || p.PropertyType == typeof(byte?) ||
+                                p.PropertyType == typeof(short) || p.PropertyType == typeof(short?) ||
+                                p.PropertyType == typeof(int) || p.PropertyType == typeof(int?) ||
+                                p.PropertyType == typeof(long) || p.PropertyType == typeof(long?));
+                            foreach (var prop in propsInteiros)
+                            {
+                                var paramName = "@i" + paramIndex++;
+                                cmd.Parameters.AddWithValue(paramName, ConvertTo(filtro, prop.PropertyType));
+                                whereConditions.Add($"[{prop.Name}] = {paramName}");
+                            }
+                        }
+
+                        // Decimais -> igualdade se conseguir converter (suporta . e ,)
+                        if (TryParseDecimalFlexible(filtro, out var dec))
+                        {
+                            var propsDecimal = props.Where(p =>
+                                p.PropertyType == typeof(decimal) || p.PropertyType == typeof(decimal?));
+                            foreach (var prop in propsDecimal)
+                            {
+                                var paramName = "@d" + paramIndex++;
+                                cmd.Parameters.AddWithValue(paramName, dec);
+                                whereConditions.Add($"[{prop.Name}] = {paramName}");
+                            }
+                        }
+
+                        // DateTime -> igualdade se conseguir converter
+                        if (DateTime.TryParse(filtro, CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None, out var dt) ||
+                            DateTime.TryParse(filtro, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
+                        {
+                            var propsDt = props.Where(p =>
+                                p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?));
+                            foreach (var prop in propsDt)
+                            {
+                                var paramName = "@t" + paramIndex++
+                                    ;
+                                cmd.Parameters.AddWithValue(paramName, dt);
+                                whereConditions.Add($"[{prop.Name}] = {paramName}");
+                            }
+                        }
+                    }
+
+                    if (whereConditions.Count > 0)
+                        query += " WHERE " + string.Join(" AND ", whereConditions); // AND em key=value, OR no amplo? Aqui usamos AND para pairs; amplo usa várias condições: se quiser OR, mude acima.
+
+                    if (!string.IsNullOrWhiteSpace(orderBy))
+                        query += $" ORDER BY {orderBy}";
+
+                    cmd.CommandText = query;
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        // Mapa de colunas existentes no resultado (evita KeyNotFound no reader)
+                        var schema = reader.GetSchemaTable();
+                        var colNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                        foreach (DataRow row in schema.Rows)
+                            colNames.Add(row["ColumnName"].ToString());
+
+                        while (reader.Read())
+                        {
+                            var obj = new T();
+                            foreach (var prop in props)
+                            {
+                                if (!colNames.Contains(prop.Name)) continue; // coluna não existe no SELECT
+                                var val = reader[prop.Name];
+                                if (val == DBNull.Value) continue;
+
+                                var targetType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+                                // Conversão segura (enums, numéricos, datas, etc.)
+                                var conv = System.Convert.ChangeType(val, targetType, CultureInfo.InvariantCulture);
+                                prop.SetValue(obj, conv);
+                            }
+                            lista.Add(obj);
+                        }
+                    }
+                }
+            }
+            return lista;
+        }
+
+        // ===== Helpers =====
+        private static object ConvertTo(string input, Type targetType)
+        {
+            var t = Nullable.GetUnderlyingType(targetType) ?? targetType;
+
+            if (t == typeof(string)) return input;
+
+            if (t.IsEnum) return Enum.Parse(t, input, ignoreCase: true);
+
+            if (t == typeof(bool))
+                return bool.TryParse(input, out var b) ? b : (object)0; // aceita "0/1"?
+            if (t == typeof(byte))
+                return byte.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            if (t == typeof(short))
+                return short.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            if (t == typeof(int))
+                return int.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            if (t == typeof(long))
+                return long.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            if (t == typeof(decimal))
+            {
+                if (TryParseDecimalFlexible(input, out var d)) return d;
+                return decimal.Parse(input, CultureInfo.InvariantCulture);
+            }
+            if (t == typeof(DateTime))
+            {
+                if (DateTime.TryParse(input, CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None, out var dt)) return dt;
+                if (DateTime.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt)) return dt;
+                throw new FormatException($"Data inválida: {input}");
+            }
+
+            // fallback
+            return System.Convert.ChangeType(input, t, CultureInfo.InvariantCulture);
+        }
+
+        private static bool TryParseDecimalFlexible(string s, out decimal value)
+        {
+            // tenta pt-BR e Invariant
+            if (decimal.TryParse(s, NumberStyles.Number, CultureInfo.GetCultureInfo("pt-BR"), out value)) return true;
+            if (decimal.TryParse(s, NumberStyles.Number, CultureInfo.InvariantCulture, out value)) return true;
+            // tenta trocar vírgula/ponto
+            var swap = s.Contains(',') ? s.Replace(",", ".") : s.Replace(".", ",");
+            return decimal.TryParse(swap, NumberStyles.Number, CultureInfo.GetCultureInfo("pt-BR"), out value)
+                || decimal.TryParse(swap, NumberStyles.Number, CultureInfo.InvariantCulture, out value);
         }
     }
 }

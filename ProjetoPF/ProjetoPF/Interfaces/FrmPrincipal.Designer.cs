@@ -45,6 +45,7 @@
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.compraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contasAPagarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -173,7 +174,8 @@
             // compraToolStripMenuItem
             // 
             this.compraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.comprasToolStripMenuItem});
+            this.comprasToolStripMenuItem,
+            this.contasAPagarToolStripMenuItem});
             this.compraToolStripMenuItem.Name = "compraToolStripMenuItem";
             this.compraToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.compraToolStripMenuItem.Text = "Gerenciar";
@@ -184,6 +186,13 @@
             this.comprasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.comprasToolStripMenuItem.Text = "Compras";
             this.comprasToolStripMenuItem.Click += new System.EventHandler(this.comprasToolStripMenuItem_Click);
+            // 
+            // contasAPagarToolStripMenuItem
+            // 
+            this.contasAPagarToolStripMenuItem.Name = "contasAPagarToolStripMenuItem";
+            this.contasAPagarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contasAPagarToolStripMenuItem.Text = "Contas a Pagar";
+            this.contasAPagarToolStripMenuItem.Click += new System.EventHandler(this.contasAPagarToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 
@@ -226,6 +235,7 @@
         private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem compraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem contasAPagarToolStripMenuItem;
     }
 }
 

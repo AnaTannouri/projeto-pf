@@ -210,6 +210,12 @@ namespace ProjetoPF.FormConsultas
                     frmCadastroCondPagamento.txtCod.Text = formaSelecionada.Id.ToString();
                     this.Close();
                 }
+                else if (this.Owner is FrmCadastroContaAPagar frmCadastroContaAPagar)
+                {
+                    frmCadastroContaAPagar.txtForma.Text = formaSelecionada.Descricao;
+                    frmCadastroContaAPagar.txtCodForma.Text = formaSelecionada.Id.ToString();
+                    this.Close();
+                }
             }
         }
     }

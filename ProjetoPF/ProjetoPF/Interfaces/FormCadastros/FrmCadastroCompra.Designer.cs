@@ -73,7 +73,6 @@
             this.txtCondicao = new System.Windows.Forms.TextBox();
             this.btnPesquisarCondicao = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -528,16 +527,6 @@
             this.label19.TabIndex = 55;
             this.label19.Text = "Condição de Pagamento:";
             // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(10, 7);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(80, 20);
-            this.label20.TabIndex = 57;
-            this.label20.Text = "Compras";
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -743,7 +732,6 @@
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtTotal);
-            this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.btnPesquisarCondicao);
             this.Controls.Add(this.txtCondicao);
@@ -837,7 +825,6 @@
             this.Controls.SetChildIndex(this.txtCondicao, 0);
             this.Controls.SetChildIndex(this.btnPesquisarCondicao, 0);
             this.Controls.SetChildIndex(this.label19, 0);
-            this.Controls.SetChildIndex(this.label20, 0);
             this.Controls.SetChildIndex(this.txtTotal, 0);
             this.Controls.SetChildIndex(this.label12, 0);
             this.Controls.SetChildIndex(this.label22, 0);
@@ -911,7 +898,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnPesquisarCondicao;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
         public System.Windows.Forms.TextBox txtCodCondicao;
         public System.Windows.Forms.TextBox txtCondicao;
         public System.Windows.Forms.TextBox txtCodProduto;

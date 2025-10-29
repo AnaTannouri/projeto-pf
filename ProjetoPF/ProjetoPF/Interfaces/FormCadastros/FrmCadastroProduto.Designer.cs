@@ -67,7 +67,6 @@
             this.txtObser = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.txtMargemLucro = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.listFornecedoresProduto = new System.Windows.Forms.ListView();
             this.btnRemover = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -462,16 +461,6 @@
             this.txtMargemLucro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtMargemLucro.TextChanged += new System.EventHandler(this.txtMargemLucro_TextChanged);
             // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(11, 6);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(81, 20);
-            this.label14.TabIndex = 56;
-            this.label14.Text = "Produtos";
-            // 
             // listFornecedoresProduto
             // 
             this.listFornecedoresProduto.HideSelection = false;
@@ -497,7 +486,6 @@
             this.ClientSize = new System.Drawing.Size(1344, 689);
             this.Controls.Add(this.btnRemover);
             this.Controls.Add(this.listFornecedoresProduto);
-            this.Controls.Add(this.label14);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.txtMargemLucro);
             this.Controls.Add(this.txtObser);
@@ -589,7 +577,6 @@
             this.Controls.SetChildIndex(this.txtObser, 0);
             this.Controls.SetChildIndex(this.txtMargemLucro, 0);
             this.Controls.SetChildIndex(this.label20, 0);
-            this.Controls.SetChildIndex(this.label14, 0);
             this.Controls.SetChildIndex(this.listFornecedoresProduto, 0);
             this.Controls.SetChildIndex(this.btnRemover, 0);
             this.ResumeLayout(false);
@@ -638,7 +625,6 @@
         private System.Windows.Forms.TextBox txtObser;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtMargemLucro;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ListView listFornecedoresProduto;
         private System.Windows.Forms.Button btnRemover;
     }

@@ -14,6 +14,7 @@ using ProjetoPF.Modelos.Compra;
 using ProjetoPF.Servicos.Pessoa;
 using System.Linq;
 using ProjetoPF.Servicos.Compra;
+using ProjetoPF.Modelos;
 
 namespace ProjetoPF.Interfaces.FormConsultas
 {
@@ -27,7 +28,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
         public FrmConsultaCompra()
         {
             InitializeComponent();
-           
+
         }
         private void btnAdicionar_Click_1(object sender, EventArgs e)
         {
@@ -48,7 +49,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.FullRowSelect = true;
                 listViewFormaPagamento.GridLines = true;
 
-                listViewFormaPagamento.Columns.Add("ID", 100, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Fornecedor", 380, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Modelo", 100, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Série", 100, HorizontalAlignment.Right);
@@ -68,7 +68,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     else if (ctrl is NumericUpDown nud) nud.Enabled = false;
                 }
 
-                btnAdicionar.Enabled = false; 
+                btnAdicionar.Enabled = false;
             }
 
             PopularListView(string.Empty);
@@ -85,7 +85,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
             if (!string.IsNullOrWhiteSpace(pesquisa))
             {
                 compras = compras.Where(compra =>
-    compra.Id.ToString().Contains(pesquisa) ||
     compra.Modelo.ToString().Contains(pesquisa) ||
     (compra.Serie?.IndexOf(pesquisa, StringComparison.OrdinalIgnoreCase) >= 0) ||
     (compra.NumeroNota?.IndexOf(pesquisa, StringComparison.OrdinalIgnoreCase) >= 0) ||
@@ -102,13 +101,13 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 {
                     var fornecedor = fornecedorServices.BuscarPorId(compra.IdFornecedor);
 
-                    ListViewItem item = new ListViewItem(compra.Id.ToString())
+                    ListViewItem item = new ListViewItem(fornecedor?.NomeRazaoSocial ?? "")
                     {
                         Tag = compra
                     };
 
-                    item.SubItems.Add(fornecedor?.NomeRazaoSocial ?? "");
-                    item.SubItems.Add(compra.Modelo.ToString());
+                    item.SubItems.Add(compra.Modelo);
+
                     item.SubItems.Add(compra.Serie);
                     item.SubItems.Add(compra.NumeroNota);
                     item.SubItems.Add(compra.DataEmissao.ToString("dd/MM/yyyy"));
@@ -131,36 +130,64 @@ namespace ProjetoPF.Interfaces.FormConsultas
 
             if (listViewFormaPagamento.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Selecione uma compra para cancelar.", "Aviso",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Selecione uma compra para cancelar.",
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
             var compra = (CompraCabecalho)itemSelecionado.Tag;
 
+            // 🔒 Verifica se já está cancelada
             if (!compra.Ativo)
             {
-                MessageBox.Show("Esta compra já está cancelada.", "Aviso",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Esta compra já está cancelada.",
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            using (var frm = new FrmCadastroCompra(compra.Id))
+            // 🔹 Cria a estrutura de chave composta
+            var compraStruct = new CompraKey(compra.Modelo, compra.Serie, compra.NumeroNota, compra.IdFornecedor);
+
+            // 🔹 Verifica se há contas pagas associadas
+            var contaDao = new ContasAPagarDao();
+            bool possuiContaPaga = contaDao.ExisteContaPagaAssociada(
+                compra.Modelo,
+                compra.Serie,
+                compra.NumeroNota,
+                compra.IdFornecedor
+            );
+
+            if (possuiContaPaga)
+            {
+                MessageBox.Show(
+                    "Não é possível cancelar esta compra, pois há contas a pagar associadas que já foram quitadas.",
+                    "Operação Bloqueada",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            // 🔹 Exibe a compra em modo de visualização (somente leitura)
+            using (var frm = new FrmCadastroCompra(compraStruct))
             {
                 frm.ModoSomenteLeitura = true;
                 frm.ShowDialog();
             }
 
+            // 🔹 Pede confirmação ao usuário
             DialogResult confirmar = MessageBox.Show(
                 "Deseja realmente cancelar esta compra?",
                 "Confirmar Cancelamento",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+                MessageBoxIcon.Question
+            );
 
             if (confirmar != DialogResult.Yes)
                 return;
 
+            // 🔹 Solicita o motivo
             string motivo = InputBox.Show("Digite o motivo do cancelamento:", "Cancelar Nota");
 
             if (string.IsNullOrWhiteSpace(motivo))
@@ -170,15 +197,16 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
+            // 🔹 Tenta cancelar via serviço
             try
             {
- 
                 var compraService = new CompraServicos();
-                compraService.CancelarCompra(compra.Id, motivo);
+                compraService.CancelarCompra(compraStruct, motivo);
 
                 MessageBox.Show("Compra cancelada com sucesso!",
                                 "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // 🔄 Atualiza a lista após cancelamento
                 PopularListView(string.Empty);
             }
             catch (Exception ex)
@@ -237,12 +265,23 @@ namespace ProjetoPF.Interfaces.FormConsultas
             }
 
             var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
-            var cabecalho = (CompraCabecalho)itemSelecionado.Tag;
 
-            using (var frm = new FrmCadastroCompra(cabecalho.Id))
+            CompraKey key;
+            if (itemSelecionado.Tag is CompraKey k)
+                key = k;
+            else if (itemSelecionado.Tag is CompraCabecalho cab)
+                key = new CompraKey(cab.Modelo, cab.Serie, cab.NumeroNota, cab.IdFornecedor);
+            else
+            {
+                MessageBox.Show("Registro inválido (sem chave da compra).", "Erro",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (var frm = new FrmCadastroCompra(key)) 
             {
                 frm.ModoSomenteLeitura = true;
-                frm.ShowDialog();
+                frm.ShowDialog(this);
             }
         }
     }

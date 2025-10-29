@@ -9,11 +9,14 @@ namespace ProjetoPF.Modelos.Compra
 {
     public class ItemCompra : BaseModelos
     {
-        public int IdCompra { get; set; }
+        public int Modelo { get; set; }
+        public string Serie { get; set; }
+        public string NumeroNota { get; set; }
+        public int IdFornecedor { get; set; }
         public int IdProduto { get; set; }
         public decimal Quantidade { get; set; }
         public decimal ValorUnitario { get; set; }
-        private decimal _valorCustoUnitarioReal;
+        public decimal ValorRateado { get; set; }
         public decimal Total { get; set; }
     }
 }

@@ -32,7 +32,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -56,6 +55,8 @@
             // comboPessoa
             // 
             this.comboPessoa.Items.AddRange(new object[] {
+            "FÍSICA",
+            "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
             "FÍSICA",
@@ -265,10 +266,6 @@
             // 
             this.btnVoltar.TabIndex = 0;
             // 
-            // lblAtualizacao
-            // 
-            this.lblAtualizacao.Location = new System.Drawing.Point(124, 669);
-            // 
             // txtCodigoCondicao
             // 
             this.txtCodigoCondicao.Enabled = false;
@@ -305,16 +302,6 @@
             this.label23.Size = new System.Drawing.Size(112, 13);
             this.label23.TabIndex = 48;
             this.label23.Text = "Condição Pagamento:";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(12, 12);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(65, 20);
-            this.label24.TabIndex = 49;
-            this.label24.Text = "Cliente";
             // 
             // label25
             // 
@@ -521,7 +508,6 @@
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
-            this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.button2);
@@ -529,6 +515,7 @@
             this.Name = "FrmCadastroCliente";
             this.Text = "Cadastro Cliente";
             this.Load += new System.EventHandler(this.FrmCadastroCliente_Load_1);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);
@@ -541,7 +528,6 @@
             this.Controls.SetChildIndex(this.button2, 0);
             this.Controls.SetChildIndex(this.label22, 0);
             this.Controls.SetChildIndex(this.label23, 0);
-            this.Controls.SetChildIndex(this.label24, 0);
             this.Controls.SetChildIndex(this.label25, 0);
             this.Controls.SetChildIndex(this.label26, 0);
             this.Controls.SetChildIndex(this.label27, 0);
@@ -597,7 +583,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label27;

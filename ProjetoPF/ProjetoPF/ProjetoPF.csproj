@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="Dao\BaseDao.cs" />
     <Compile Include="Dao\Compras\CompraDao.cs" />
+    <Compile Include="Dao\Compras\ContasAPagarDao.cs" />
+    <Compile Include="Dao\Compras\ItemCompraDao.cs" />
     <Compile Include="Dao\Compras\ProdutoFornecedorDAO.cs" />
     <Compile Include="Dao\Localizacao\CidadeDAO.cs" />
     <Compile Include="Dao\Localizacao\EstadoDAO.cs" />
@@ -94,6 +96,12 @@
     </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.Designer.cs">
       <DependentUpon>FrmCadastroCondPagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroContaAPagar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmCadastroContaAPagar.Designer.cs">
+      <DependentUpon>FrmCadastroContaAPagar.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormCadastros\FrmCadastroEstado.cs">
       <SubType>Form</SubType>
@@ -161,6 +169,12 @@
     <Compile Include="Interfaces\FormCadastros\FrmCadastroUnidadeMedida.Designer.cs">
       <DependentUpon>FrmCadastroUnidadeMedida.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmContasAPagarBaixa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormCadastros\FrmContasAPagarBaixa.Designer.cs">
+      <DependentUpon>FrmContasAPagarBaixa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +210,12 @@
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaCondPagamentoFiltrado.Designer.cs">
       <DependentUpon>FrmConsultaCondPagamentoFiltrado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaContasAPagar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\FormConsultas\FrmConsultaContasAPagar.Designer.cs">
+      <DependentUpon>FrmConsultaContasAPagar.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\FormConsultas\FrmConsultaEstado.cs">
       <SubType>Form</SubType>
@@ -258,7 +278,9 @@
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\BaseModelos.cs" />
+    <Compile Include="Modelos\CompraKey.cs" />
     <Compile Include="Modelos\Compra\Compra.cs" />
+    <Compile Include="Modelos\Compra\CompraCabecalho.cs" />
     <Compile Include="Modelos\Compra\ItemCompra.cs" />
     <Compile Include="Modelos\Compra\ContasAPagar.cs" />
     <Compile Include="Modelos\Compra\ProdutoFornecedor.cs" />
@@ -285,6 +307,8 @@
     </Compile>
     <Compile Include="Servicos\BaseServicos.cs" />
     <Compile Include="Servicos\Compra\CompraServicos.cs" />
+    <Compile Include="Servicos\Compra\ItemCompraService.cs" />
+    <Compile Include="Servicos\Compra\ParcelaCompraService.cs" />
     <Compile Include="Servicos\Compra\ProdutoFornecedorService.cs" />
     <Compile Include="Servicos\Localizacao\CidadeServicos.cs" />
     <Compile Include="Servicos\Localizacao\EstadoServicos.cs" />
@@ -299,6 +323,7 @@
     <Compile Include="Servicos\Produto\MarcaServicos.cs" />
     <Compile Include="Servicos\Produto\ProdutoServicos.cs" />
     <Compile Include="Servicos\Produto\UnidadeMedidaServicos.cs" />
+    <Compile Include="Utils\SqlExtensions.cs" />
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCidade.resx">
       <DependentUpon>FrmCadastroCidade.cs</DependentUpon>
     </EmbeddedResource>
@@ -311,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroCondPagamento.resx">
       <DependentUpon>FrmCadastroCondPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroContaAPagar.resx">
+      <DependentUpon>FrmCadastroContaAPagar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroEstado.resx">
       <DependentUpon>FrmCadastroEstado.cs</DependentUpon>
@@ -346,6 +374,9 @@
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroUnidadeMedida.resx">
       <DependentUpon>FrmCadastroUnidadeMedida.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmContasAPagarBaixa.resx">
+      <DependentUpon>FrmContasAPagarBaixa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCategoria.resx">
       <DependentUpon>FrmConsultaCategoria.cs</DependentUpon>
     </EmbeddedResource>
@@ -360,6 +391,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaCondPagamento.resx">
       <DependentUpon>FrmConsultaCondPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaContasAPagar.resx">
+      <DependentUpon>FrmConsultaContasAPagar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormConsultas\FrmConsultaEstado.resx">
       <DependentUpon>FrmConsultaEstado.cs</DependentUpon>

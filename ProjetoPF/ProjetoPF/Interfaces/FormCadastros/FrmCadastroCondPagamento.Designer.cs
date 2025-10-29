@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
             this.txtCondPagamento = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -74,16 +73,6 @@
             // btnVoltar
             // 
             this.btnVoltar.TabIndex = 0;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(205, 20);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Condição de Pagamento";
             // 
             // txtCondPagamento
             // 
@@ -401,7 +390,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtCondPagamento);
-            this.Controls.Add(this.label2);
             this.Name = "FrmCadastroCondPagamento";
             this.Text = "Cadastro Condição de Pagamento";
             this.Load += new System.EventHandler(this.FrmCadastroCondPagamento_Load);
@@ -415,7 +403,6 @@
             this.Controls.SetChildIndex(this.btnVoltar, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
-            this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtCondPagamento, 0);
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.label4, 0);
@@ -452,8 +439,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtCondPagamento;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

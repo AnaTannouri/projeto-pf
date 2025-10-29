@@ -69,7 +69,7 @@ namespace ProjetoPF.Dao
                 catch (SqlException ex)
                 {
                     transaction.Rollback();
-                    throw; 
+                    throw;
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace ProjetoPF.Dao
         {
             using (TransactionScope scope = new TransactionScope())
             {
-                Atualizar(condicao); 
+                Atualizar(condicao);
 
                 var parcelaDao = new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas");
 
@@ -98,6 +98,41 @@ namespace ProjetoPF.Dao
 
                 scope.Complete();
             }
+        }
+        public CondicaoPagamento BuscarPorCompra(int modelo, string serie, string numeroNota, int idFornecedor)
+        {
+            using (var cn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand(@"
+        SELECT TOP 1 c.Multa, c.TaxaJuros, c.Desconto
+        FROM CondicaoPagamentos c
+        INNER JOIN Compras co ON co.IdCondicaoPagamento = c.Id
+        WHERE co.Modelo = @Modelo
+          AND co.Serie = @Serie
+          AND co.NumeroNota = @NumeroNota
+          AND co.IdFornecedor = @IdFornecedor;", cn))
+            {
+                cmd.Parameters.AddWithValue("@Modelo", modelo);
+                cmd.Parameters.AddWithValue("@Serie", serie);
+                cmd.Parameters.AddWithValue("@NumeroNota", numeroNota);
+                cmd.Parameters.AddWithValue("@IdFornecedor", idFornecedor);
+
+                cn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new CondicaoPagamento
+                        {
+                            Multa = reader["Multa"] != DBNull.Value ? Convert.ToDecimal(reader["Multa"]) : 0m,
+                            TaxaJuros = reader["TaxaJuros"] != DBNull.Value ? Convert.ToDecimal(reader["TaxaJuros"]) : 0m,
+                            Desconto = reader["Desconto"] != DBNull.Value ? Convert.ToDecimal(reader["Desconto"]) : 0m
+                        };
+                    }
+                }
+            }
+
+            return null;
+
         }
     }
 }

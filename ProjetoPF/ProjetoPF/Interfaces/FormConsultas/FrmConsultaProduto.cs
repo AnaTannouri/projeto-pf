@@ -18,6 +18,8 @@ namespace ProjetoPF.Interfaces.FormConsultas
         public Produtos ProdutoSelecionado { get; private set; }
         private FrmCadastroProduto frmCadastroProduto = new FrmCadastroProduto();
         private BaseServicos<Produtos> produtoServices = new BaseServicos<Produtos>(new BaseDao<Produtos>("Produtos"));
+
+        public bool ModoSelecao { get; set; } = false;
         public FrmConsultaProduto()
         {
             InitializeComponent();
@@ -170,6 +172,9 @@ namespace ProjetoPF.Interfaces.FormConsultas
         }
         private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (!ModoSelecao)
+                return;
+
             if (listViewFormaPagamento.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
@@ -185,7 +190,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 }
 
                 this.ProdutoSelecionado = produtoSelecionado;
-                this.DialogResult = DialogResult.OK; 
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }

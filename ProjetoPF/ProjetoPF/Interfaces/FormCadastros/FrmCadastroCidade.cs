@@ -23,7 +23,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private bool isExcluindo = false;
 
         private bool carregandoCombo = false;
-        public Cidade CidadeAtual => cidade;
 
         public FrmCadastroCidade()
         {
@@ -58,8 +57,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             return true;
         }
-
-
         private void AtualizarObjeto()
         {
 
@@ -89,7 +86,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             cidade.DataAtualizacao = DateTime.Now;
             cidade.Ativo = checkAtivo.Checked;
         }
-
         public void CarregarDados(Cidade cidadeSelecionada, bool isEditandoForm, bool isExcluindoForm)
         {
             cidade = cidadeSelecionada;
@@ -130,7 +126,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             checkAtivo.Checked = cidadeSelecionada.Ativo;
             checkAtivo.Enabled = isEditandoForm;
         }
-
         public void LimparCampos()
         {
             txtCodigo.Clear();
@@ -154,7 +149,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             btnSalvar.Enabled = true;
             btnCadastrar.Enabled = false;
         }
-
         public void DesbloquearCampos()
         {
             txtCidade.Enabled = true;

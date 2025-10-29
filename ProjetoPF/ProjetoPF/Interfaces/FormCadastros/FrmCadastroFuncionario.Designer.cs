@@ -47,7 +47,6 @@
             this.DataDem = new System.Windows.Forms.DateTimePicker();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
             this.txtCidadeFunc = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -70,6 +69,8 @@
             // comboPessoa
             // 
             this.comboPessoa.Items.AddRange(new object[] {
+            "FÍSICA",
+            "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
             "FÍSICA",
@@ -465,16 +466,6 @@
             this.label22.TabIndex = 94;
             this.label22.Text = "Data Demissão:";
             // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(10, 10);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(103, 20);
-            this.label23.TabIndex = 95;
-            this.label23.Text = "Funcionário";
-            // 
             // txtCidadeFunc
             // 
             this.txtCidadeFunc.Location = new System.Drawing.Point(429, 214);
@@ -673,7 +664,6 @@
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.txtCidadeFunc);
-            this.Controls.Add(this.label23);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.DataDem);
@@ -696,6 +686,7 @@
             this.Name = "FrmCadastroFuncionario";
             this.Text = "Cadastro Funcionário";
             this.Load += new System.EventHandler(this.FrmCadastroFuncionario_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);
@@ -744,7 +735,6 @@
             this.Controls.SetChildIndex(this.DataDem, 0);
             this.Controls.SetChildIndex(this.label21, 0);
             this.Controls.SetChildIndex(this.label22, 0);
-            this.Controls.SetChildIndex(this.label23, 0);
             this.Controls.SetChildIndex(this.txtCidadeFunc, 0);
             this.Controls.SetChildIndex(this.label24, 0);
             this.Controls.SetChildIndex(this.label26, 0);
@@ -787,7 +777,6 @@
         private System.Windows.Forms.DateTimePicker DataDem;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
         public System.Windows.Forms.TextBox txtCodigoCidadeFunc;
         public System.Windows.Forms.TextBox txtCidadeFunc;
         private System.Windows.Forms.Label label24;

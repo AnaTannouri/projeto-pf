@@ -55,17 +55,6 @@ namespace ProjetoPF.Dao.Compra
 
             }
         }
-        public ProdutoFornecedor BuscarPorProdutoFornecedor(int idProduto, int idFornecedor)
-        {
-            var resultado = BuscarTodos($"IdProduto = {idProduto} AND IdFornecedor = {idFornecedor}");
-            return resultado.FirstOrDefault();
-        }
-        public bool ExisteVinculo(int idProduto, int idFornecedor)
-        {
-            string filtro = $"IdProduto = {idProduto} AND IdFornecedor = {idFornecedor}";
-            var resultados = BuscarTodos(filtro);
-            return resultados != null && resultados.Count > 0;
-        }
         public List<ProdutoFornecedor> ListarPorProduto(int idProduto)
         {
             var lista = new List<ProdutoFornecedor>();
@@ -162,78 +151,6 @@ namespace ProjetoPF.Dao.Compra
             }
             return lista;
         }
-        public void RemoverTodosDoProduto(int idProduto)
-        {
-            using (var conn = new SqlConnection(_connectionString))
-            using (var cmd = new SqlCommand("DELETE FROM ProdutoFornecedor WHERE IdProduto = @IdProduto", conn))
-            {
-                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
-        public void AtualizarPrecoUltimaCompra(int idProduto, int idFornecedor, decimal novoPreco)
-        {
-            using (var conn = new SqlConnection(_connectionString))
-            using (var cmd = new SqlCommand(@"
-        IF EXISTS (
-            SELECT 1 FROM ProdutoFornecedor
-            WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor
-        )
-        BEGIN
-            UPDATE ProdutoFornecedor
-            SET PrecoUltimaCompra = @Preco,
-                DataUltimaCompra = @DataAtualizacao,
-                DataAtualizacao = @DataAtualizacao,
-                Ativo = 1
-            WHERE IdProduto = @IdProduto AND IdFornecedor = @IdFornecedor;
-        END
-        ELSE
-        BEGIN
-            INSERT INTO ProdutoFornecedor (IdProduto, IdFornecedor, PrecoUltimaCompra, DataUltimaCompra, DataCriacao, DataAtualizacao, Ativo)
-            VALUES (@IdProduto, @IdFornecedor, @Preco, @DataAtualizacao, @DataAtualizacao, @DataAtualizacao, 1);
-        END", conn))
-            {
-                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
-                cmd.Parameters.AddWithValue("@IdFornecedor", idFornecedor);
-                cmd.Parameters.AddWithValue("@Preco", novoPreco);
-                cmd.Parameters.AddWithValue("@DataAtualizacao", DateTime.Now);
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
-        public ProdutoFornecedor BuscarUltimaCompraValida(int idProduto)
-        {
-            using (var conn = new SqlConnection(_connectionString))
-            using (var cmd = new SqlCommand(@"
-        SELECT TOP 1 *
-        FROM ProdutoFornecedor
-        WHERE IdProduto = @IdProduto
-        ORDER BY DataUltimaCompra DESC", conn))
-            {
-                cmd.Parameters.AddWithValue("@IdProduto", idProduto);
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return new ProdutoFornecedor
-                        {
-                            Id = Convert.ToInt32(reader["Id"]),
-                            IdProduto = Convert.ToInt32(reader["IdProduto"]),
-                            IdFornecedor = Convert.ToInt32(reader["IdFornecedor"]),
-                            PrecoUltimaCompra = Convert.ToDecimal(reader["PrecoUltimaCompra"]),
-                            DataUltimaCompra = reader["DataUltimaCompra"] as DateTime?
-                        };
-                    }
-                }
-            }
-
-            return null;
-        }
-
     }
 }
 

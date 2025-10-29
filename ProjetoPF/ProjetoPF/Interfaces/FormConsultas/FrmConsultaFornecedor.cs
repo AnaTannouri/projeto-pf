@@ -202,6 +202,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     frmCadastroCompra.txtCodFornecedor.Text = fornecedorSelecionado.Id.ToString();
                     this.Close();
                 }
+                else if (this.Owner is FrmCadastroContaAPagar frmCadastroContaAPagar)
+                {
+                    frmCadastroContaAPagar.txtFornecedor.Text = fornecedorSelecionado.NomeRazaoSocial;
+                    frmCadastroContaAPagar.txtCodFornecedor.Text = fornecedorSelecionado.Id.ToString();
+                    this.Close();
+                }
                 else
                 {
                     this.Close();

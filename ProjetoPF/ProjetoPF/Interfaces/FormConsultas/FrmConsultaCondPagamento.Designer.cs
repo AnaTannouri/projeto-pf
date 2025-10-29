@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnAdicionar
@@ -38,7 +37,6 @@
             // 
             // txtPesquisa
             // 
-            this.txtPesquisa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPesquisa.Location = new System.Drawing.Point(34, 39);
             this.txtPesquisa.Size = new System.Drawing.Size(1177, 20);
             // 
@@ -59,22 +57,11 @@
             this.label2.Size = new System.Drawing.Size(0, 20);
             this.label2.TabIndex = 8;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(36, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(214, 20);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Condições de Pagamento";
-            // 
             // FrmConsultaCondPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1344, 689);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Name = "FrmConsultaCondPagamento";
             this.Text = "Consulta Condição de Pagamento";
@@ -87,7 +74,6 @@
             this.Controls.SetChildIndex(this.listViewFormaPagamento, 0);
             this.Controls.SetChildIndex(this.btnFiltro, 0);
             this.Controls.SetChildIndex(this.label2, 0);
-            this.Controls.SetChildIndex(this.label1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,6 +82,5 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
     }
 }

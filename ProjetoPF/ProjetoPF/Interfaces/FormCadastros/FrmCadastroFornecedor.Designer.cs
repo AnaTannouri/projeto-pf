@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label7 = new System.Windows.Forms.Label();
             this.btnCadastrarCidade = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtCodigoCidade = new System.Windows.Forms.TextBox();
@@ -59,6 +58,8 @@
             // comboPessoa
             // 
             this.comboPessoa.Items.AddRange(new object[] {
+            "FÍSICA",
+            "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
             "FÍSICA",
@@ -209,16 +210,6 @@
             // lblAtualizacao
             // 
             this.lblAtualizacao.Location = new System.Drawing.Point(124, 667);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(12, 7);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(101, 20);
-            this.label7.TabIndex = 39;
-            this.label7.Text = "Fornecedor";
             // 
             // btnCadastrarCidade
             // 
@@ -499,7 +490,6 @@
             this.Controls.Add(this.txtCodigoCidade);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label36);
-            this.Controls.Add(this.label7);
             this.Name = "FrmCadastroFornecedor";
             this.Text = "Cadastro Fornecedor";
             this.Load += new System.EventHandler(this.FrmCadastroFornecedor_Load);
@@ -534,7 +524,6 @@
             this.Controls.SetChildIndex(this.txtCpf_Cnpj, 0);
             this.Controls.SetChildIndex(this.txtApelido_NomeFantasia, 0);
             this.Controls.SetChildIndex(this.dateTimePicker1, 0);
-            this.Controls.SetChildIndex(this.label7, 0);
             this.Controls.SetChildIndex(this.label36, 0);
             this.Controls.SetChildIndex(this.label14, 0);
             this.Controls.SetChildIndex(this.txtCodigoCidade, 0);
@@ -566,8 +555,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnCadastrarCidade;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;

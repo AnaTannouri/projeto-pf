@@ -165,3 +165,6 @@ C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.pdb
 C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroCompra.resources
 C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaCompra.resources
 C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaContasAPagar.resources
+C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroContaAPagar.resources
+C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmContasAPagarBaixa.resources
