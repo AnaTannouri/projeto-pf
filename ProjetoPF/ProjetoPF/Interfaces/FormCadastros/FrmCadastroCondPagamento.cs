@@ -46,7 +46,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return false;
             }
 
-            if (!decimal.TryParse(txtJuros.Text.Trim().Replace(",", "."), out _) || !decimal.TryParse(txtMulta.Text.Trim().Replace(",", "."), out _))
+            decimal juros, multa;
+            if (!decimal.TryParse(txtJuros.Text.Replace("%", "").Replace(" ", "").Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out juros) ||
+                !decimal.TryParse(txtMulta.Text.Replace("%", "").Replace(" ", "").Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out multa))
             {
                 MessageBox.Show("Informe valores válidos para a taxa de juros e multa.");
                 return false;
@@ -58,24 +60,31 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void AtualizarObjeto()
         {
             condicaoPagamento.Descricao = txtCondPagamento.Text.Trim();
-            condicaoPagamento.TaxaJuros = decimal.Parse(txtJuros.Text);
-            condicaoPagamento.Multa = decimal.Parse(txtMulta.Text);
+
+            condicaoPagamento.TaxaJuros = ConverterPercentual(txtJuros.Text);
+            condicaoPagamento.Multa = ConverterPercentual(txtMulta.Text);
+            condicaoPagamento.Desconto = ConverterPercentual(maskedTxtDesconto.Text);
+
             condicaoPagamento.Ativo = checkAtivo.Checked;
-            if (string.IsNullOrEmpty(maskedTxtDesconto.Text.Trim()))
-            {
-                condicaoPagamento.Desconto = 0;  
-            }
-            else
-            {
-                condicaoPagamento.Desconto = decimal.Parse(maskedTxtDesconto.Text);
-            }
 
             if (condicaoPagamento.DataCriacao == DateTime.MinValue)
                 condicaoPagamento.DataCriacao = DateTime.Now;
 
             condicaoPagamento.DataAtualizacao = DateTime.Now;
         }
+        private decimal ConverterPercentual(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return 0;
 
+            texto = texto.Replace("%", "").Replace(" ", "").Replace(",", ".").Trim();
+
+            if (!decimal.TryParse(texto, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal valor))
+                return 0;
+
+            // 🔹 Agora mantemos o valor exatamente como o usuário digitou (1,00 -> 1.00)
+            return valor;
+        }
         private void LimparCampos()
         {
             txtCodigo.Clear();
@@ -129,6 +138,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
             labelCriacao.Text = condicaoPagamento.DataCriacao > DateTime.MinValue ? condicaoPagamento.DataCriacao.ToShortDateString() : "";
             lblAtualizacao.Text = condicaoPagamento.DataAtualizacao > DateTime.MinValue ? condicaoPagamento.DataAtualizacao.ToShortDateString() : "";
+
+            txtJuros.Leave += FormatarPercentual_Leave;
+            txtMulta.Leave += FormatarPercentual_Leave;
+            maskedTxtDesconto.Leave += FormatarPercentual_Leave;
+            txtPorcentagem.Leave += FormatarPercentual_Leave;
+            txtRestante.Leave += FormatarPercentual_Leave;
+
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -170,6 +186,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
+                AtualizarObjeto();
+
                 decimal somaPorcentagens = parcelas.Sum(p => p.Porcentagem);
                 if (Math.Round(somaPorcentagens, 2) != 100)
                 {
@@ -181,6 +199,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     );
                     return;
                 }
+
                 foreach (var parcela in parcelas)
                 {
                     var forma = formaPagamentoServicos.BuscarPorId(parcela.IdFormaPagamento);
@@ -193,8 +212,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                         return;
                     }
                 }
-
-                AtualizarObjeto();
 
                 if (isEditando)
                 {
@@ -263,11 +280,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             txtCodigo.Text = condicao.Id.ToString();
             txtCondPagamento.Text = condicao.Descricao;
-            txtJuros.Text = condicao.TaxaJuros.ToString("F2");
-            txtMulta.Text = condicao.Multa.ToString("F2");
+            txtJuros.Text = condicao.TaxaJuros.ToString("N2");
+            txtMulta.Text = condicao.Multa.ToString("N2");
+            maskedTxtDesconto.Text = condicao.Desconto.ToString("N2");
             checkAtivo.Checked = condicao.Ativo;      
             checkAtivo.Enabled = isEditandoForm;
-            maskedTxtDesconto.Text = condicao.Desconto.ToString("F2");
 
             condicaoPagamento = condicao;
             isEditando = isEditandoForm;
@@ -341,9 +358,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     ListViewItem lvi = new ListViewItem(contador.ToString());
                     lvi.SubItems.Add(parcela.Prazo.ToString());
                     lvi.SubItems.Add(parcela.Porcentagem.ToString("F2") + "%");
-                    lvi.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
-                    lvi.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
-                    lvi.SubItems.Add(condicaoPagamento.Desconto.ToString("F2") + "%");
+                    lvi.SubItems.Add($"{condicaoPagamento.TaxaJuros.ToString("N2")}%");
+                    lvi.SubItems.Add($"{condicaoPagamento.Multa.ToString("N2")}%");
+                    lvi.SubItems.Add($"{condicaoPagamento.Desconto.ToString("N2")}%");
+
                     lvi.SubItems.Add(descricaoForma);
                     listView1.Items.Add(lvi);
 
@@ -364,6 +382,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             try
             {
                 AtualizarObjeto();
+
                 int numParcela = proximoNumeroParcela;
 
                 if (string.IsNullOrWhiteSpace(txtForma.Text))
@@ -373,8 +392,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
 
                 var formasPagamento = formaPagamentoServicos.BuscarTodos()
-                        .Where(f => f.Ativo) 
-                        .ToList();
+                    .Where(f => f.Ativo)
+                    .ToList();
+
                 FormaPagamento pagamentoSelecionado = formasPagamento
                     .FirstOrDefault(f => f.Descricao.Equals(txtForma.Text.Trim(), StringComparison.OrdinalIgnoreCase));
 
@@ -385,32 +405,38 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
                 else if (!pagamentoSelecionado.Ativo)
                 {
-                    MessageBox.Show("A forma de pagamento selecionada está inativa. Selecione uma forma ativa.", "Forma inativa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("A forma de pagamento selecionada está inativa. Selecione uma forma ativa.",
+                                    "Forma inativa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                string formaPagamento = pagamentoSelecionado.Descricao;
-                int prazo = int.Parse(txtPrazo.Text);
-
-                string textoPorcentagem = txtPorcentagem.Text.Trim().Replace('.', ',');
-                if (!decimal.TryParse(textoPorcentagem, NumberStyles.Any, CultureInfo.CurrentCulture, out decimal porcentagemParcela) || porcentagemParcela <= 0)
+                if (!int.TryParse(txtPrazo.Text.Trim(), out int prazo) || prazo < 0)
                 {
-                    MessageBox.Show("Informe uma porcentagem válida.");
+                    MessageBox.Show("Informe um prazo válido (em dias).");
+                    return;
+                }
+
+                string textoPorcentagem = txtPorcentagem.Text
+                    .Trim()
+                    .Replace("%", "")
+                    .Replace(" ", "")
+                    .Replace(",", ".");
+
+                if (!decimal.TryParse(textoPorcentagem, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal porcentagemParcela) || porcentagemParcela <= 0)
+                {
+                    MessageBox.Show("Informe uma porcentagem válida (ex: 50,00 ou 50.00).");
                     return;
                 }
 
                 if (porcentagemParcela > porcentagemRestante)
                 {
                     MessageBox.Show($"A porcentagem informada excede o restante disponível ({porcentagemRestante:F2}%).");
-                    txtParcela.Clear();
-                    txtPrazo.Clear();
                     txtPorcentagem.Clear();
-                    txtForma.Clear();
                     return;
                 }
 
                 porcentagemRestante -= porcentagemParcela;
-                txtRestante.Text = porcentagemRestante.ToString("F2");
+                txtRestante.Text = porcentagemRestante.ToString("N2") + "%";
 
                 CondicaoPagamentoParcelas novaParcela = new CondicaoPagamentoParcelas
                 {
@@ -422,32 +448,24 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                 parcelas.Add(novaParcela);
 
+
                 ListViewItem lvi = new ListViewItem(novaParcela.NumParcela.ToString());
                 lvi.SubItems.Add(novaParcela.Prazo.ToString());
-                lvi.SubItems.Add(novaParcela.Porcentagem.ToString("F2") + "%");
-                lvi.SubItems.Add(condicaoPagamento.TaxaJuros.ToString("F2") + "%");
-                lvi.SubItems.Add(condicaoPagamento.Multa.ToString("F2") + "%");
-                lvi.SubItems.Add(condicaoPagamento.Desconto.ToString("F2") + "%");
-                lvi.SubItems.Add(formaPagamento);
+                lvi.SubItems.Add(novaParcela.Porcentagem.ToString("N2") + "%");
+                lvi.SubItems.Add($"{condicaoPagamento.TaxaJuros.ToString("N2")}%");
+                lvi.SubItems.Add($"{condicaoPagamento.Multa.ToString("N2")}%");
+                lvi.SubItems.Add($"{condicaoPagamento.Desconto.ToString("N2")}%");
+                lvi.SubItems.Add(pagamentoSelecionado.Descricao);
                 listView1.Items.Add(lvi);
 
                 MessageBox.Show($"Parcela {numParcela} gerada com sucesso!");
 
                 proximoNumeroParcela++;
 
-                if (porcentagemRestante > 0)
-                {
-                    txtParcela.Text = proximoNumeroParcela.ToString();
-                }
-                else
-                {
-                    txtParcela.Clear();
-                }
-
+                txtParcela.Text = porcentagemRestante > 0 ? proximoNumeroParcela.ToString() : "";
                 txtPrazo.Clear();
                 txtPorcentagem.Clear();
                 txtForma.Clear();
-
                 txtForma.Focus();
             }
             catch (Exception ex)
@@ -507,18 +525,46 @@ namespace ProjetoPF.Interfaces.FormCadastros
         }
         private void SomenteNumerosOuVirgula_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) &&
-                !char.IsDigit(e.KeyChar) &&
-                e.KeyChar != ',')
-            {
-                e.Handled = true; 
-            }
-
-
-            TextBox txt = sender as TextBox;
-            if (e.KeyChar == ',' && txt != null && txt.Text.Contains(","))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != '.')
             {
                 e.Handled = true;
+            }
+
+            TextBoxBase txt = sender as TextBoxBase;
+
+            if ((e.KeyChar == ',' || e.KeyChar == '.') && txt != null && (txt.Text.Contains(",") || txt.Text.Contains(".")))
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == '.')
+            {
+                e.KeyChar = ',';
+            }
+        }
+        private void FormatarPercentual_Leave(object sender, EventArgs e)
+        {
+            TextBoxBase txt = sender as TextBoxBase;
+            if (txt == null) return;
+
+            string valor = txt.Text.Trim()
+                .Replace("%", "")
+                .Replace(" ", "")
+                .Replace(".", ",");
+
+            if (string.IsNullOrEmpty(valor))
+            {
+                txt.Text = "0,00%";
+                return;
+            }
+
+            if (decimal.TryParse(valor, NumberStyles.Any, new CultureInfo("pt-BR"), out decimal numero))
+            {
+                txt.Text = numero.ToString("N2") + "%";
+            }
+            else
+            {
+                txt.Text = "0,00%";
             }
         }
     }

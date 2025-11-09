@@ -1,5 +1,6 @@
 ﻿using ProjetoPF.Dao;
 using ProjetoPF.Dao.Compras;
+using ProjetoPF.FormConsultas;
 using ProjetoPF.Interfaces.FormConsultas;
 using ProjetoPF.Modelos;
 using ProjetoPF.Modelos.Compra;
@@ -59,55 +60,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
         }
         private void btnPesquisarCondicao_Click(object sender, EventArgs e)
         {
-            if (itensCompra.Count == 0)
-            {
-                MessageBox.Show("Inclua ao menos um item antes de escolher a condição de pagamento.");
-                return;
-            }
-
-            if (!int.TryParse(txtCodFornecedor.Text, out int idFornecedor))
-            {
-                MessageBox.Show("Selecione um fornecedor antes de escolher a condição de pagamento.",
-                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var fornecedor = fornecedorServices.BuscarPorId(idFornecedor);
-            if (fornecedor == null)
-            {
-                MessageBox.Show("Fornecedor não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            var condicaoAVista = condicaoPagamentoServices.BuscarTodos("")
-                .FirstOrDefault(c => c.Descricao.Equals("A VISTA", StringComparison.OrdinalIgnoreCase));
-
-            if (condicaoAVista == null)
-            {
-                MessageBox.Show("Condição 'À Vista' não encontrada no banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            var idsPermitidos = new List<int> { condicaoAVista.Id };
-            if (fornecedor.CondicaoPagamentoId != condicaoAVista.Id)
-                idsPermitidos.Add(fornecedor.CondicaoPagamentoId);
-
-            using (var formConsulta = new FrmConsultaCondPagamentoFiltrado(idsPermitidos))
-            {
-                formConsulta.ShowDialog();
-
-                if (formConsulta.CondicaoSelecionada != null)
-                {
-                    txtCondicao.Text = formConsulta.CondicaoSelecionada.Descricao;
-                    txtCodCondicao.Text = formConsulta.CondicaoSelecionada.Id.ToString();
-
-                    btnLimparParcelas.Enabled = true;
-                    btnGerarParcelas.Enabled = true;
-                }
-            }
+            FrmConsultaCondPagamento frmConsultaCondPagamento = new FrmConsultaCondPagamento();
+            frmConsultaCondPagamento.Owner = this;
+            frmConsultaCondPagamento.ShowDialog();
         }
 
-        private void btnPesquisarProduto_Click(object sender, EventArgs e)
+            private void btnPesquisarProduto_Click(object sender, EventArgs e)
         {
             using (var formConsulta = new FrmConsultaProduto())
             {
@@ -321,6 +279,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             label33.Visible = false;
             label34.Visible = false;
+
             checkAtivo.Visible = false;
             txtObservacao.Enabled = false;
 
@@ -499,6 +458,20 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 if (btnVoltar != null)
                     btnVoltar.Text = "Cancelar";
             }
+            if (_key != null)
+            {
+                var dao = new CompraDao();
+                var compra = dao.BuscarPorChave(_key.Value);
+
+                if (compra != null && !compra.Ativo && !string.IsNullOrWhiteSpace(compra.MotivoCancelamento))
+                {
+                    label33.Text = "Motivo do Cancelamento:";
+                    label34.Text = compra.MotivoCancelamento;
+                    label33.Visible = true;
+                    label34.Visible = true;
+                }
+            }
+
 
         }
         private void AtualizarTotalParcelas()
@@ -574,6 +547,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 }
                 AtualizarTotalProdutos();
 
+
                 // Parcelas
                 listViewParcelas.Items.Clear();
                 var parcelasLista = new ContasAPagarDao().BuscarPorChave(key);
@@ -608,7 +582,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                 AtualizarTotalParcelas();
 
-                // Bloquear edição, se modo leitura
+                if (!compra.Ativo && !string.IsNullOrWhiteSpace(compra.MotivoCancelamento))
+                {
+                    label33.Text = "Motivo do Cancelamento:";
+                    label34.Text = compra.MotivoCancelamento;
+                    label33.Visible = true;
+                    label34.Visible = true;
+                }
+                else
+                {
+                    label33.Visible = false;
+                    label34.Visible = false;
+                }
+
                 AplicarSomenteLeitura();
                 txtCodigo.ReadOnly = true;
                 txtSerie.ReadOnly = true;
@@ -978,6 +964,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     MessageBox.Show("Gere ao menos uma parcela.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
 
                 decimal TryMoeda(string s)
                 {

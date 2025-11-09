@@ -318,9 +318,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(1129, 37);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
+            this.label7.Size = new System.Drawing.Size(94, 13);
             this.label7.TabIndex = 40;
-            this.label7.Text = "Data de Entrega:";
+            this.label7.Text = "Data de Chegada:";
             // 
             // label8
             // 
@@ -361,7 +361,8 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(1126, 314);
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(1088, 317);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(102, 13);
             this.label17.TabIndex = 50;
@@ -397,10 +398,10 @@
             // txtValorTotal
             // 
             this.txtValorTotal.Enabled = false;
-            this.txtValorTotal.Location = new System.Drawing.Point(1222, 336);
+            this.txtValorTotal.Location = new System.Drawing.Point(1196, 336);
             this.txtValorTotal.MaxLength = 18;
             this.txtValorTotal.Name = "txtValorTotal";
-            this.txtValorTotal.Size = new System.Drawing.Size(107, 20);
+            this.txtValorTotal.Size = new System.Drawing.Size(133, 20);
             this.txtValorTotal.TabIndex = 0;
             this.txtValorTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -473,7 +474,9 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(1128, 339);
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Red;
+            this.label16.Location = new System.Drawing.Point(1089, 339);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(84, 13);
             this.label16.TabIndex = 49;
@@ -491,7 +494,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1266, 314);
+            this.label4.Location = new System.Drawing.Point(1240, 314);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(10, 13);
             this.label4.TabIndex = 52;
@@ -540,6 +543,7 @@
             // 
             this.txtTotal.Enabled = false;
             this.txtTotal.Location = new System.Drawing.Point(662, 108);
+            this.txtTotal.MaxLength = 50;
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(103, 20);
@@ -549,7 +553,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(1264, 570);
+            this.label21.Location = new System.Drawing.Point(1240, 570);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(10, 13);
             this.label21.TabIndex = 61;
@@ -558,7 +562,9 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(1125, 570);
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.Red;
+            this.label22.Location = new System.Drawing.Point(1095, 570);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(101, 13);
             this.label22.TabIndex = 60;

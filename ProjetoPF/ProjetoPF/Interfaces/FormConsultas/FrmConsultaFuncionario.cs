@@ -16,9 +16,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
     {
         private FrmCadastroFuncionario frmCadastroFuncionario = new FrmCadastroFuncionario();
         private BaseServicos<Funcionario> funcionarioServices = new BaseServicos<Funcionario>(new BaseDao<Funcionario>("Funcionarios"));
+        public Funcionario FuncionarioSelecionado { get; private set; }
+        public bool ModoSelecao { get; set; } = false;
         public FrmConsultaFuncionario()
         {
             InitializeComponent();
+            this.listViewFormaPagamento.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewFormaPagamento_MouseDoubleClick);
         }
 
         private void btnAdicionar_Click_1(object sender, EventArgs e)
@@ -74,13 +77,13 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             if (listViewFormaPagamento.Columns.Count == 0)
             {
-                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Matrícula", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Matrícula", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Funcionario", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Right);
             }
 
             AjustarLarguraColunas();
@@ -151,6 +154,27 @@ namespace ProjetoPF.Interfaces.FormConsultas
             else
             {
                 MessageBox.Show("Selecione um funcionário para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!ModoSelecao)
+                return;
+
+            if (listViewFormaPagamento.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                Funcionario funcionarioSelecionado = funcionarioServices.BuscarPorId(int.Parse(itemSelecionado.Text));
+
+                if (funcionarioSelecionado == null)
+                {
+                    MessageBox.Show("Funcionário não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                this.FuncionarioSelecionado = funcionarioSelecionado;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
     }

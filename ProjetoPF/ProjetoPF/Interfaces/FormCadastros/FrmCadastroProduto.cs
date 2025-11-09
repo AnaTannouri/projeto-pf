@@ -49,7 +49,40 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtPrecoVenda.KeyPress += SomenteNumerosPontuacao_KeyPress;
 
             txtPrecoVenda.TextChanged += txtPrecoVenda_TextChanged;
+
+            txtPrecoVenda.Leave += FormatarComoReal_Leave;
+            txtPrecoVenda.Enter += RemoverSimboloReal_Enter;
+
         }
+        private void FormatarComoReal_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string valor = txt.Text.Replace("R$", "").Trim();
+
+            if (string.IsNullOrEmpty(valor))
+            {
+                txt.Text = "R$ 0,00";
+                return;
+            }
+
+            if (decimal.TryParse(valor, out decimal valorDecimal))
+            {
+                txt.Text = string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "R$ {0:N2}", valorDecimal);
+            }
+            else
+            {
+                txt.Text = "R$ 0,00";
+            }
+
+            CalcularMargemLucro();
+        }
+
+        private void RemoverSimboloReal_Enter(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            txt.Text = txt.Text.Replace("R$", "").Trim();
+        }
+
         private bool ValidarEntrada()
         {
             if (string.IsNullOrWhiteSpace(txtProduto.Text))
@@ -273,17 +306,46 @@ namespace ProjetoPF.Interfaces.FormCadastros
                             }
                             catch (Exception ex)
                             {
-                                if (ex.Message.Contains("FK_ItensCompra_Produtos"))
+                                if (ex is SqlException sqlEx && sqlEx.Number == 547) 
                                 {
-                                    MessageBox.Show(
-                                        "Não é possível remover este produto, pois ele está vinculado a uma ou mais compras.",
-                                        "Aviso",
-                                        MessageBoxButtons.OK,
-                                        MessageBoxIcon.Warning);
+                                    string msg = sqlEx.Message;
+
+                                    if (msg.Contains("FK_ProdutoFornecedor_Produto"))
+                                    {
+                                        MessageBox.Show(
+                                            "Não é possível remover este produto, pois ele ainda está vinculado a um ou mais fornecedores",
+                                            "Aviso",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning
+                                        );
+                                    }
+                                    else if (msg.Contains("FK_ItensCompra_Produtos"))
+                                    {
+                                        MessageBox.Show(
+                                            "Este produto não pode ser removido porque está vinculado a compras registradas.\n\n",
+                                            "Aviso",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning
+                                        );
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(
+                                            "Não foi possível excluir o produto porque há registros relacionados em outras tabelas.\n\n",
+                                            "Aviso",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning
+                                        );
+                                    }
                                 }
                                 else
                                 {
-                                    MessageBox.Show($"Erro ao remover o produto: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(
+                                        $"Erro ao remover o produto: {ex.Message}",
+                                        "Erro",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error
+                                    );
                                 }
                             }
                         }
@@ -399,9 +461,16 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 estoque = 0;
             produto.Estoque = estoque;
 
-            string precoVendaStr = txtPrecoVenda.Text.Replace("R$", "").Trim();
-            if (!decimal.TryParse(precoVendaStr, out decimal precoVenda))
+            string precoVendaStr = txtPrecoVenda.Text.Replace("R$", "").Trim()
+                                               .Replace(".", "")
+                                               .Replace(",", ".");
+
+            if (!decimal.TryParse(precoVendaStr, System.Globalization.NumberStyles.Any,
+                                  System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda))
+            {
                 throw new Exception("Preço de venda inválido.");
+            }
+
             produto.PrecoVenda = precoVenda;
 
             string ultimaCompraStr = txtUltCompra.Text.Replace("R$", "").Trim();

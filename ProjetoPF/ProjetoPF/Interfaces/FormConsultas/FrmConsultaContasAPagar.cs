@@ -46,7 +46,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Fornecedor", 200, HorizontalAlignment.Center);
                 listViewFormaPagamento.Columns.Add("Forma Pagamento", 180, HorizontalAlignment.Center);
                 listViewFormaPagamento.Columns.Add("Valor da Parcela", 100, HorizontalAlignment.Right);
-                listViewFormaPagamento.Columns.Add("Data Vencimento", 100, HorizontalAlignment.Center);
+                listViewFormaPagamento.Columns.Add("Data Vencimento", 100, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Status", 120, HorizontalAlignment.Center);
             }
             comboBox1.Items.Clear();
@@ -70,12 +70,10 @@ namespace ProjetoPF.Interfaces.FormConsultas
             var daoForma = new FormaPagamentoDAO();
             var daoFornecedor = new FornecedorDAO();
 
-            // 🔹 Busca todas as contas direto do banco
             var contas = daoContas.BuscarTodos()
                                   .OrderBy(c => c.DataCriacao)
                                   .ToList();
 
-            // 🔹 Atualiza apenas parcelas vencidas (não pagas nem canceladas)
             foreach (var conta in contas)
             {
                 if (conta.Ativo &&
@@ -91,7 +89,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 }
             }
 
-            // 🔹 Aplica filtro de pesquisa se houver texto
             if (!string.IsNullOrWhiteSpace(pesquisa))
             {
                 pesquisa = pesquisa.Trim().ToLowerInvariant();
@@ -109,7 +106,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 }).ToList();
             }
 
-            // 🔹 Preenche o ListView
             foreach (var conta in contas)
             {
                 var forma = daoForma.BuscarPorId(conta.IdFormaPagamento);
@@ -146,10 +142,8 @@ namespace ProjetoPF.Interfaces.FormConsultas
             var daoForma = new FormaPagamentoDAO();
             var daoFornecedor = new FornecedorDAO();
 
-            // 🔹 Busca todas as contas direto do banco
             var contas = daoContas.BuscarTodos();
 
-            // 🔹 Atualiza automaticamente apenas as vencidas (não pagas nem canceladas)
             foreach (var conta in contas)
             {
                 if (conta.Ativo &&
@@ -165,7 +159,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 }
             }
 
-            // 🔹 Filtra conforme a situação no banco
             IEnumerable<ContasAPagar> filtradas = contas;
 
             switch (status)
@@ -192,7 +185,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     break;
             }
 
-            // 🔹 Exibe no ListView
             foreach (var conta in filtradas)
             {
                 var forma = daoForma.BuscarPorId(conta.IdFormaPagamento);
@@ -212,7 +204,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 item.SubItems.Add(conta.DataVencimento.ToString("dd/MM/yyyy"));
                 item.SubItems.Add(conta.Situacao ?? "Em aberto");
 
-                // 🔹 Tudo preto, sem cores condicionais
                 item.ForeColor = Color.Black;
 
                 listViewFormaPagamento.Items.Add(item);
@@ -247,7 +238,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             }
 
             var item = listViewFormaPagamento.SelectedItems[0];
-            string situacao = item.SubItems[9].Text; // coluna "Status"
+            string situacao = item.SubItems[9].Text; 
 
             if (situacao.Equals("Paga", StringComparison.OrdinalIgnoreCase))
             {
@@ -270,6 +261,26 @@ namespace ProjetoPF.Interfaces.FormConsultas
             int idFornecedor = int.Parse(item.SubItems[4].Text);
 
             var dao = new ContasAPagarDao();
+
+            bool existeAnteriorEmAberto = dao.ExisteParcelaAnteriorEmAberto(
+                modelo.ToString(),
+                serie,
+                numeroNota,
+                idFornecedor,
+                numeroParcela
+            );
+
+            if (existeAnteriorEmAberto)
+            {
+                MessageBox.Show(
+                    $"Não é possível dar baixa na parcela nº {numeroParcela}, pois há parcelas anteriores ainda em aberto.",
+                    "Operação não permitida",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             var parcelaCompleta = dao.BuscarParcelaCompleta(modelo, serie, numeroNota, idFornecedor, numeroParcela);
 
             if (parcelaCompleta == null)
@@ -279,7 +290,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // 🔹 Corrige datas inválidas antes de abrir o form
             if (parcelaCompleta.DataEmissao < new DateTime(1753, 1, 1))
                 parcelaCompleta.DataEmissao = DateTime.Today;
 
@@ -292,13 +302,11 @@ namespace ProjetoPF.Interfaces.FormConsultas
             if (parcelaCompleta.DataAtualizacao < new DateTime(1753, 1, 1))
                 parcelaCompleta.DataAtualizacao = DateTime.Now;
 
-            // ✅ Carrega e abre o form de baixa
             var frm = new FrmContasAPagarBaixa();
             frm.Owner = this;
             frm.Shown += (s, ev) => frm.CarregarParcela(parcelaCompleta);
             frm.ShowDialog(this);
 
-            // ✅ Atualiza listview imediatamente ao fechar a baixa
             PopularListView(string.Empty);
 
         }
@@ -338,24 +346,22 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // 🔹 Caso a parcela esteja paga → abre o formulário de baixa
             if (situacao.Equals("Paga", StringComparison.OrdinalIgnoreCase))
             {
                 var frm = new FrmContasAPagarBaixa();
-                frm.ModoVisualizacao = true; // 👈 define o modo visualização
+                frm.ModoVisualizacao = true; 
                 frm.Shown += (s, ev) =>
                 {
                     frm.CarregarParcela(parcela);
                     frm.CarregarParcela(parcela);
-                    frm.BloquearCamposVisualizar(); // 🔒 bloqueia todos os campos
+                    frm.BloquearCamposVisualizar();
                 };
                 frm.ShowDialog();
             }
-            // 🔹 Caso esteja cancelada ou em aberto → abre o form de cadastro
             else
             {
                 var frm = new FrmCadastroContaAPagar();
-                frm.ModoVisualizacao = true; // 🔹 impede validações e bloqueia salvamento
+                frm.ModoVisualizacao = true;
                 frm.Shown += (s, ev) =>
                 {
                     frm.CarregarConta(parcela);
@@ -391,7 +397,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // 🔸 Regras de negócio
             if (conta.Situacao == "Paga")
             {
                 MessageBox.Show("Não é possível cancelar uma conta que já foi paga.",
@@ -414,7 +419,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // 🔹 Abre o formulário com os dados bloqueados
             var frmVisualizar = new FrmCadastroContaAPagar();
             frmVisualizar.ModoVisualizacao = true;
             frmVisualizar.Shown += (s, ev) =>
@@ -424,7 +428,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
             };
             frmVisualizar.ShowDialog();
 
-            // 🔸 Confirmação do cancelamento
             DialogResult confirmar = MessageBox.Show(
                 "Deseja realmente cancelar esta conta?",
                 "Confirmar Cancelamento",
@@ -434,17 +437,29 @@ namespace ProjetoPF.Interfaces.FormConsultas
             if (confirmar != DialogResult.Yes)
                 return;
 
-            // 🔸 InputBox customizado para motivo
-            string motivo = InputBox.Show("Digite o motivo do cancelamento:", "Cancelar Conta");
+            string motivo = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(motivo))
+            while (true)
             {
-                MessageBox.Show("O cancelamento foi cancelado, pois o motivo não foi informado.",
-                                "Operação cancelada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                motivo = InputBox.Show("Digite o motivo do cancelamento (mínimo 10 caracteres):", "Cancelar Conta");
+
+                if (string.IsNullOrWhiteSpace(motivo))
+                {
+                    MessageBox.Show("O cancelamento foi cancelado, pois o motivo não foi informado.",
+                                    "Operação cancelada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (motivo.Trim().Length < 10)
+                {
+                    MessageBox.Show("O motivo do cancelamento deve conter pelo menos 10 caracteres.",
+                                    "Motivo muito curto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue;
+                }
+
+                break;
             }
 
-            // 🔹 Cancela e salva no banco
             bool sucesso = dao.CancelarConta(modelo, serie, numeroNota, idFornecedor, numeroParcela, motivo);
 
             if (sucesso)
@@ -455,9 +470,10 @@ namespace ProjetoPF.Interfaces.FormConsultas
             }
             else
             {
-                MessageBox.Show("Não foi possível cancelar a conta. Verifique se ela já não foi cancelada.",
+                MessageBox.Show("Não foi possível cancelar a conta. Verifique seu status.",
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+           
     }
 }

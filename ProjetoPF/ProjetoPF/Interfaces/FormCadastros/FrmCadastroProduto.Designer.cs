@@ -111,6 +111,7 @@
             this.txtEstoque.Name = "txtEstoque";
             this.txtEstoque.Size = new System.Drawing.Size(153, 20);
             this.txtEstoque.TabIndex = 16;
+            this.txtEstoque.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPrecoCusto
             // 
@@ -186,7 +187,7 @@
             // 
             this.txtCodFornecedor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodFornecedor.Enabled = false;
-            this.txtCodFornecedor.Location = new System.Drawing.Point(12, 256);
+            this.txtCodFornecedor.Location = new System.Drawing.Point(15, 255);
             this.txtCodFornecedor.Name = "txtCodFornecedor";
             this.txtCodFornecedor.Size = new System.Drawing.Size(153, 20);
             this.txtCodFornecedor.TabIndex = 0;

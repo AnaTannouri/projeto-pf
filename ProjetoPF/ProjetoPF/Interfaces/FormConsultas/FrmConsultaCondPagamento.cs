@@ -30,9 +30,9 @@ namespace ProjetoPF.FormConsultas
                 listViewFormaPagamento.Columns.Add("Juros %", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Multa %", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Desconto %", -2, HorizontalAlignment.Right);
-                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Right);
             }
 
             AjustarLarguraColunas();

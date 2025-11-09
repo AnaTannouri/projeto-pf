@@ -398,7 +398,66 @@ namespace ProjetoPF.Interfaces.FormCadastros
             dateTimePicker1.MaxDate = DateTime.Today;
             labelCriacao.Text = cliente.DataCriacao > DateTime.MinValue ? cliente.DataCriacao.ToShortDateString() : "";
             lblAtualizacao.Text = cliente.DataAtualizacao > DateTime.MinValue ? cliente.DataAtualizacao.ToShortDateString() : "";
+
+            txtCpf_Cnpj.Leave += FormatarCpf_Leave;
+            txtCep.Leave += FormatarCep_Leave;
+            txtCpf_Cnpj.Leave += ValidarDocumento_Leave;
+
         }
+        private void ValidarDocumento_Leave(object sender, EventArgs e)
+        {
+            string tipoPessoa = comboPessoa.SelectedItem?.ToString().ToUpper() ?? "";
+            string documento = new string(txtCpf_Cnpj.Text.Where(char.IsDigit).ToArray());
+
+            if (string.IsNullOrEmpty(documento))
+                return;
+
+            if (tipoPessoa == "FÍSICA")
+            {
+                if (documento.Length != 11 || !ValidarCpf(documento))
+                {
+                    MessageBox.Show("Pessoa Física deve possuir um CPF válido.",
+                                    "Documento inválido",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCpf_Cnpj.Focus();
+                    return;
+                }
+            }
+            else if (tipoPessoa == "JURÍDICA")
+            {
+                if (documento.Length != 14 || !ValidarCnpj(documento))
+                {
+                    MessageBox.Show("Pessoa Jurídica deve possuir um CNPJ válido.",
+                                    "Documento inválido",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCpf_Cnpj.Focus();
+                    return;
+                }
+            }
+        }
+
+        private void FormatarCpf_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string cpf = new string(txt.Text.Where(char.IsDigit).ToArray());
+
+            if (cpf.Length == 11)
+                txt.Text = Convert.ToUInt64(cpf).ToString(@"000\.000\.000\-00");
+            else
+                txt.Text = cpf; // mantém como digitado se incompleto
+        }
+
+        private void FormatarCep_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string cep = new string(txt.Text.Where(char.IsDigit).ToArray());
+
+            if (cep.Length == 8)
+                txt.Text = Convert.ToUInt64(cep).ToString(@"00000\-000");
+            else
+                txt.Text = cep; // mantém se incompleto
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             FrmConsultaCondPagamento frmConsultaCondPagamento = new FrmConsultaCondPagamento();
@@ -528,6 +587,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
         }
         private void SomenteNumerosPontuacao_KeyPress(object sender, KeyPressEventArgs e)
         {
+            string tipoPessoa = comboPessoa.SelectedItem?.ToString().ToUpper() ?? "";
+
             if (!char.IsControl(e.KeyChar) &&
                 !char.IsDigit(e.KeyChar) &&
                 e.KeyChar != '.' &&
@@ -535,6 +596,18 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 e.KeyChar != '/')
             {
                 e.Handled = true;
+                return;
+            }
+
+            string somenteNumeros = new string(txtCpf_Cnpj.Text.Where(char.IsDigit).ToArray());
+
+            if (tipoPessoa == "FÍSICA" && somenteNumeros.Length >= 11 && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true; // bloqueia mais que 11 dígitos
+            }
+            else if (tipoPessoa == "JURÍDICA" && somenteNumeros.Length >= 14 && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true; // bloqueia mais que 14 dígitos
             }
         }
 

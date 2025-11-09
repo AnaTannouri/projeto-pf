@@ -160,13 +160,13 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             if (listViewFormaPagamento.Columns.Count == 0)
             {
-                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Nome/Razão Social", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Valor Mínimo", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Valor Mínimo", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Right);
             }
             listViewFormaPagamento.MouseDoubleClick += listViewFormaPagamento_MouseDoubleClick;
 

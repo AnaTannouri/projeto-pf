@@ -146,7 +146,7 @@ VALUES
                                 cmdParc.Parameters.Add("@NumeroNota", SqlDbType.VarChar, 20);
                                 cmdParc.Parameters.Add("@IdFornecedor", SqlDbType.Int);
                                 cmdParc.Parameters.Add("@NumeroParcela", SqlDbType.Int);
-                                cmdParc.Parameters.Add("@DataEmissao", SqlDbType.DateTime); // ✅ novo
+                                cmdParc.Parameters.Add("@DataEmissao", SqlDbType.DateTime); 
                                 cmdParc.Parameters.Add("@DataVencimento", SqlDbType.DateTime);
                                 var pVal = cmdParc.Parameters.Add("@ValorParcela", SqlDbType.Decimal);
                                 pVal.Precision = 18; pVal.Scale = 2;
@@ -165,7 +165,7 @@ VALUES
                                     cmdParc.Parameters["@IdFornecedor"].Value = compra.IdFornecedor;
 
                                     cmdParc.Parameters["@NumeroParcela"].Value = p.NumeroParcela > 0 ? p.NumeroParcela : n++;
-                                    cmdParc.Parameters["@DataEmissao"].Value = compra.DataEmissao; // ✅ adicionado
+                                    cmdParc.Parameters["@DataEmissao"].Value = compra.DataEmissao; 
                                     cmdParc.Parameters["@DataVencimento"].Value = p.DataVencimento;
                                     cmdParc.Parameters["@ValorParcela"].Value = p.ValorParcela;
                                     cmdParc.Parameters["@IdFormaPagamento"].Value = p.IdFormaPagamento;
@@ -198,7 +198,6 @@ VALUES
                 {
                     try
                     {
-                        // Normaliza motivo
                         string motivoEfetivo = string.IsNullOrWhiteSpace(motivo)
                             ? "Cancelamento não informado"
                             : motivo.Trim();
@@ -310,7 +309,7 @@ UPDATE ContasAPagar
                         //    - Atualizar tabelas de apoio e Produtos
                         // ------------------------------------------------------------------
                         foreach (var item in itens.GroupBy(x => x.IdProduto)
-                                                   .Select(g => g.First())) // ou g.OrderByDescending(i => i.AlgumCampo).First()
+                                                   .Select(g => g.First())) 
                         {
                             // 5.1) Último custo (TOP 1 pela data de emissão, excluindo a compra cancelada e só Ativo=1)
                             decimal ultimoCusto = 0m;
@@ -346,8 +345,6 @@ UPDATE ContasAPagar
                             // 5.2) Custo médio (somente compras ATIVAS, excluindo a cancelada)
                             //      Reutilize seu método existente que já exclui a compraKey:
                             decimal custoMedio = CalcularCustoMedioProduto(item.IdProduto, compraKey, conn, tx);
-
-                            // 5.3) Atualizar Produtos (último custo + custo médio)
                             using (var cmd = new SqlCommand(@"
 UPDATE Produtos
    SET CustoUltimaCompra = @CustoUltima,
@@ -361,10 +358,6 @@ UPDATE Produtos
                                 cmd.Parameters.Add("@IdProduto", SqlDbType.Int).Value = item.IdProduto;
                                 cmd.ExecuteNonQuery();
                             }
-
-                            // 5.4) (Opcional) Atualizar preço na tabela ProdutoFornecedor, se você usa essa relação.
-                            //      Ideal: criar uma sobrecarga que receba conn/tx para manter atomicidade.
-                            // new ProdutoFornecedorDAO().AtualizarPrecoUltimaCompra(item.IdProduto, compraKey.IdFornecedor, ultimoCusto);
                         }
 
                         tx.Commit();
@@ -464,16 +457,13 @@ UPDATE Produtos
 
         public decimal CalcularCustoMedioProduto(int idProduto, CompraKey key)
         {
-            // Wrapper: abre a própria conexão quando você está fora de uma transação
             using (var conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                // Sem transação aqui (tx = null)
                 return CalcularCustoMedioProduto(idProduto, key, conn, null);
             }
         }
 
-        // Core: usa a MESMA conexão/tx do chamador (evita bloqueio/timeout)
         public decimal CalcularCustoMedioProduto(int idProduto, CompraKey key, SqlConnection conn, SqlTransaction tx)
         {
             const string sql = @"
@@ -500,8 +490,6 @@ WHERE i.IdProduto = @IdProduto
             using (var cmd = new SqlCommand(sql, conn, tx))
             {
                 cmd.Parameters.Add("@IdProduto", SqlDbType.Int).Value = idProduto;
-
-                // ⚠️ Ajuste os tipos/tamanhos para os do seu schema:
                 cmd.Parameters.Add("@Modelo", SqlDbType.VarChar, 10).Value = key.Modelo;
                 cmd.Parameters.Add("@Serie", SqlDbType.VarChar, 10).Value = key.Serie;
                 cmd.Parameters.Add("@NumeroNota", SqlDbType.VarChar, 20).Value = key.NumeroNota;
@@ -583,6 +571,5 @@ WHERE Modelo = @Modelo
                 }
             }
         }
-
     }
 }

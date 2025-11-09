@@ -13,10 +13,15 @@ namespace ProjetoPF.Interfaces.FormConsultas
     {
         private FrmCadastroCliente frmCadastroCliente = new FrmCadastroCliente();
         private BaseServicos<Cliente> clienteServices = new BaseServicos<Cliente>(new BaseDao<Cliente>("Clientes"));
+        public Cliente ClienteSelecionado { get; private set; }
+        public bool ModoSelecao { get; set; } = false;
+
 
         public FrmConsultaCliente()
         {
             InitializeComponent();
+            this.listViewFormaPagamento.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewFormaPagamento_MouseDoubleClick);
+
         }
 
         private void btnAdicionar_Click_1(object sender, EventArgs e)
@@ -75,13 +80,13 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             if (listViewFormaPagamento.Columns.Count == 0)
             {
-                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Tipo Pessoa", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Nome/Razão Social", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Telefone", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Criação", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Atualização", -2, HorizontalAlignment.Right);
             }
 
             AjustarLarguraColunas();
@@ -115,7 +120,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             }
             else
             {
-                MessageBox.Show("Selecione uma condição para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Selecione um cliente para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -153,6 +158,36 @@ namespace ProjetoPF.Interfaces.FormConsultas
             else
             {
                 MessageBox.Show("Selecione um cliente para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void listViewFormaPagamento_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!ModoSelecao)
+                return;
+
+            if (listViewFormaPagamento.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
+                Cliente clienteSelecionado = clienteServices.BuscarPorId(int.Parse(itemSelecionado.Text));
+
+                if (clienteSelecionado == null)
+                {
+                    MessageBox.Show("Cliente não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!clienteSelecionado.Ativo)
+                {
+                    MessageBox.Show("Este cliente está inativo e não pode ser selecionado.",
+                                    "Cliente inativo",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    return;
+                }
+
+                this.ClienteSelecionado = clienteSelecionado;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
     }

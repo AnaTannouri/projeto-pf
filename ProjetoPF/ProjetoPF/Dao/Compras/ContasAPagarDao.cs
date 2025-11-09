@@ -75,7 +75,6 @@ namespace ProjetoPF.Dao.Compras
             }
             return parcelas;
         }
-
         public bool ExisteContaPagaAssociada(string modelo, string serie, string numeroNota, int idFornecedor)
         {
             using (var conn = new SqlConnection(_connectionString))
@@ -130,13 +129,16 @@ SELECT COUNT(*) FROM ContasAPagar
 
                     if (existe > 0)
                     {
-                        // 🔹 UPDATE — informações da baixa
+                       
                         string sqlUpdate = @"
 UPDATE ContasAPagar
    SET 
        Multa = @Multa,
        Juros = @Juros,
        Desconto = @Desconto,
+       MultaValor = @MultaValor,
+       JurosValor = @JurosValor,
+       DescontoValor = @DescontoValor,
        ValorFinalParcela = @ValorFinalParcela,
        DataPagamento = @DataPagamento,
        Situacao = @Situacao,
@@ -153,6 +155,11 @@ UPDATE ContasAPagar
                             cmd.Parameters.AddWithValue("@Multa", conta.Multa);
                             cmd.Parameters.AddWithValue("@Juros", conta.Juros);
                             cmd.Parameters.AddWithValue("@Desconto", conta.Desconto);
+
+                            cmd.Parameters.AddWithValue("@MultaValor", conta.MultaValor);
+                            cmd.Parameters.AddWithValue("@JurosValor", conta.JurosValor);
+                            cmd.Parameters.AddWithValue("@DescontoValor", conta.DescontoValor);
+
                             cmd.Parameters.AddWithValue("@ValorFinalParcela", conta.ValorFinalParcela);
                             cmd.Parameters.AddWithValue("@DataPagamento", CorrigirDataSql(conta.DataPagamento));
                             cmd.Parameters.AddWithValue("@Situacao", conta.Situacao ?? "Paga");
@@ -170,16 +177,17 @@ UPDATE ContasAPagar
                     }
                     else
                     {
-                        // 🔹 INSERT — novo registro
                         string sqlInsert = @"
 INSERT INTO ContasAPagar
 (Modelo, Serie, NumeroNota, IdFornecedor, NumeroParcela,
  ValorParcela, IdFormaPagamento, DataEmissao, DataVencimento,
- Multa, Juros, Desconto, DataCriacao, DataAtualizacao, Ativo, Situacao)
+ Multa, Juros, Desconto, MultaValor, JurosValor, DescontoValor,
+ DataCriacao, DataAtualizacao, Ativo, Situacao)
 VALUES
 (@Modelo, @Serie, @NumeroNota, @IdFornecedor, @NumeroParcela,
  @ValorParcela, @IdFormaPagamento, @DataEmissao, @DataVencimento,
- @Multa, @Juros, @Desconto, @DataCriacao, @DataAtualizacao, @Ativo, @Situacao);";
+ @Multa, @Juros, @Desconto, @MultaValor, @JurosValor, @DescontoValor,
+ @DataCriacao, @DataAtualizacao, @Ativo, @Situacao);";
 
                         using (var cmd = new SqlCommand(sqlInsert, conn))
                         {
@@ -192,9 +200,15 @@ VALUES
                             cmd.Parameters.AddWithValue("@IdFormaPagamento", conta.IdFormaPagamento);
                             cmd.Parameters.AddWithValue("@DataEmissao", CorrigirDataSql(conta.DataEmissao));
                             cmd.Parameters.AddWithValue("@DataVencimento", CorrigirDataSql(conta.DataVencimento));
+
                             cmd.Parameters.AddWithValue("@Multa", conta.Multa);
                             cmd.Parameters.AddWithValue("@Juros", conta.Juros);
                             cmd.Parameters.AddWithValue("@Desconto", conta.Desconto);
+
+                            cmd.Parameters.AddWithValue("@MultaValor", conta.MultaValor);
+                            cmd.Parameters.AddWithValue("@JurosValor", conta.JurosValor);
+                            cmd.Parameters.AddWithValue("@DescontoValor", conta.DescontoValor);
+
                             cmd.Parameters.AddWithValue("@DataCriacao", CorrigirDataSql(DateTime.Now));
                             cmd.Parameters.AddWithValue("@DataAtualizacao", CorrigirDataSql(DateTime.Now));
                             cmd.Parameters.AddWithValue("@Ativo", true);
@@ -291,7 +305,6 @@ VALUES
                 {
                     if (reader.Read())
                     {
-                        // 🔹 Cria o objeto e armazena em uma variável
                         var conta = new ContasAPagar
                         {
                             Modelo = Convert.ToInt32(reader["Modelo"]),
@@ -313,7 +326,6 @@ VALUES
                             Ativo = reader["Ativo"] != DBNull.Value && (reader["Ativo"] is bool b ? b : Convert.ToInt32(reader["Ativo"]) == 1)
                         };
 
-                        // 🔹 Se os valores vierem zerados, buscar da condição de pagamento associada
                         if (conta.Multa == 0 && conta.Juros == 0 && conta.Desconto == 0)
                         {
                             var condDao = new CondicaoPagamentoDAO();
@@ -420,7 +432,35 @@ UPDATE ContasAPagar
                 }
             }
         }
+        public bool ExisteParcelaAnteriorEmAberto(string modelo, string serie, string numeroNota, int idFornecedor, int numeroParcelaAtual)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
 
+                string sql = @"
+            SELECT COUNT(*) 
+              FROM ContasAPagar
+             WHERE Modelo = @Modelo
+               AND Serie = @Serie
+               AND NumeroNota = @NumeroNota
+               AND IdFornecedor = @IdFornecedor
+               AND NumeroParcela < @NumeroParcelaAtual
+               AND (Situacao NOT IN ('Paga', 'Cancelada'));";
+
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Modelo", modelo);
+                    cmd.Parameters.AddWithValue("@Serie", serie);
+                    cmd.Parameters.AddWithValue("@NumeroNota", numeroNota);
+                    cmd.Parameters.AddWithValue("@IdFornecedor", idFornecedor);
+                    cmd.Parameters.AddWithValue("@NumeroParcelaAtual", numeroParcelaAtual);
+
+                    int resultado = Convert.ToInt32(cmd.ExecuteScalar());
+                    return resultado > 0;
+                }
+            }
+        }
     }
 }
 

@@ -52,6 +52,34 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtJuros.Leave += (s, ev) => { valorPagoEditadoManualmente = false; AtualizarValorPago(); };
             txtDesconto.Leave += (s, ev) => { valorPagoEditadoManualmente = false; AtualizarValorPago(); };
 
+            txtMultaReais.Leave += (s, ev) => { valorPagoEditadoManualmente = false; AtualizarValorPago(); };
+            txtJurosReais.Leave += (s, ev) => { valorPagoEditadoManualmente = false; AtualizarValorPago(); };
+            txtDescontoReais.Leave += (s, ev) => { valorPagoEditadoManualmente = false; AtualizarValorPago(); };
+
+            txtMultaReais.KeyPress += ApenasNumerosDecimais;
+            txtJurosReais.KeyPress += ApenasNumerosDecimais;
+            txtDescontoReais.KeyPress += ApenasNumerosDecimais;
+
+            txtMultaReais.Leave += FormatarMoedaAoSair;
+            txtJurosReais.Leave += FormatarMoedaAoSair;
+            txtDescontoReais.Leave += FormatarMoedaAoSair;
+            txtValorPago.Leave += FormatarMoedaAoSair;
+            datePagamento.ValueChanged += (s, ev) =>
+            {
+                valorPagoEditadoManualmente = false;
+                if (!string.IsNullOrEmpty(txtNumNota.Text))
+                {
+                    var parcela = new ContasAPagar
+                    {
+                        ValorParcela = ConverterTextoParaDecimal(txtValorParcela.Text),
+                        Multa = ConverterTextoParaDecimal(txtMulta.Text),
+                        Juros = ConverterTextoParaDecimal(txtJuros.Text),
+                        Desconto = ConverterTextoParaDecimal(txtDesconto.Text),
+                        DataVencimento = dateVencimento.Value
+                    };
+                    RecalcularValoresReais(parcela);
+                }
+            };
 
 
             BloquearCampos();
@@ -93,15 +121,21 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FormatarMoedaAoSair(object sender, EventArgs e)
         {
             var txt = sender as TextBox;
-            if (decimal.TryParse(txt.Text.Replace("R$", "").Trim(),
-                                 out decimal valor))
-            {
-                txt.Text = valor.ToString("C2");
-            }
-            else
+            string texto = txt.Text.Replace("R$", "").Trim();
+
+            if (string.IsNullOrWhiteSpace(texto))
             {
                 txt.Text = "R$ 0,00";
+                return;
             }
+
+            // Troca "." por "," para compatibilidade com cultura pt-BR
+            texto = texto.Replace(".", ",");
+
+            if (decimal.TryParse(texto, NumberStyles.Any, new CultureInfo("pt-BR"), out decimal valor))
+                txt.Text = valor.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"));
+            else
+                txt.Text = "R$ 0,00";
         }
         private void SetarDataSeguro(DateTimePicker picker, DateTime data)
         {
@@ -115,9 +149,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         public void CarregarParcela(ContasAPagar parcela)
         {
-
             if (parcela == null) return;
 
+            // 🔹 Identificação e dados principais
             txtCodigo.Text = parcela.Modelo.ToString();
             txtSerie.Text = parcela.Serie;
             txtNumNota.Text = parcela.NumeroNota;
@@ -125,11 +159,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtFornecedor.Text = parcela.NomeFornecedor ?? "";
             txtNumParcela.Text = parcela.NumeroParcela.ToString();
             txtValorParcela.Text = parcela.ValorParcela.ToString("C2");
+
             SetarDataSeguro(dateEmissao,
                 parcela.DataEmissao == DateTime.MinValue ? DateTime.Today : parcela.DataEmissao);
             SetarDataSeguro(dateVencimento,
                 parcela.DataVencimento == DateTime.MinValue ? DateTime.Today.AddDays(1) : parcela.DataVencimento);
 
+            // 🔹 Forma de pagamento
             var formaDao = new FormaPagamentoDAO();
             var forma = formaDao.BuscarPorId(parcela.IdFormaPagamento);
             if (forma != null)
@@ -143,63 +179,51 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 txtForma.Text = parcela.FormaPagamentoDescricao ?? "-";
             }
 
+            // 🔹 Percentuais (somente leitura)
             txtMulta.Text = parcela.Multa.ToString("N2");
             txtJuros.Text = parcela.Juros.ToString("N2");
             txtDesconto.Text = parcela.Desconto.ToString("N2");
 
+            txtMulta.ReadOnly = true;
+            txtJuros.ReadOnly = true;
+            txtDesconto.ReadOnly = true;
+
+            // 🔹 Cálculo dos valores em reais
             decimal valorBase = parcela.ValorParcela;
-            decimal valorFinal;
+            DateTime dataVenc = parcela.DataVencimento;
+            int diasAtraso = (DateTime.Today - dataVenc).Days;
 
-            if (DateTime.Today > parcela.DataVencimento)
-            {
-                valorFinal = valorBase + (valorBase * (parcela.Multa / 100)) + (valorBase * (parcela.Juros / 100));
-            }
-            else
-            {
-                valorFinal = valorBase - (valorBase * (parcela.Desconto / 100));
-            }
-
+            RecalcularValoresReais(parcela);
 
             datePagamento.Value = DateTime.Now;
 
             dateEmissao.Enabled = false;
             dateVencimento.Enabled = false;
-            valorPagoEditadoManualmente = false; // garante que o cálculo ocorra
+
+            valorPagoEditadoManualmente = false;
             AtualizarValorPago();
-            // Formata corretamente o valor pago
+
             decimal valorPagoDecimal = ConverterTextoParaDecimal(txtValorPago.Text);
             txtValorPago.Text = valorPagoDecimal.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"));
-            valorPagoEditadoManualmente = false; // mantém falso para permitir o próximo cálculo
+            valorPagoEditadoManualmente = false;
         }
+
         private void AtualizarValorPago()
         {
-            // Se o valor foi digitado manualmente, não recalcula automaticamente
+
             if (valorPagoEditadoManualmente)
                 return;
 
             decimal valorBase = ConverterTextoParaDecimal(txtValorParcela.Text);
-            decimal multa = ConverterTextoParaDecimal(txtMulta.Text);
-            decimal juros = ConverterTextoParaDecimal(txtJuros.Text);
-            decimal desconto = ConverterTextoParaDecimal(txtDesconto.Text);
+            decimal valorMulta = ConverterTextoParaDecimal(txtMultaReais.Text);
+            decimal valorJuros = ConverterTextoParaDecimal(txtJurosReais.Text);
+            decimal valorDesconto = ConverterTextoParaDecimal(txtDescontoReais.Text);
 
-            DateTime dataVenc = dateVencimento.Value;
-            DateTime dataPag = datePagamento.Value;
+            decimal valorFinal = valorBase + valorMulta + valorJuros - valorDesconto;
 
-            int diasAtraso = (dataPag - dataVenc).Days;
-            decimal valorFinal = valorBase;
+            if (valorFinal < 0)
+                valorFinal = 0;
 
-            if (diasAtraso > 0)
-            {
-                decimal valorMulta = valorBase * (multa / 100);
-                decimal valorJurosProporcional = valorBase * ((juros / 100) / 30m) * diasAtraso;
-                valorFinal = valorBase + valorMulta + valorJurosProporcional;
-            }
-            else if (diasAtraso <= 0)
-            {
-                valorFinal = valorBase - (valorBase * (desconto / 100));
-            }
-
-            // Atualiza o campo sem reentrar no evento
             txtValorPago.TextChanged -= (s, e) => valorPagoEditadoManualmente = true;
             txtValorPago.Text = valorFinal.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"));
             txtValorPago.TextChanged += (s, e) => valorPagoEditadoManualmente = true;
@@ -235,32 +259,17 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             try
             {
-                // ✅ Calcula diretamente o valor final, sem depender de texto formatado
+
                 decimal valorBase = ConverterTextoParaDecimal(txtValorParcela.Text);
-                decimal multa = ConverterTextoParaDecimal(txtMulta.Text);
-                decimal juros = ConverterTextoParaDecimal(txtJuros.Text);
-                decimal desconto = ConverterTextoParaDecimal(txtDesconto.Text);
+                decimal multaPerc = ConverterTextoParaDecimal(txtMulta.Text);
+                decimal jurosPerc = ConverterTextoParaDecimal(txtJuros.Text);
+                decimal descontoPerc = ConverterTextoParaDecimal(txtDesconto.Text);
 
-                DateTime dataVenc = dateVencimento.Value;
-                DateTime dataPag = datePagamento.Value;
+                decimal multaValor = ConverterTextoParaDecimal(txtMultaReais.Text);
+                decimal jurosValor = ConverterTextoParaDecimal(txtJurosReais.Text);
+                decimal descontoValor = ConverterTextoParaDecimal(txtDescontoReais.Text);
+                decimal valorPago = ConverterTextoParaDecimal(txtValorPago.Text);
 
-                int diasAtraso = (dataPag - dataVenc).Days;
-                decimal valorFinal = valorBase;
-
-                // ✅ Cálculo correto do valor com multa/juros/desconto
-                if (diasAtraso > 0)
-                {
-                    decimal valorMulta = valorBase * (multa / 100);
-                    decimal valorJurosProporcional = valorBase * ((juros / 100) / 30m) * diasAtraso;
-                    valorFinal = valorBase + valorMulta + valorJurosProporcional;
-                }
-                else if (diasAtraso <= 0)
-                {
-                    valorFinal = valorBase - (valorBase * (desconto / 100));
-                }
-
-
-                // ✅ Validação da Data de Pagamento
                 if (datePagamento.Value == DateTime.MinValue)
                 {
                     MessageBox.Show("A data de pagamento é obrigatória.",
@@ -268,7 +277,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
-                // ✅ Monta o objeto com o valor já calculado
                 var conta = new ContasAPagar
                 {
                     Modelo = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text),
@@ -278,25 +286,29 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     NumeroParcela = string.IsNullOrWhiteSpace(txtNumParcela.Text) ? 0 : int.Parse(txtNumParcela.Text),
 
                     ValorParcela = valorBase,
-                    ValorFinalParcela = valorFinal,
-                    Multa = multa,
-                    Juros = juros,
-                    Desconto = desconto,
+                    ValorFinalParcela = valorPago,
+
+ 
+                    Multa = multaPerc,
+                    Juros = jurosPerc,
+                    Desconto = descontoPerc,
+
+                    MultaValor = multaValor,
+                    JurosValor = jurosValor,
+                    DescontoValor = descontoValor,
 
                     DataPagamento = datePagamento.Value,
                     Situacao = "Paga",
                     Observacao = txtObservacao.Text
                 };
 
-                // ✅ Salva no banco
                 var dao = new ContasAPagarDao();
                 dao.SalvarOuAtualizar(conta);
-                // ✅ Atualiza lista da tela de consulta ANTES de fechar
 
                 if (this.Owner is ProjetoPF.Interfaces.FormConsultas.FrmConsultaContasAPagar consultaForm)
                 {
                     consultaForm.PopularListView(string.Empty);
-                    consultaForm.BringToFront();  // traz a tela de consulta pro foco
+                    consultaForm.BringToFront();
                 }
 
                 MessageBox.Show("Baixa registrada com sucesso!",
@@ -319,26 +331,20 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             if (string.IsNullOrWhiteSpace(texto))
                 return 0m;
+            texto = texto.Replace("\u00A0", "");  
+            texto = texto.Replace("\u200B", ""); 
 
-            // Remove espaços não quebráveis e caracteres invisíveis
-            texto = texto.Replace("\u00A0", "");  // Non-breaking space
-            texto = texto.Replace("\u200B", "");  // Zero-width space
-
-            // Remove o símbolo da moeda em qualquer forma
             texto = texto.Replace("R$", "");
             texto = texto.Replace("r$", "");
             texto = texto.Replace("R", "");
             texto = texto.Replace("$", "");
             texto = texto.Trim();
 
-            // Remove pontos de milhar e padroniza vírgula/ponto
             texto = texto.Replace(".", "").Replace(",", ".");
 
-            // Tenta converter com cultura invariante
             if (decimal.TryParse(texto, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal valor))
                 return valor;
 
-            // Tenta com cultura brasileira se ainda falhar
             if (decimal.TryParse(texto, NumberStyles.Any, new CultureInfo("pt-BR"), out valor))
                 return valor;
 
@@ -362,5 +368,35 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (result == DialogResult.Yes)
                 this.Close();
         }
+        private void RecalcularValoresReais(ContasAPagar parcela)
+        {
+            if (parcela == null) return;
+
+            decimal valorBase = parcela.ValorParcela;
+            DateTime dataVenc = parcela.DataVencimento;
+            DateTime dataPag = datePagamento.Value;
+            int diasAtraso = (dataPag - dataVenc).Days;
+
+            decimal valorMultaR = 0m;
+            decimal valorJurosR = 0m;
+            decimal valorDescontoR = 0m;
+
+            if (diasAtraso > 0)
+            {
+                valorMultaR = Math.Round(valorBase * (parcela.Multa / 100), 2, MidpointRounding.AwayFromZero);
+                valorJurosR = Math.Round(valorBase * ((parcela.Juros / 100) / 30m) * diasAtraso, 2, MidpointRounding.AwayFromZero);
+            }
+            else
+            {
+                valorDescontoR = Math.Round(valorBase * (parcela.Desconto / 100), 2, MidpointRounding.AwayFromZero);
+            }
+
+            txtMultaReais.Text = valorMultaR.ToString("C2");
+            txtJurosReais.Text = valorJurosR.ToString("C2");
+            txtDescontoReais.Text = valorDescontoR.ToString("C2");
+
+            AtualizarValorPago();
+        }
+
     }
 }

@@ -11,7 +11,6 @@ namespace ProjetoPF.Dao.Compras
     {
         public ItemCompraDao() : base("ItensCompra") { }
 
-        // Busca direta no banco pela chave composta
         public List<ItemCompra> BuscarPorChaveCompra(string modelo, string serie, string numeroNota, int idFornecedor)
         {
             var itens = new List<ItemCompra>();
@@ -53,8 +52,6 @@ namespace ProjetoPF.Dao.Compras
 
             return itens;
         }
-
-        // Sobrecarga prática que recebe o objeto CompraKey
         public List<ItemCompra> BuscarPorChave(CompraKey key)
         {
             if (string.IsNullOrWhiteSpace(key.Modelo))

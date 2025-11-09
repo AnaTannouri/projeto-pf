@@ -152,7 +152,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 MessageBox.Show("Informe o cargo do funcionário.");
                 return false;
             }
-            if (!decimal.TryParse(txtSalario.Text, out _))
+            string salarioTexto = txtSalario.Text.Replace("R$", "").Trim()
+                                      .Replace(".", "")
+                                      .Replace(",", ".");
+
+            if (!decimal.TryParse(salarioTexto, System.Globalization.NumberStyles.Any,
+                                  System.Globalization.CultureInfo.InvariantCulture, out _))
             {
                 MessageBox.Show("Informe um salário válido.");
                 return false;
@@ -160,6 +165,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (Dataadm.CustomFormat == " ")
             {
                 MessageBox.Show("Selecione a data de admissão do funcionário.");
+                return false;
+            }
+
+            if (Dataadm.Value.Date > DateTime.Today)
+            {
+                MessageBox.Show("A data de admissão não pode ser posterior à data de hoje.",
+                                "Data inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (comboTurno.SelectedItem == null)
@@ -245,7 +257,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtBairro.Text = funcionario.Bairro;
             txtCep.Text = funcionario.Cep;
             txtCargo.Text = funcionario.Cargo;
-            txtSalario.Text = funcionario.Salario.ToString("F2");
+            txtSalario.Text = string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "R$ {0:N2}", funcionario.Salario);
             txtCargaHoraria.Text = funcionario.CargaHoraria;
             txtComplemento.Text = funcionario.Complemento;
 
@@ -436,7 +448,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             funcionario.IdCidade = cidadeSelecionada.Id;
             funcionario.Cargo = txtCargo.Text.Trim();
-            funcionario.Salario = decimal.Parse(txtSalario.Text);
+            string textoSalario = txtSalario.Text.Replace("R$", "").Trim()
+                                    .Replace(".", "")
+                                    .Replace(",", ".");
+
+            if (decimal.TryParse(textoSalario, System.Globalization.NumberStyles.Any,
+                                 System.Globalization.CultureInfo.InvariantCulture, out var salario))
+            {
+                funcionario.Salario = salario;
+            }
+            else
+            {
+                funcionario.Salario = 0;
+            }
             funcionario.Turno = comboTurno.SelectedItem?.ToString().Trim();
             funcionario.CargaHoraria = txtCargaHoraria.Text.Trim();
             funcionario.DataAdmissao = Dataadm.Value;
@@ -520,6 +544,61 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 comboPessoa.Items.Add("FÍSICA");
             }
             comboPessoa.SelectedItem = "FÍSICA";
+
+            txtSalario.KeyPress += SomenteNumerosPontuacao_KeyPress;
+            txtSalario.Leave += FormatarComoReal_Leave;
+            txtSalario.Enter += RemoverSimboloReal_Enter;
+
+            txtCpf_Cnpj.Leave += FormatarCpf_Leave;
+            txtCep.Leave += FormatarCep_Leave;
+
+        }
+        private void FormatarCpf_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string cpf = new string(txt.Text.Where(char.IsDigit).ToArray());
+
+            if (cpf.Length == 11)
+                txt.Text = Convert.ToUInt64(cpf).ToString(@"000\.000\.000\-00");
+            else
+                txt.Text = cpf; // mantém como digitado se incompleto
+        }
+
+        private void FormatarCep_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string cep = new string(txt.Text.Where(char.IsDigit).ToArray());
+
+            if (cep.Length == 8)
+                txt.Text = Convert.ToUInt64(cep).ToString(@"00000\-000");
+            else
+                txt.Text = cep; // mantém se incompleto
+        }
+        private void FormatarComoReal_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string valor = txt.Text.Replace("R$", "").Trim();
+
+            if (string.IsNullOrEmpty(valor))
+            {
+                txt.Text = "R$ 0,00";
+                return;
+            }
+
+            if (decimal.TryParse(valor, out decimal valorDecimal))
+            {
+                txt.Text = string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "R$ {0:N2}", valorDecimal);
+            }
+            else
+            {
+                txt.Text = "R$ 0,00";
+            }
+        }
+
+        private void RemoverSimboloReal_Enter(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            txt.Text = txt.Text.Replace("R$", "").Trim();
         }
 
         private void btnCadastrarCidade_Click(object sender, EventArgs e)

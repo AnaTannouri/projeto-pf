@@ -93,6 +93,7 @@
             this.txtCep.Name = "txtCep";
             this.txtCep.Size = new System.Drawing.Size(273, 20);
             this.txtCep.TabIndex = 13;
+            this.txtCep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtBairro
             // 
@@ -108,6 +109,7 @@
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 20);
             this.txtNumero.TabIndex = 15;
+            this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTelefone
             // 
@@ -115,6 +117,7 @@
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(202, 20);
             this.txtTelefone.TabIndex = 16;
+            this.txtTelefone.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtEmail
             // 
@@ -145,6 +148,7 @@
             this.txtCpf_Cnpj.Name = "txtCpf_Cnpj";
             this.txtCpf_Cnpj.Size = new System.Drawing.Size(273, 20);
             this.txtCpf_Cnpj.TabIndex = 20;
+            this.txtCpf_Cnpj.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtApelido_NomeFantasia
             // 
@@ -329,6 +333,7 @@
             this.Controls.Add(this.comboPessoa);
             this.Name = "FrmCadastroPessoa";
             this.Load += new System.EventHandler(this.FrmCadastroPessoa_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.labelDataCriacao, 0);
             this.Controls.SetChildIndex(this.labelCriacao, 0);
             this.Controls.SetChildIndex(this.lblAtualizacao, 0);

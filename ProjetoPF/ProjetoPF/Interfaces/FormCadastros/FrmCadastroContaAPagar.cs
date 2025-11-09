@@ -92,6 +92,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
         }
         private void FrmCadastroContaAPagar_Load(object sender, EventArgs e)
         {
+
             if (ModoVisualizacao)
             {
                 // 🔹 Garante formato fixo de data (dd/MM/yyyy)
@@ -101,8 +102,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 dateVencimento.Format = DateTimePickerFormat.Custom;
                 dateVencimento.CustomFormat = "dd/MM/yyyy";
 
-                return; // evita validações ou inicializações
             }
+
             label1.Text = "Modelo:";
             checkAtivo.Enabled = false;
 
@@ -217,7 +218,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 txtForma.Text = "-";
             }
 
-            // Atualiza campos de controle
             if (conta.DataCriacao != DateTime.MinValue)
                 labelCriacao.Text = conta.DataCriacao.ToString("dd/MM/yyyy HH:mm:ss");
             else
@@ -381,7 +381,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return;
             }
 
-            // 🔹 Caso contrário, exibe a confirmação normal
             var result = MessageBox.Show("Deseja realmente voltar? As informações não salvas serão perdidas.",
                                          "Confirmação",
                                          MessageBoxButtons.YesNo,

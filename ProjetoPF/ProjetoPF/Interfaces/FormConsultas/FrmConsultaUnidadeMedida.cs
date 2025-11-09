@@ -28,12 +28,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             if (listViewFormaPagamento.Columns.Count == 0)
             {
-                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Unidade de Medida", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Sigla", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Right);
             }
             listViewFormaPagamento.MouseDoubleClick += listViewFormaPagamento_MouseDoubleClick;
 

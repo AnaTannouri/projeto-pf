@@ -28,7 +28,9 @@ namespace ProjetoPF.Modelos.Compra
         public string Situacao { get; set; } = "Em Aberto";
         public string MotivoCancelamento { get; set; }
 
-
+        public decimal MultaValor { get; set; }
+        public decimal JurosValor { get; set; }
+        public decimal DescontoValor { get; set; }
 
 
         [NotMapped]

@@ -48,7 +48,30 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCep.KeyPress += SomenteNumerosPontuacao_KeyPress;
             txtNumero.KeyPress += SomenteNumeros_KeyPress;
             txtValorMin.KeyPress += SomenteNumerosPontuacao_KeyPress;
+            txtValorMin.Leave += FormatarComoReal_Leave;
+
         }
+        private void FormatarComoReal_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string valor = txt.Text.Replace("R$", "").Trim();
+
+            if (string.IsNullOrEmpty(valor))
+            {
+                txt.Text = "R$ 0,00";
+                return;
+            }
+
+            if (decimal.TryParse(valor, out decimal valorDecimal))
+            {
+                txt.Text = string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "R$ {0:N2}", valorDecimal);
+            }
+            else
+            {
+                txt.Text = "R$ 0,00";
+            }
+        }
+
         private bool ValidarCpf(string cpf)
         {
             cpf = new string(cpf.Where(char.IsDigit).ToArray());
@@ -320,8 +343,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
             }
 
             txtValorMin.Text = fornecedor.ValorMinimoPedido.HasValue
-                ? fornecedor.ValorMinimoPedido.Value.ToString("N2")
-                : string.Empty;
+        ? string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "R$ {0:N2}", fornecedor.ValorMinimoPedido.Value)
+        : "R$ 0,00";
 
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
 
@@ -380,7 +403,32 @@ namespace ProjetoPF.Interfaces.FormCadastros
             btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
             labelCriacao.Text = fornecedor.DataCriacao > DateTime.MinValue ? fornecedor.DataCriacao.ToShortDateString() : "";
             lblAtualizacao.Text = fornecedor.DataAtualizacao > DateTime.MinValue ? fornecedor.DataAtualizacao.ToShortDateString() : "";
+
+            txtCpf_Cnpj.Leave += FormatarCpf_Leave;
+            txtCep.Leave += FormatarCep_Leave;
         }
+        private void FormatarCpf_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string cpf = new string(txt.Text.Where(char.IsDigit).ToArray());
+
+            if (cpf.Length == 11)
+                txt.Text = Convert.ToUInt64(cpf).ToString(@"000\.000\.000\-00");
+            else
+                txt.Text = cpf; // mantém como digitado se incompleto
+        }
+
+        private void FormatarCep_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            string cep = new string(txt.Text.Where(char.IsDigit).ToArray());
+
+            if (cep.Length == 8)
+                txt.Text = Convert.ToUInt64(cep).ToString(@"00000\-000");
+            else
+                txt.Text = cep; // mantém se incompleto
+        }
+
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             try
@@ -466,10 +514,19 @@ namespace ProjetoPF.Interfaces.FormCadastros
             fornecedor.DataCriacao = fornecedor.DataCriacao == DateTime.MinValue ? DateTime.Now : fornecedor.DataCriacao;
             fornecedor.DataAtualizacao = DateTime.Now;
 
-            if (decimal.TryParse(txtValorMin.Text, out var valor))
+            string textoValor = txtValorMin.Text.Replace("R$", "").Trim()
+                                   .Replace(".", "")
+                                   .Replace(",", ".");
+
+            if (decimal.TryParse(textoValor, System.Globalization.NumberStyles.Any,
+                                 System.Globalization.CultureInfo.InvariantCulture, out var valor))
+            {
                 fornecedor.ValorMinimoPedido = valor;
+            }
             else
+            {
                 fornecedor.ValorMinimoPedido = null;
+            }
         }
 
         private void btnCadastrarCidade_Click(object sender, EventArgs e)

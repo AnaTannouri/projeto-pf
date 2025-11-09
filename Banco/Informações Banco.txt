@@ -1,0 +1,17 @@
+Informações do Banco
+
+Sistema Gerenciador de Banco de Dados (SGBD): SQL Server Management Studio
+Versão: 19.3.4.0
+
+---------------------------------------------------
+
+COMO CONFIGURAR O BANCO DE DADOS
+
+Para rodar o projeto, o banco de dados "projeto-pf" precisa ser criado.
+
+1. CRIAR A ESTRUTURA DO BANCO:
+   - Em seu servidor Sql Server, execute o script mais atualizado completo.
+   - Isso criará o banco de dados "projeto-pf" e todas as suas tabelas.
+
+IMPORTANTE:
+Será necessário ajustar a string de conexão no arquivo "ProjetoPF/Dao/BaseDao.cs" para que corresponda às credenciais do seu servidor.

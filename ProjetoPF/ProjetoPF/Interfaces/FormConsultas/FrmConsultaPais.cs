@@ -153,10 +153,10 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Código", -2, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("País", -2, HorizontalAlignment.Left);
                 listViewFormaPagamento.Columns.Add("Sigla", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("DDI", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Left); 
-                listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Left);
-                listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Left);
+                listViewFormaPagamento.Columns.Add("DDI", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Ativo", -2, HorizontalAlignment.Right); 
+                listViewFormaPagamento.Columns.Add("Data de Criação", -2, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Data de Atualização", -2, HorizontalAlignment.Right);
             }
 
             AjustarLarguraColunas();

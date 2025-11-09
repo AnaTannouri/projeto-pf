@@ -228,8 +228,6 @@ namespace ProjetoPF.Dao
             using (var conn = CriarConexao())
             {
                 conn.Open();
-
-                // Base SELECT
                 var query = $"SELECT * FROM [{_tabela}]";
                 using (var cmd = new SqlCommand())
                 {
@@ -254,7 +252,7 @@ namespace ProjetoPF.Dao
                             var valStr = raw.Substring(idx + 1).Trim();
 
                             if (!propsByName.TryGetValue(key, out var prop))
-                                continue; // ignora chave inexistente na entidade
+                                continue; 
 
                             var paramName = "@k" + paramIndex++;
                             var typedValue = ConvertTo(valStr, prop.PropertyType);
@@ -265,7 +263,6 @@ namespace ProjetoPF.Dao
                     // ===== 2) Filtro amplo (sem '=') =====
                     else if (!string.IsNullOrWhiteSpace(filtro))
                     {
-                        // Strings -> LIKE
                         var propsTexto = props.Where(p => p.PropertyType == typeof(string));
                         foreach (var prop in propsTexto)
                         {
@@ -274,7 +271,6 @@ namespace ProjetoPF.Dao
                             cmd.Parameters.AddWithValue(paramName, $"%{filtro}%");
                         }
 
-                        // Integrais -> igualdade se conseguir converter
                         if (long.TryParse(filtro, out var inteiro))
                         {
                             var propsInteiros = props.Where(p =>
@@ -290,7 +286,6 @@ namespace ProjetoPF.Dao
                             }
                         }
 
-                        // Decimais -> igualdade se conseguir converter (suporta . e ,)
                         if (TryParseDecimalFlexible(filtro, out var dec))
                         {
                             var propsDecimal = props.Where(p =>
@@ -302,8 +297,6 @@ namespace ProjetoPF.Dao
                                 whereConditions.Add($"[{prop.Name}] = {paramName}");
                             }
                         }
-
-                        // DateTime -> igualdade se conseguir converter
                         if (DateTime.TryParse(filtro, CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None, out var dt) ||
                             DateTime.TryParse(filtro, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
                         {
@@ -320,7 +313,7 @@ namespace ProjetoPF.Dao
                     }
 
                     if (whereConditions.Count > 0)
-                        query += " WHERE " + string.Join(" AND ", whereConditions); // AND em key=value, OR no amplo? Aqui usamos AND para pairs; amplo usa várias condições: se quiser OR, mude acima.
+                        query += " WHERE " + string.Join(" AND ", whereConditions); 
 
                     if (!string.IsNullOrWhiteSpace(orderBy))
                         query += $" ORDER BY {orderBy}";
@@ -329,7 +322,6 @@ namespace ProjetoPF.Dao
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        // Mapa de colunas existentes no resultado (evita KeyNotFound no reader)
                         var schema = reader.GetSchemaTable();
                         var colNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                         foreach (DataRow row in schema.Rows)
@@ -340,12 +332,11 @@ namespace ProjetoPF.Dao
                             var obj = new T();
                             foreach (var prop in props)
                             {
-                                if (!colNames.Contains(prop.Name)) continue; // coluna não existe no SELECT
+                                if (!colNames.Contains(prop.Name)) continue;
                                 var val = reader[prop.Name];
                                 if (val == DBNull.Value) continue;
 
                                 var targetType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
-                                // Conversão segura (enums, numéricos, datas, etc.)
                                 var conv = System.Convert.ChangeType(val, targetType, CultureInfo.InvariantCulture);
                                 prop.SetValue(obj, conv);
                             }
@@ -357,7 +348,6 @@ namespace ProjetoPF.Dao
             return lista;
         }
 
-        // ===== Helpers =====
         private static object ConvertTo(string input, Type targetType)
         {
             var t = Nullable.GetUnderlyingType(targetType) ?? targetType;
@@ -367,7 +357,7 @@ namespace ProjetoPF.Dao
             if (t.IsEnum) return Enum.Parse(t, input, ignoreCase: true);
 
             if (t == typeof(bool))
-                return bool.TryParse(input, out var b) ? b : (object)0; // aceita "0/1"?
+                return bool.TryParse(input, out var b) ? b : (object)0; 
             if (t == typeof(byte))
                 return byte.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
             if (t == typeof(short))
@@ -387,17 +377,13 @@ namespace ProjetoPF.Dao
                 if (DateTime.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt)) return dt;
                 throw new FormatException($"Data inválida: {input}");
             }
-
-            // fallback
             return System.Convert.ChangeType(input, t, CultureInfo.InvariantCulture);
         }
 
         private static bool TryParseDecimalFlexible(string s, out decimal value)
         {
-            // tenta pt-BR e Invariant
             if (decimal.TryParse(s, NumberStyles.Number, CultureInfo.GetCultureInfo("pt-BR"), out value)) return true;
             if (decimal.TryParse(s, NumberStyles.Number, CultureInfo.InvariantCulture, out value)) return true;
-            // tenta trocar vírgula/ponto
             var swap = s.Contains(',') ? s.Replace(",", ".") : s.Replace(".", ",");
             return decimal.TryParse(swap, NumberStyles.Number, CultureInfo.GetCultureInfo("pt-BR"), out value)
                 || decimal.TryParse(swap, NumberStyles.Number, CultureInfo.InvariantCulture, out value);

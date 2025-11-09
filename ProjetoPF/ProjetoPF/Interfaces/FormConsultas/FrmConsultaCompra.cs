@@ -53,8 +53,8 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Modelo", 100, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Série", 100, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Número", 100, HorizontalAlignment.Right);
-                listViewFormaPagamento.Columns.Add("Emissão", 150, HorizontalAlignment.Center);
-                listViewFormaPagamento.Columns.Add("Entrega", 150, HorizontalAlignment.Center);
+                listViewFormaPagamento.Columns.Add("Emissão", 150, HorizontalAlignment.Right);
+                listViewFormaPagamento.Columns.Add("Entrega", 150, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Valor Total", 120, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Status", 90, HorizontalAlignment.Center);
             }
@@ -138,7 +138,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
             var itemSelecionado = listViewFormaPagamento.SelectedItems[0];
             var compra = (CompraCabecalho)itemSelecionado.Tag;
 
-            // 🔒 Verifica se já está cancelada
             if (!compra.Ativo)
             {
                 MessageBox.Show("Esta compra já está cancelada.",
@@ -146,10 +145,8 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // 🔹 Cria a estrutura de chave composta
             var compraStruct = new CompraKey(compra.Modelo, compra.Serie, compra.NumeroNota, compra.IdFornecedor);
 
-            // 🔹 Verifica se há contas pagas associadas
             var contaDao = new ContasAPagarDao();
             bool possuiContaPaga = contaDao.ExisteContaPagaAssociada(
                 compra.Modelo,
@@ -169,14 +166,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // 🔹 Exibe a compra em modo de visualização (somente leitura)
             using (var frm = new FrmCadastroCompra(compraStruct))
             {
                 frm.ModoSomenteLeitura = true;
                 frm.ShowDialog();
             }
 
-            // 🔹 Pede confirmação ao usuário
             DialogResult confirmar = MessageBox.Show(
                 "Deseja realmente cancelar esta compra?",
                 "Confirmar Cancelamento",
@@ -187,17 +182,29 @@ namespace ProjetoPF.Interfaces.FormConsultas
             if (confirmar != DialogResult.Yes)
                 return;
 
-            // 🔹 Solicita o motivo
-            string motivo = InputBox.Show("Digite o motivo do cancelamento:", "Cancelar Nota");
+            string motivo = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(motivo))
+            while (true)
             {
-                MessageBox.Show("Cancelamento abortado. Motivo não informado.",
-                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                motivo = InputBox.Show("Digite o motivo do cancelamento (mínimo 10 caracteres):", "Cancelar Nota");
+
+                if (string.IsNullOrWhiteSpace(motivo))
+                {
+                    MessageBox.Show("O cancelamento foi cancelado, pois o motivo não foi informado.",
+                                    "Operação cancelada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (motivo.Trim().Length < 10)
+                {
+                    MessageBox.Show("O motivo do cancelamento deve conter pelo menos 10 caracteres.",
+                                    "Motivo muito curto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue; 
+                }
+
+                break; 
             }
 
-            // 🔹 Tenta cancelar via serviço
             try
             {
                 var compraService = new CompraServicos();
@@ -206,7 +213,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 MessageBox.Show("Compra cancelada com sucesso!",
                                 "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // 🔄 Atualiza a lista após cancelamento
                 PopularListView(string.Empty);
             }
             catch (Exception ex)

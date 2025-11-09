@@ -25,6 +25,9 @@ namespace ProjetoPF
 
         FrmConsultaCompra frmConsultaCompra = new FrmConsultaCompra();
         FrmConsultaContasAPagar frmConsultaContasAPagar = new FrmConsultaContasAPagar();
+
+        FrmConsultaVenda frmConsultaVenda = new FrmConsultaVenda();
+        FrmConsultaContasAReceber frmConsultaContasAReceber = new FrmConsultaContasAReceber();
         public FrmPrincipal()
         {
             InitializeComponent();
@@ -96,6 +99,16 @@ namespace ProjetoPF
         private void contasAPagarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmConsultaContasAPagar.ShowDialog();
+        }
+
+        private void vendasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaVenda.ShowDialog();
+        }
+
+        private void contasAReceberToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaContasAReceber.ShowDialog();
         }
     }
 }

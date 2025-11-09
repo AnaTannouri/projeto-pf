@@ -94,6 +94,10 @@
             "JURÍDICA",
             "FÍSICA",
             "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
+            "FÍSICA",
+            "JURÍDICA",
             "Física",
             "Jurídica",
             "Física",
@@ -108,7 +112,7 @@
             // 
             // comboClassificacao
             // 
-            this.comboClassificacao.Location = new System.Drawing.Point(505, 326);
+            this.comboClassificacao.Location = new System.Drawing.Point(432, 327);
             this.comboClassificacao.MaxLength = 20;
             this.comboClassificacao.Size = new System.Drawing.Size(181, 21);
             this.comboClassificacao.TabIndex = 15;
@@ -122,6 +126,7 @@
             // 
             this.txtCep.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCep.MaxLength = 10;
+            this.txtCep.Size = new System.Drawing.Size(161, 20);
             this.txtCep.TabIndex = 9;
             // 
             // txtBairro
@@ -134,12 +139,12 @@
             this.txtNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNumero.MaxLength = 10;
             this.txtNumero.TabIndex = 6;
-            this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTelefone
             // 
             this.txtTelefone.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtTelefone.MaxLength = 20;
+            this.txtTelefone.Size = new System.Drawing.Size(152, 20);
             this.txtTelefone.TabIndex = 12;
             // 
             // txtEmail
@@ -155,7 +160,7 @@
             // txtRg_InscricaoEstadual
             // 
             this.txtRg_InscricaoEstadual.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtRg_InscricaoEstadual.Location = new System.Drawing.Point(293, 327);
+            this.txtRg_InscricaoEstadual.Location = new System.Drawing.Point(220, 328);
             this.txtRg_InscricaoEstadual.MaxLength = 15;
             this.txtRg_InscricaoEstadual.TabIndex = 14;
             // 
@@ -164,6 +169,7 @@
             this.txtCpf_Cnpj.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCpf_Cnpj.Location = new System.Drawing.Point(12, 327);
             this.txtCpf_Cnpj.MaxLength = 18;
+            this.txtCpf_Cnpj.Size = new System.Drawing.Size(204, 20);
             this.txtCpf_Cnpj.TabIndex = 13;
             // 
             // txtApelido_NomeFantasia
@@ -182,11 +188,11 @@
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(290, 311);
+            this.label6.Location = new System.Drawing.Point(217, 312);
             // 
             // lblClassificacao
             // 
-            this.lblClassificacao.Location = new System.Drawing.Point(502, 310);
+            this.lblClassificacao.Location = new System.Drawing.Point(429, 311);
             // 
             // txtComplemento
             // 
@@ -213,7 +219,7 @@
             // 
             // btnCadastrarCidade
             // 
-            this.btnCadastrarCidade.Location = new System.Drawing.Point(692, 209);
+            this.btnCadastrarCidade.Location = new System.Drawing.Point(572, 209);
             this.btnCadastrarCidade.Name = "btnCadastrarCidade";
             this.btnCadastrarCidade.Size = new System.Drawing.Size(201, 23);
             this.btnCadastrarCidade.TabIndex = 10;
@@ -224,7 +230,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(298, 197);
+            this.label15.Location = new System.Drawing.Point(178, 197);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(79, 13);
             this.label15.TabIndex = 71;
@@ -233,7 +239,7 @@
             // txtCodigoCidade
             // 
             this.txtCodigoCidade.Enabled = false;
-            this.txtCodigoCidade.Location = new System.Drawing.Point(298, 211);
+            this.txtCodigoCidade.Location = new System.Drawing.Point(178, 211);
             this.txtCodigoCidade.Name = "txtCodigoCidade";
             this.txtCodigoCidade.Size = new System.Drawing.Size(135, 20);
             this.txtCodigoCidade.TabIndex = 70;
@@ -242,7 +248,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(436, 195);
+            this.label14.Location = new System.Drawing.Point(316, 195);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(43, 13);
             this.label14.TabIndex = 69;
@@ -364,7 +370,7 @@
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.Color.Red;
-            this.label27.Location = new System.Drawing.Point(485, 192);
+            this.label27.Location = new System.Drawing.Point(365, 192);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(15, 20);
             this.label27.TabIndex = 92;
@@ -418,7 +424,7 @@
             // 
             this.txtCidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCidade.Enabled = false;
-            this.txtCidade.Location = new System.Drawing.Point(439, 211);
+            this.txtCidade.Location = new System.Drawing.Point(319, 211);
             this.txtCidade.Name = "txtCidade";
             this.txtCidade.Size = new System.Drawing.Size(165, 20);
             this.txtCidade.TabIndex = 99;
@@ -435,7 +441,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(606, 197);
+            this.label25.Location = new System.Drawing.Point(486, 197);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(24, 13);
             this.label25.TabIndex = 116;
@@ -444,7 +450,7 @@
             // txtUF
             // 
             this.txtUF.Enabled = false;
-            this.txtUF.Location = new System.Drawing.Point(608, 211);
+            this.txtUF.Location = new System.Drawing.Point(488, 211);
             this.txtUF.Name = "txtUF";
             this.txtUF.Size = new System.Drawing.Size(78, 20);
             this.txtUF.TabIndex = 115;
