@@ -254,6 +254,7 @@
             // txtMultaReais
             // 
             this.txtMultaReais.Location = new System.Drawing.Point(333, 174);
+            this.txtMultaReais.MaxLength = 15;
             this.txtMultaReais.Name = "txtMultaReais";
             this.txtMultaReais.Size = new System.Drawing.Size(100, 20);
             this.txtMultaReais.TabIndex = 49;
@@ -261,6 +262,7 @@
             // txtJurosReais
             // 
             this.txtJurosReais.Location = new System.Drawing.Point(439, 174);
+            this.txtJurosReais.MaxLength = 15;
             this.txtJurosReais.Name = "txtJurosReais";
             this.txtJurosReais.Size = new System.Drawing.Size(100, 20);
             this.txtJurosReais.TabIndex = 50;
@@ -268,6 +270,7 @@
             // txtDescontoReais
             // 
             this.txtDescontoReais.Location = new System.Drawing.Point(545, 174);
+            this.txtDescontoReais.MaxLength = 15;
             this.txtDescontoReais.Name = "txtDescontoReais";
             this.txtDescontoReais.Size = new System.Drawing.Size(100, 20);
             this.txtDescontoReais.TabIndex = 51;
@@ -328,6 +331,7 @@
             this.Name = "FrmContasAPagarBaixa";
             this.Text = "Baixa Parcela";
             this.Load += new System.EventHandler(this.FrmContasAPagarBaixa_Load);
+            this.Controls.SetChildIndex(this.label5, 0);
             this.Controls.SetChildIndex(this.btnPesquisarFornecedor, 0);
             this.Controls.SetChildIndex(this.txtNumParcela, 0);
             this.Controls.SetChildIndex(this.txtDesconto, 0);
@@ -380,12 +384,8 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DateTimePicker datePagamento;
-        private System.Windows.Forms.TextBox txtValorPago;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox txtObservacao;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
@@ -397,11 +397,14 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.TextBox txtMultaReais;
-        private System.Windows.Forms.TextBox txtJurosReais;
-        private System.Windows.Forms.TextBox txtDescontoReais;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
+        public System.Windows.Forms.DateTimePicker datePagamento;
+        public System.Windows.Forms.TextBox txtValorPago;
+        public System.Windows.Forms.TextBox txtMultaReais;
+        public System.Windows.Forms.TextBox txtJurosReais;
+        public System.Windows.Forms.TextBox txtDescontoReais;
+        public System.Windows.Forms.TextBox txtObservacao;
     }
 }

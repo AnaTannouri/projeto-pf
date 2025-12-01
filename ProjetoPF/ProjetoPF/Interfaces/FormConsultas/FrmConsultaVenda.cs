@@ -58,6 +58,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Emissão", 170, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Valor Total", 170, HorizontalAlignment.Right);
                 listViewFormaPagamento.Columns.Add("Status", 150, HorizontalAlignment.Center);
+
             }
 
             if (ModoSomenteLeitura)
@@ -81,16 +82,10 @@ namespace ProjetoPF.Interfaces.FormConsultas
         public override void PopularListView(string pesquisa)
         {
             listViewFormaPagamento.Items.Clear();
-
-            // ✅ 1) Busca todas as vendas
             List<VendaCabecalho> vendas = vendaDao.BuscarTodosCabecalho("");
-
-            // ✅ 2) Se houver termo de pesquisa, aplica o filtro
             if (!string.IsNullOrWhiteSpace(pesquisa))
             {
                 string termo = pesquisa.Trim().ToLower();
-
-                // Instancia de serviço para funcionário (evita recriar a cada iteração)
                 var funcionarioService = new BaseServicos<Funcionario>(
                     new BaseDao<Funcionario>("Funcionarios"));
 
@@ -112,8 +107,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                         || numero.Contains(termo);
                 }).ToList();
             }
-
-            // ✅ 3) Exibe os resultados
             if (vendas.Count > 0)
             {
                 var funcionarioService = new BaseServicos<Funcionario>(

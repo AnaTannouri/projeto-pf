@@ -369,6 +369,9 @@
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroContaAPagar.resx">
       <DependentUpon>FrmCadastroContaAPagar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroContaAReceber.resx">
+      <DependentUpon>FrmCadastroContaAReceber.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\FormCadastros\FrmCadastroEstado.resx">
       <DependentUpon>FrmCadastroEstado.cs</DependentUpon>
     </EmbeddedResource>

@@ -95,7 +95,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             if (ModoVisualizacao)
             {
-                // 🔹 Garante formato fixo de data (dd/MM/yyyy)
                 dateEmissao.Format = DateTimePickerFormat.Custom;
                 dateEmissao.CustomFormat = "dd/MM/yyyy";
 
@@ -204,7 +203,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             dateEmissao.Value = conta.DataEmissao;
             dateVencimento.Value = conta.DataVencimento;
 
-            // 🔹 Busca e preenche a forma de pagamento
             var formaDao = new FormaPagamentoDAO();
             var forma = formaDao.BuscarPorId(conta.IdFormaPagamento);
             if (forma != null)

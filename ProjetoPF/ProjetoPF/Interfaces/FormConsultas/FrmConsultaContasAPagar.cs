@@ -59,7 +59,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
 
             btnAdicionar.Text = "Incluir";
             btnEditar.Text = "Dar baixa";
-            btnExcluir.Text = "Vizualizar";
+            btnExcluir.Text = "Visualizar";
             PopularListView(string.Empty);
         }
         public override void PopularListView(string pesquisa)

@@ -171,3 +171,4 @@ C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastr
 C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroVenda.resources
 C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaVenda.resources
 C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormConsultas.FrmConsultaContasAReceber.resources
+C:\Dev\ProjetoPF2\ProjetoPF\ProjetoPF\obj\Debug\ProjetoPF.Interfaces.FormCadastros.FrmCadastroContaAReceber.resources
