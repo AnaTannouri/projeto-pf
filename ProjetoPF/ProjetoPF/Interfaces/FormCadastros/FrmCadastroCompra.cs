@@ -290,7 +290,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             var hoje = DateTime.Today;
 
-            // ✅ Corrigido: comportamento diferente para NOVA compra x VISUALIZAÇÃO
             if (_key == null) // Nova compra
             {
                 dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
@@ -673,40 +672,70 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return;
             }
 
-            var condicao = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos")).BuscarPorId(idCondicao);
+            var condicao = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"))
+                .BuscarPorId(idCondicao);
+
             var parcelasCondicao = new BaseServicos<CondicaoPagamentoParcelas>(
-    new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas"))
-    .BuscarTodos()
-    .Where(p => p.IdCondicaoPagamento == idCondicao)
-    .OrderBy(p => p.NumParcela)
-    .ToList();
+                    new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas"))
+                .BuscarTodos()
+                .Where(p => p.IdCondicaoPagamento == idCondicao)
+                .OrderBy(p => p.NumParcela)
+                .ToList();
 
             decimal totalProdutos = itensCompra.Sum(i => i.Total);
             decimal frete = ConverterMoeda(txtValorFrete.Text);
             decimal seguro = ConverterMoeda(txtSeguro.Text);
             decimal despesas = ConverterMoeda(txtDespesas.Text);
 
-            decimal totalCompra = totalProdutos + frete + seguro + despesas;
+            // Arredonda o total da compra para 2 casas (importante para consistência)
+            decimal totalCompra = Math.Round(totalProdutos + frete + seguro + despesas, 2, MidpointRounding.AwayFromZero);
             DateTime dataBase = dtpEmissao.Value;
 
             parcelas.Clear();
 
-            foreach (var p in parcelasCondicao)
+            if (parcelasCondicao.Count == 0)
             {
+                AtualizarListViewParcelas(parcelas);
+                return;
+            }
+
+            decimal somaAtribuida = 0m;
+            int ultimoIndex = parcelasCondicao.Count - 1;
+
+            for (int i = 0; i < parcelasCondicao.Count; i++)
+            {
+                var p = parcelasCondicao[i];
                 decimal porcentagem = p.Porcentagem / 100m;
+
+                decimal valorParcela;
+
+                if (i < ultimoIndex)
+                {
+                    // Calcula e arredonda cada parcela (exceto a última)
+                    valorParcela = Math.Round(porcentagem * totalCompra, 2, MidpointRounding.AwayFromZero);
+                    somaAtribuida += valorParcela;
+                }
+                else
+                {
+                    // Última parcela: atribui o restante para garantir que a soma das parcelas = totalCompra
+                    valorParcela = totalCompra - somaAtribuida;
+                    // Garantir duas casas decimais (deve já estar com 2, mas por segurança):
+                    valorParcela = Math.Round(valorParcela, 2, MidpointRounding.AwayFromZero);
+                }
 
                 parcelas.Add(new ContasAPagar
                 {
                     NumeroParcela = p.NumParcela,
                     DataVencimento = dataBase.AddDays(p.Prazo),
-                    ValorParcela = Math.Round(porcentagem * totalCompra, 2),
+                    ValorParcela = valorParcela,
                     IdFormaPagamento = p.IdFormaPagamento,
                     FormaPagamentoDescricao = BuscarDescricaoFormaPagamento(p.IdFormaPagamento)
                 });
-
             }
+
             AtualizarListViewParcelas(parcelas);
         }
+
         private string BuscarDescricaoFormaPagamento(int idForma)
         {
             var servicoForma = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"));

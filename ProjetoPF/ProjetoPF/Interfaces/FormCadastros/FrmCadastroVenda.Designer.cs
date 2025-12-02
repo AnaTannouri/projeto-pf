@@ -36,7 +36,7 @@
             this.txtCliente = new System.Windows.Forms.TextBox();
             this.btnPesquisarFuncionario = new System.Windows.Forms.Button();
             this.btnPesquisarCliente = new System.Windows.Forms.Button();
-            this.DateEmissão = new System.Windows.Forms.DateTimePicker();
+            this.DateEmissao = new System.Windows.Forms.DateTimePicker();
             this.txtCodProduto = new System.Windows.Forms.TextBox();
             this.txtProduto = new System.Windows.Forms.TextBox();
             this.btnPesquisarProduto = new System.Windows.Forms.Button();
@@ -175,12 +175,14 @@
             this.btnPesquisarCliente.UseVisualStyleBackColor = true;
             this.btnPesquisarCliente.Click += new System.EventHandler(this.btnPesquisarCliente_Click_1);
             // 
-            // DateEmissão
+            // DateEmissao
             // 
-            this.DateEmissão.Location = new System.Drawing.Point(1174, 33);
-            this.DateEmissão.Name = "DateEmissão";
-            this.DateEmissão.Size = new System.Drawing.Size(151, 20);
-            this.DateEmissão.TabIndex = 3;
+            this.DateEmissao.Checked = false;
+            this.DateEmissao.Enabled = false;
+            this.DateEmissao.Location = new System.Drawing.Point(1174, 33);
+            this.DateEmissao.Name = "DateEmissao";
+            this.DateEmissao.Size = new System.Drawing.Size(151, 20);
+            this.DateEmissao.TabIndex = 3;
             // 
             // txtCodProduto
             // 
@@ -653,7 +655,7 @@
             this.Controls.Add(this.btnPesquisarProduto);
             this.Controls.Add(this.txtProduto);
             this.Controls.Add(this.txtCodProduto);
-            this.Controls.Add(this.DateEmissão);
+            this.Controls.Add(this.DateEmissao);
             this.Controls.Add(this.btnPesquisarCliente);
             this.Controls.Add(this.btnPesquisarFuncionario);
             this.Controls.Add(this.txtCliente);
@@ -673,7 +675,7 @@
             this.Controls.SetChildIndex(this.txtCliente, 0);
             this.Controls.SetChildIndex(this.btnPesquisarFuncionario, 0);
             this.Controls.SetChildIndex(this.btnPesquisarCliente, 0);
-            this.Controls.SetChildIndex(this.DateEmissão, 0);
+            this.Controls.SetChildIndex(this.DateEmissao, 0);
             this.Controls.SetChildIndex(this.txtCodProduto, 0);
             this.Controls.SetChildIndex(this.txtProduto, 0);
             this.Controls.SetChildIndex(this.btnPesquisarProduto, 0);
@@ -743,7 +745,7 @@
         private System.Windows.Forms.TextBox txtCliente;
         private System.Windows.Forms.Button btnPesquisarFuncionario;
         private System.Windows.Forms.Button btnPesquisarCliente;
-        private System.Windows.Forms.DateTimePicker DateEmissão;
+        private System.Windows.Forms.DateTimePicker DateEmissao;
         private System.Windows.Forms.TextBox txtCodProduto;
         private System.Windows.Forms.TextBox txtProduto;
         private System.Windows.Forms.Button btnPesquisarProduto;

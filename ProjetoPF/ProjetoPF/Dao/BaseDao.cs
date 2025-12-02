@@ -12,7 +12,7 @@ namespace ProjetoPF.Dao
 {
     public class BaseDao<T> where T : ProjetoPF.Model.BaseModelos, new()
     {
-        protected readonly string _connectionString = "data source=ANA\\SQLEXPRESS;initial catalog=projeto-pf;user id=sa;password=123";
+        protected readonly string _connectionString = "data source=Gabriel\\SQLEXPRESS;initial catalog=projeto-pf;user id=sa;password=123";
         protected readonly string _tabela;
 
         public BaseDao(string tabela)
