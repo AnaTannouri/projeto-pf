@@ -82,7 +82,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (!decimal.TryParse(texto, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal valor))
                 return 0;
 
-            // 🔹 Agora mantemos o valor exatamente como o usuário digitou (1,00 -> 1.00)
             return valor;
         }
         private void LimparCampos()

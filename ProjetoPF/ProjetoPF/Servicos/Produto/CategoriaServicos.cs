@@ -12,24 +12,5 @@ namespace ProjetoPF.Servicos.Produto
     {
         public CategoriaServicos() : base(new CategoriaDAO()) { }
 
-        public void CadastrarCategoria(Categoria categoria)
-        {
-            if (string.IsNullOrWhiteSpace(categoria.Descricao))
-                throw new Exception("Descrição é obrigatória!");
-
-            categoria.DataCriacao = DateTime.Now;
-            categoria.DataAtualizacao = DateTime.Now;
-            Criar(categoria);
-        }
-
-        public void AtualizarCategoria(Categoria categoria)
-        {
-            if (categoria.Id == 0)
-            {
-                throw new Exception("ID inválido. Não é possível atualizar o registro.");
-            }
-
-            Atualizar(categoria);
-        }
     }
 }

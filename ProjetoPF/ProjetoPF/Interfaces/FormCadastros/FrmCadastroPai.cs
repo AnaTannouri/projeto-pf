@@ -10,12 +10,6 @@ namespace ProjetoPF.FormCadastros
         {
             InitializeComponent();
         }
-
-        public virtual void Salvar()
-        {
-            Sair();
-        }
-
         public virtual void Sair()
         {
             this.Close();
@@ -25,10 +19,6 @@ namespace ProjetoPF.FormCadastros
         {
             Sair();
         }
-        public virtual void ConhecaObjeto(object obj)
-        {
-        }
-
         public virtual void CarregarFormasDePagamento()
         {
 

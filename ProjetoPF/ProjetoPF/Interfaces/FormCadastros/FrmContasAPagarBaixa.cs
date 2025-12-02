@@ -30,10 +30,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 eventList.RemoveHandler(eventClick, eventList[eventClick]);
             }
 
-            // 🔹 Agora liga apenas o evento desta tela
             btnSalvar.Click += new EventHandler(this.btnSalvar_Click);
 
-            // 🔹 Configurações específicas da tela de baixa
             this.ModoBaixa = true;
 
             btnSalvar.Text = "Dar Baixa";
@@ -128,8 +126,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 txt.Text = "R$ 0,00";
                 return;
             }
-
-            // Troca "." por "," para compatibilidade com cultura pt-BR
             texto = texto.Replace(".", ",");
 
             if (decimal.TryParse(texto, NumberStyles.Any, new CultureInfo("pt-BR"), out decimal valor))
@@ -151,7 +147,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
         {
             if (parcela == null) return;
 
-            // 🔹 Identificação e dados principais
             txtCodigo.Text = parcela.Modelo.ToString();
             txtSerie.Text = parcela.Serie;
             txtNumNota.Text = parcela.NumeroNota;
@@ -165,7 +160,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             SetarDataSeguro(dateVencimento,
                 parcela.DataVencimento == DateTime.MinValue ? DateTime.Today.AddDays(1) : parcela.DataVencimento);
 
-            // 🔹 Forma de pagamento
             var formaDao = new FormaPagamentoDAO();
             var forma = formaDao.BuscarPorId(parcela.IdFormaPagamento);
             if (forma != null)
@@ -179,7 +173,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 txtForma.Text = parcela.FormaPagamentoDescricao ?? "-";
             }
 
-            // 🔹 Percentuais (somente leitura)
             txtMulta.Text = parcela.Multa.ToString("N2");
             txtJuros.Text = parcela.Juros.ToString("N2");
             txtDesconto.Text = parcela.Desconto.ToString("N2");
@@ -188,7 +181,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtJuros.ReadOnly = true;
             txtDesconto.ReadOnly = true;
 
-            // 🔹 Cálculo dos valores em reais
             decimal valorBase = parcela.ValorParcela;
             DateTime dataVenc = parcela.DataVencimento;
             int diasAtraso = (DateTime.Today - dataVenc).Days;
@@ -227,32 +219,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtValorPago.TextChanged -= (s, e) => valorPagoEditadoManualmente = true;
             txtValorPago.Text = valorFinal.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"));
             txtValorPago.TextChanged += (s, e) => valorPagoEditadoManualmente = true;
-        }
-        private decimal CalcularValorFinal()
-        {
-            decimal valorBase = ConverterTextoParaDecimal(txtValorParcela.Text);
-            decimal multa = ConverterTextoParaDecimal(txtMulta.Text);
-            decimal juros = ConverterTextoParaDecimal(txtJuros.Text);
-            decimal desconto = ConverterTextoParaDecimal(txtDesconto.Text);
-
-            DateTime dataVenc = dateVencimento.Value;
-            DateTime dataPag = datePagamento.Value;
-
-            int diasAtraso = (dataPag - dataVenc).Days;
-            decimal valorFinal = valorBase;
-
-            if (diasAtraso > 0)
-            {
-                decimal valorMulta = valorBase * (multa / 100);
-                decimal valorJurosProporcional = valorBase * ((juros / 100) / 30m) * diasAtraso;
-                valorFinal = valorBase + valorMulta + valorJurosProporcional;
-            }
-            else
-            {
-                valorFinal = valorBase - (valorBase * (desconto / 100));
-            }
-
-            return valorFinal;
         }
 
         protected override void btnSalvar_Click(object sender, EventArgs e)

@@ -24,7 +24,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
 
         private void FrmConsultaContasAReceber_Load(object sender, EventArgs e)
         {
-            // ListView
             if (listViewFormaPagamento.Columns.Count == 0)
             {
                 listViewFormaPagamento.View = View.Details;
@@ -43,7 +42,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 listViewFormaPagamento.Columns.Add("Status", 120, HorizontalAlignment.Center);
             }
 
-            // Filtros
             comboBox1.Items.Clear();
             comboBox1.Items.Add("Em Aberto");
             comboBox1.Items.Add("Recebida");
@@ -52,7 +50,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
             comboBox1.Items.Add("Todas");
             comboBox1.SelectedIndex = 4;
 
-            // Ajustes dos botões
             btnAdicionar.Visible = false;
             btnEditar.Text = "Dar Baixa";
             btnExcluir.Text = "Visualizar";
@@ -71,7 +68,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                                   .OrderBy(c => c.DataCriacao)
                                   .ToList();
 
-            // Atualizar status VENCIDA automaticamente
             foreach (var conta in contas)
             {
                 if (conta.Ativo &&
@@ -129,8 +125,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
             }
         }
 
-
-
         private void btnEditar_Click_1(object sender, EventArgs e)
         {
             if (listViewFormaPagamento.SelectedItems.Count == 0)
@@ -141,7 +135,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             }
 
             var item = listViewFormaPagamento.SelectedItems[0];
-            string situacao = item.SubItems[9].Text; // Coluna da Situação
+            string situacao = item.SubItems[9].Text; 
 
             if (situacao.Equals("Recebida", StringComparison.OrdinalIgnoreCase))
             {
@@ -157,7 +151,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // Dados principais para identificar a parcela
             int numeroParcela = int.Parse(item.SubItems[0].Text);
             string modelo = item.SubItems[1].Text;
             string serie = item.SubItems[2].Text;
@@ -200,7 +193,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // Correções de datas inválidas do SQL Server
             if (parcelaCompleta.DataEmissao < new DateTime(1753, 1, 1))
                 parcelaCompleta.DataEmissao = DateTime.Today;
 
@@ -213,14 +205,12 @@ namespace ProjetoPF.Interfaces.FormConsultas
             if (parcelaCompleta.DataAtualizacao < new DateTime(1753, 1, 1))
                 parcelaCompleta.DataAtualizacao = DateTime.Now;
 
-            // Abre a tela de baixa de contas a receber
             var frm = new FrmCadastroContaAReceber();
             frm.Owner = this;
 
             frm.Shown += (s, ev) => frm.CarregarParcela(parcelaCompleta);
             frm.ShowDialog(this);
 
-            // Atualiza a listview após baixa
             PopularListView(string.Empty);
         }
 
@@ -253,7 +243,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
 
             string status = parcela.Situacao?.Trim();
 
-            // RECEBIDA OU CANCELADA → VISUALIZAR
             if (status.Equals("Recebida", StringComparison.OrdinalIgnoreCase) ||
                 status.Equals("Cancelada", StringComparison.OrdinalIgnoreCase))
             {
@@ -270,7 +259,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 return;
             }
 
-            // EM ABERTO OU VENCIDA → PERGUNTAR SE QUER BAIXAR
             if (status.Equals("Em Aberto", StringComparison.OrdinalIgnoreCase) ||
                 status.Equals("Vencida", StringComparison.OrdinalIgnoreCase))
             {
@@ -321,14 +309,11 @@ namespace ProjetoPF.Interfaces.FormConsultas
 
             var contas = daoContas.BuscarTodos();
 
-            // PADRONIZA TODAS AS SITUAÇÕES
             foreach (var conta in contas)
             {
-                // Situação nula vira EM ABERTO
                 if (string.IsNullOrWhiteSpace(conta.Situacao))
                     conta.Situacao = "Em aberto";
 
-                // Marca como vencida automaticamente
                 if (conta.Ativo &&
                     !conta.Situacao.Equals("Recebida", StringComparison.OrdinalIgnoreCase) &&
                     !conta.Situacao.Equals("Cancelada", StringComparison.OrdinalIgnoreCase) &&
@@ -342,7 +327,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                 }
             }
 
-            // APLICA O FILTRO
             IEnumerable<ContasAReceber> filtradas = contas;
 
             switch (status)
@@ -373,7 +357,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     break;
             }
 
-            // PREENCHER A LISTVIEW
             foreach (var conta in filtradas)
             {
                 var forma = daoForma.BuscarPorId(conta.IdFormaPagamento);

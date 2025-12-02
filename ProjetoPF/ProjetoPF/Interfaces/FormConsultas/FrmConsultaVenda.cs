@@ -30,12 +30,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
             InitializeComponent();
         }
 
-        private void btnAdicionar_Click_1(object sender, EventArgs e)
-        {
-            frmCadastroVenda = new FrmCadastroVenda();
-            frmCadastroVenda.FormClosed += FrmCadastroVenda_FormClosed;
-            frmCadastroVenda.ShowDialog();
-        }
+      
         private void FrmCadastroVenda_FormClosed(object sender, FormClosedEventArgs e)
         {
             PopularListView(string.Empty);
@@ -133,17 +128,7 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
-            else
-            {
-                MessageBox.Show(
-                    "Nenhuma venda encontrada para o termo pesquisado!",
-                    "Aviso",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-            }
         }
-
 
         private void btnEditar_Click_1(object sender, EventArgs e)
         {
@@ -314,6 +299,13 @@ namespace ProjetoPF.Interfaces.FormConsultas
         {
             string termo = txtPesquisa.Text.Trim();
             PopularListView(termo);
+        }
+
+        private void btnAdicionar_Click_1(object sender, EventArgs e)
+        {
+            frmCadastroVenda = new FrmCadastroVenda();
+            frmCadastroVenda.FormClosed += FrmCadastroVenda_FormClosed;
+            frmCadastroVenda.ShowDialog();
         }
     }
 }

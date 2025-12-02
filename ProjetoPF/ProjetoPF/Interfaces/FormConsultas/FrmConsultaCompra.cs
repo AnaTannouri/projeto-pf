@@ -118,11 +118,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
                     listViewFormaPagamento.Items.Add(item);
                 }
             }
-            else
-            {
-                MessageBox.Show("Nenhuma compra encontrada!", "Aviso",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)

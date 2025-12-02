@@ -5,9 +5,7 @@ namespace ProjetoPF.Utils
 {
     public static class SqlExtensions
     {
-        /// <summary>
-        /// Verifica se o SqlDataReader contém uma coluna específica (evita exceções).
-        /// </summary>
+
         public static bool HasColumn(this SqlDataReader reader, string columnName)
         {
             for (int i = 0; i < reader.FieldCount; i++)

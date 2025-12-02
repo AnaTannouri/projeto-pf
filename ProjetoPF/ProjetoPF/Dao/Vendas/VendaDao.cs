@@ -53,7 +53,6 @@ namespace ProjetoPF.Dao.Vendas
                 {
                     try
                     {
-                        // 1) Inserir VENDA
                         const string sqlVenda = @"
 INSERT INTO dbo.Vendas
   (Modelo, Serie, NumeroNota, DataEmissao,
@@ -92,7 +91,6 @@ VALUES
                                 throw new InvalidOperationException("Falha ao inserir a venda.");
                         }
 
-                        // 2) Inserir ITENS
                         const string sqlItem = @"
 INSERT INTO dbo.ItensVenda
   (Modelo, Serie, NumeroNota, IdCliente,
@@ -139,7 +137,6 @@ VALUES
                                 cmdItem.Parameters["@Ativo"].Value = true;
                                 cmdItem.ExecuteNonQuery();
 
-                                // Atualiza estoque
                                 using (var cmdEstoque = new SqlCommand(@"
 UPDATE Produtos
    SET Estoque = Estoque - @Qtd,
@@ -154,7 +151,6 @@ UPDATE Produtos
                             }
                         }
 
-                        // 3) Inserir PARCELAS
                         if (parcelas != null && parcelas.Count > 0)
                         {
                             const string sqlParc = @"
@@ -234,9 +230,6 @@ VALUES
                             ? "Cancelamento não informado"
                             : motivo.Trim();
 
-                        // ------------------------------------------------------------------
-                        // 1) Cancelar a VENDA (cabeçalho) pela PK composta
-                        // ------------------------------------------------------------------
                         int linhasVenda;
                         using (var cmd = new SqlCommand(@"
                 UPDATE Vendas
@@ -261,9 +254,7 @@ VALUES
                         if (linhasVenda == 0)
                             throw new InvalidOperationException("Venda não encontrada ou já cancelada.");
 
-                        // ------------------------------------------------------------------
-                        // 2) Cancelar PARCELAS vinculadas (ContasAReceber)
-                        // ------------------------------------------------------------------
+
                         using (var cmd = new SqlCommand(@"
 UPDATE ContasAReceber
    SET Ativo = 0,
@@ -282,9 +273,6 @@ UPDATE ContasAReceber
                             cmd.ExecuteNonQuery();
                         }
 
-                        // ------------------------------------------------------------------
-                        // 3) Inativar ITENS vinculados à venda
-                        // ------------------------------------------------------------------
                         using (var cmd = new SqlCommand(@"
 UPDATE ItensVenda
    SET Ativo = 0,
@@ -302,9 +290,6 @@ UPDATE ItensVenda
                             cmd.ExecuteNonQuery();
                         }
 
-                        // ------------------------------------------------------------------
-                        // 4) Recarregar ITENS da venda para ajustar estoque
-                        // ------------------------------------------------------------------
                         var itens = new List<ItemVenda>();
                         using (var cmd = new SqlCommand(@"
                 SELECT i.IdProduto, i.Quantidade, i.ValorUnitario
@@ -333,9 +318,6 @@ UPDATE ItensVenda
                             }
                         }
 
-                        // ------------------------------------------------------------------
-                        // 5) Para cada produto, DEVOLVER ao estoque
-                        // ------------------------------------------------------------------
                         foreach (var item in itens.GroupBy(x => x.IdProduto)
                                                   .Select(g => g.First()))
                         {
@@ -398,49 +380,7 @@ UPDATE Produtos
                 }
             }
         }
-        public ProjetoPF.Modelos.Venda.Venda BuscarPorNota(int modelo, string serie, string numero, int idCliente)
-        {
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                conn.Open();
-                using (var cmd = new SqlCommand(@"
-        SELECT TOP 1 *
-        FROM Vendas
-        WHERE Modelo = @Modelo
-          AND Serie = @Serie
-          AND NumeroNota = @Numero
-          AND IdCliente = @Cliente
-          AND Ativo = 1;", conn))
-                {
-                    cmd.Parameters.AddWithValue("@Modelo", modelo);
-                    cmd.Parameters.AddWithValue("@Serie", serie.Trim());
-                    cmd.Parameters.AddWithValue("@Numero", numero.Trim());
-                    cmd.Parameters.AddWithValue("@Cliente", idCliente);
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            return new ProjetoPF.Modelos.Venda.Venda
-                            {
-                                Modelo = reader["Modelo"].ToString(),
-                                Serie = reader["Serie"].ToString(),
-                                NumeroNota = reader["NumeroNota"].ToString(),
-                                IdCliente = Convert.ToInt32(reader["IdCliente"]),
-                                IdCondicaoPagamento = Convert.ToInt32(reader["IdCondicaoPagamento"]),
-                                DataEmissao = Convert.ToDateTime(reader["DataEmissao"]),
-                                ValorTotal = Convert.ToDecimal(reader["ValorTotal"]),
-                                Observacao = reader["Observacao"]?.ToString(),
-                                DataCriacao = Convert.ToDateTime(reader["DataCriacao"]),
-                                DataAtualizacao = Convert.ToDateTime(reader["DataAtualizacao"]),
-                                Ativo = Convert.ToBoolean(reader["Ativo"])
-                            };
-                        }
-                    }
-                }
-            }
-            return null;
-        }
+     
         public ProjetoPF.Modelos.Venda.Venda BuscarPorChave(VendaKey key)
         {
             using (var cn = new SqlConnection(_connectionString))

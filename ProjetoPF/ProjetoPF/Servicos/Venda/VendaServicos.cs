@@ -14,21 +14,6 @@ namespace ProjetoPF.Servicos.Venda
     {
         public VendaServicos() : base(new VendaDao()) { }
 
-        public void CriarVendaCompleta(ProjetoPF.Modelos.Venda.Venda venda)
-        {
-            if (venda == null)
-                throw new Exception("Venda inválida.");
-
-            if (venda.Itens == null || venda.Itens.Count == 0)
-                throw new Exception("É necessário adicionar ao menos um item.");
-
-            if (venda.Parcelas == null || venda.Parcelas.Count == 0)
-                throw new Exception("É necessário gerar ao menos uma parcela.");
-
-            var vendaDao = new VendaDao();
-            vendaDao.SalvarVendaComItensParcelas(venda, venda.Itens, venda.Parcelas);
-        }
-
         public void CancelarVenda(VendaKey vendaKey, string motivo)
         {
             var vendaDao = new VendaDao();

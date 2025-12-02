@@ -154,17 +154,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodigo.Enabled = false;
             checkAtivo.Enabled = isEditando;
         }
-
-        private void FrmCadastroEstado_Load_1(object sender, EventArgs e)
-        {
-            btnSalvar.Text = isExcluindo ? "Remover" : "Salvar";
-            if (!isEditando && !isExcluindo)
-            {
-                checkAtivo.Checked = true;
-                checkAtivo.Enabled = false;
-            }
-        }
-
         private void btnSalvar_Click_1(object sender, EventArgs e)
         {
             try

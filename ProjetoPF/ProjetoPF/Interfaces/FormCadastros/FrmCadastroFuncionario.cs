@@ -561,7 +561,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (cpf.Length == 11)
                 txt.Text = Convert.ToUInt64(cpf).ToString(@"000\.000\.000\-00");
             else
-                txt.Text = cpf; // mantém como digitado se incompleto
+                txt.Text = cpf; 
         }
 
         private void FormatarCep_Leave(object sender, EventArgs e)
@@ -572,7 +572,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             if (cep.Length == 8)
                 txt.Text = Convert.ToUInt64(cep).ToString(@"00000\-000");
             else
-                txt.Text = cep; // mantém se incompleto
+                txt.Text = cep; 
         }
         private void FormatarComoReal_Leave(object sender, EventArgs e)
         {
@@ -660,11 +660,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 e.Handled = true;
             }
-        }
-
-        private bool ValidarEmail(string email)
-        {
-            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
 
         private bool ValidarCpf(string cpf)

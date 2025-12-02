@@ -43,7 +43,6 @@ namespace ProjetoPF.Dao.Compras
                 {
                     try
                     {
-                        // 1) Inserir COMPRA (PK composta; sem SCOPE_IDENTITY)
                         const string sqlCompra = @"
 INSERT INTO dbo.Compras
   (Modelo, Serie, NumeroNota, DataEmissao, DataEntrega, IdFornecedor,
@@ -77,8 +76,6 @@ VALUES
                             if (cmd.ExecuteNonQuery() != 1)
                                 throw new InvalidOperationException("Falha ao inserir a compra.");
                         }
-
-                        // 2) Inserir ITENS
                         const string sqlItem = @"
 INSERT INTO dbo.ItensCompra
   (Modelo, Serie, NumeroNota, IdFornecedor,
@@ -126,7 +123,6 @@ VALUES
                             }
                         }
 
-                        // 3) Inserir PARCELAS
                         if (parcelas != null && parcelas.Count > 0)
                         {
                             const string sqlParc = @"
@@ -202,10 +198,6 @@ VALUES
                             ? "Cancelamento não informado"
                             : motivo.Trim();
 
-                        // ------------------------------------------------------------------
-                        // 1) Cancelar a COMPRA pela PK composta (nada de Id)
-                        //    - Se já estava cancelada ou não existe, o número de linhas será 0
-                        // ------------------------------------------------------------------
                         int linhasCompra;
                         using (var cmd = new SqlCommand(@"
                         UPDATE Compras
@@ -229,9 +221,7 @@ VALUES
                         if (linhasCompra == 0)
                             throw new InvalidOperationException("Compra não encontrada ou já cancelada.");
 
-                        // ------------------------------------------------------------------
-                        // 2) Inativar PARCELAS vinculadas à compra (mesma PK composta)
-                        // ------------------------------------------------------------------
+
                         using (var cmd = new SqlCommand(@"
 UPDATE ContasAPagar
    SET Ativo = 0,
@@ -250,9 +240,6 @@ UPDATE ContasAPagar
                             cmd.ExecuteNonQuery();
                         }
 
-                        // ------------------------------------------------------------------
-                        // 3) Inativar ITENS vinculados à compra (mesma PK composta)
-                        // ------------------------------------------------------------------
                         using (var cmd = new SqlCommand(@"
                         UPDATE ItensCompra
                            SET Ativo = 0,
@@ -270,10 +257,6 @@ UPDATE ContasAPagar
                             cmd.ExecuteNonQuery();
                         }
 
-                        // ------------------------------------------------------------------
-                        // 4) Recarregar ITENS da compra (para recalcular custos por produto)
-                        //    Observação: usa a mesma conexão/transação.
-                        // ------------------------------------------------------------------
                         var itens = new List<ItemCompra>();
                         using (var cmd = new SqlCommand(@"
                         SELECT i.IdProduto, i.Quantidade, i.ValorUnitario
@@ -302,16 +285,10 @@ UPDATE ContasAPagar
                             }
                         }
 
-                        // ------------------------------------------------------------------
-                        // 5) Para cada produto afetado:
-                        //    - Recalcular "último custo" (última compra ATIVA diferente da cancelada)
-                        //    - Recalcular "custo médio" (somente compras ATIVAS ≠ cancelada)
-                        //    - Atualizar tabelas de apoio e Produtos
-                        // ------------------------------------------------------------------
                         foreach (var item in itens.GroupBy(x => x.IdProduto)
                                                    .Select(g => g.First())) 
                         {
-                            // 5.1) Último custo (TOP 1 pela data de emissão, excluindo a compra cancelada e só Ativo=1)
+
                             decimal ultimoCusto = 0m;
                             using (var cmd = new SqlCommand(@"
                             SELECT TOP(1) CAST(i.ValorUnitario AS DECIMAL(18,6)) AS UltimoCusto
@@ -341,9 +318,6 @@ UPDATE ContasAPagar
                                 if (escalar != null && escalar != DBNull.Value)
                                     ultimoCusto = Convert.ToDecimal(escalar);
                             }
-
-                            // 5.2) Custo médio (somente compras ATIVAS, excluindo a cancelada)
-                            //      Reutilize seu método existente que já exclui a compraKey:
                             decimal custoMedio = CalcularCustoMedioProduto(item.IdProduto, compraKey, conn, tx);
                             using (var cmd = new SqlCommand(@"
 UPDATE Produtos

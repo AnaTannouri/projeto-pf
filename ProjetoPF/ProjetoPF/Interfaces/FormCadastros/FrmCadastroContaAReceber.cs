@@ -24,11 +24,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private void FrmCadastroContaAReceber_Load(object sender, EventArgs e)
         {
 
-            // Datas
             datePagamento.Format = DateTimePickerFormat.Custom;
             datePagamento.CustomFormat = "dd/MM/yyyy";
             datePagamento.Value = DateTime.Today;
-            datePagamento.MaxDate = DateTime.Today; // ❗ Não permite data futura
+            datePagamento.MaxDate = DateTime.Today;
 
             dateEmissao.Format = DateTimePickerFormat.Custom;
             dateEmissao.CustomFormat = "dd/MM/yyyy";
@@ -36,20 +35,18 @@ namespace ProjetoPF.Interfaces.FormCadastros
             dateVencimento.Format = DateTimePickerFormat.Custom;
             dateVencimento.CustomFormat = "dd/MM/yyyy";
 
-            // Bloqueia todos os campos
             BloquearCampos();
             LiberarCamposBaixa();
 
-            // Eventos
             txtValorPago.KeyPress += ApenasNumerosDecimais;
             txtMultaValor.KeyPress += ApenasNumerosDecimais;
             txtJurosValor.KeyPress += ApenasNumerosDecimais;
-            labelDescoto.KeyPress += ApenasNumerosDecimais;
+            txtDesc.KeyPress += ApenasNumerosDecimais;
 
             txtValorPago.Leave += FormatarMoedaAoSair;
             txtMultaValor.Leave += FormatarMoedaAoSair;
             txtJurosValor.Leave += FormatarMoedaAoSair;
-            labelDescoto.Leave += FormatarMoedaAoSair;
+            txtDesc.Leave += FormatarMoedaAoSair;
 
             txtValorPago.TextChanged += (s, ev) => valorEditadoManualmente = true;
             txtValorPago.TextChanged += ValorPagoEditado;
@@ -119,12 +116,9 @@ namespace ProjetoPF.Interfaces.FormCadastros
             }
         }
 
-        // --------------------------------------------------------------
-        // CARREGAR PARCELA
-        // --------------------------------------------------------------
         public void CarregarParcela(ContasAReceber conta)
         {
-            // Impede recálculo automático se estiver apenas visualizando
+
             if (ModoVisualizacao)
                 valorEditadoManualmente = true;
 
@@ -137,113 +131,77 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtValorParcela.Text = conta.ValorParcela.ToString("C2");
 
-            // Ajuste datas inválidas
-            dateEmissao.Value = conta.DataEmissao < new DateTime(1753, 1, 1) ? DateTime.Today : conta.DataEmissao;
-            dateVencimento.Value = conta.DataVencimento < new DateTime(1753, 1, 1) ? DateTime.Today : conta.DataVencimento;
+            dateEmissao.Value = conta.DataEmissao.Year < 1900 ? DateTime.Today : conta.DataEmissao;
+            dateVencimento.Value = conta.DataVencimento.Year < 1900 ? DateTime.Today : conta.DataVencimento;
 
             CodForma.Text = conta.IdFormaPagamento.ToString();
             txtForma.Text = conta.FormaPagamentoDescricao ?? "";
 
-            // SITUAÇÃO
             string situacao = conta.Situacao?.Trim() ?? "Em Aberto";
 
             if (ModoVisualizacao)
             {
-                // Cancelada ou Recebida → mostra a data real
-                if (situacao.Equals("Recebida", StringComparison.OrdinalIgnoreCase) ||
-                    situacao.Equals("Cancelada", StringComparison.OrdinalIgnoreCase))
-                {
-                    datePagamento.CustomFormat = "dd/MM/yyyy";
+                btnSalvar.Visible = false;
+                datePagamento.Enabled = false;
 
-                    // Se a data vier inválida (0001-01-01) ou < 1753 → não exibir
-                    if (conta.DataPagamento < new DateTime(1753, 1, 1))
+                txtMultaPorc.Text = conta.Multa.ToString("N2");
+                txtJurosPorc.Text = conta.Juros.ToString("N2");
+                txtDescPorc.Text = conta.Desconto.ToString("N2");
+
+                if (situacao.Equals("Recebida", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (conta.DataPagamento.Year < 1900)
                     {
-                        datePagamento.CustomFormat = " ";  // deixa em branco
+                        datePagamento.CustomFormat = " ";
                     }
                     else
                     {
+                        datePagamento.CustomFormat = "dd/MM/yyyy";
                         datePagamento.Value = conta.DataPagamento;
                     }
-                }
-                else
-                {
-                    // Em aberto ou vencida → data em branco
-                    datePagamento.CustomFormat = " ";
-                }
 
-                datePagamento.Enabled = false;
-                btnSalvar.Visible = false;
-            }
-            else
-            {
-                // Modo BAIXA
-                datePagamento.CustomFormat = "dd/MM/yyyy";
-                datePagamento.Value = DateTime.Today;
-                datePagamento.Enabled = true;
-                btnSalvar.Visible = true;
-            }
-
-            // Percentuais
-            txtMultaPorc.Text = conta.Multa.ToString("N2");
-            txtJurosPorc.Text = conta.Juros.ToString("N2");
-            txtDescPorc.Text = conta.Desconto.ToString("N2");
-
-            txtMultaPorc.Text = conta.Multa.ToString("N2");
-            txtJurosPorc.Text = conta.Juros.ToString("N2");
-            txtDescPorc.Text = conta.Desconto.ToString("N2");
-
-            if (ModoVisualizacao)
-            {
-                // CANCELADA → tudo zerado
-                if (conta.Situacao == "Cancelada")
-                {
-                    txtMultaValor.Text = "R$ 0,00";
-                    txtJurosValor.Text = "R$ 0,00";
-                    txtDesc.Text = "R$ 0,00";
-                }
-                // RECEBIDA → mostrar valores salvos
-                else if (conta.Situacao == "Recebida")
-                {
                     txtMultaValor.Text = conta.MultaValor.ToString("C2");
                     txtJurosValor.Text = conta.JurosValor.ToString("C2");
                     txtDesc.Text = conta.DescontoValor.ToString("C2");
+                    txtValorPago.Text = conta.ValorFinalParcela.ToString("C2");
                 }
-                // EM ABERTO ou VENCIDA → nunca calcula na visualização
                 else
                 {
+                    datePagamento.CustomFormat = " ";
                     txtMultaValor.Text = "R$ 0,00";
                     txtJurosValor.Text = "R$ 0,00";
                     txtDesc.Text = "R$ 0,00";
+                    txtValorPago.Text = "R$ 0,00";
                 }
-            }
-            else
-            {
-                // MODO BAIXA → calcular normalmente
-                txtMultaValor.Text = (conta.ValorParcela * conta.Multa / 100).ToString("C2");
-                txtJurosValor.Text = "R$ 0,00";
-                txtDesc.Text = (conta.ValorParcela * conta.Desconto / 100).ToString("C2");
 
-                // juros dias atrasados (somente na baixa)
-                int diasAtraso = (datePagamento.Value - conta.DataVencimento).Days;
-                if (diasAtraso > 0)
-                {
-                    decimal j = (conta.ValorParcela * ((conta.Juros / 100) / 30m) * diasAtraso);
-                    txtJurosValor.Text = j.ToString("C2");
-                }
+                labelCriacao.Text = conta.DataCriacao.ToString("dd/MM/yyyy HH:mm");
+                lblAtualizacao.Text = conta.DataAtualizacao.ToString("dd/MM/yyyy HH:mm");
+
+                return; 
+            }
+            datePagamento.CustomFormat = "dd/MM/yyyy";
+            datePagamento.Value = DateTime.Today;
+            datePagamento.Enabled = true;
+            btnSalvar.Visible = true;
+
+            txtMultaPorc.Text = conta.Multa.ToString("N2");
+            txtJurosPorc.Text = conta.Juros.ToString("N2");
+            txtDescPorc.Text = conta.Desconto.ToString("N2");
+
+            RecalcularValores(conta);
+
+            int diasAtraso2 = (datePagamento.Value - conta.DataVencimento).Days;
+            if (diasAtraso2 > 0)
+            {
+                decimal jurosCalc = conta.ValorParcela * ((conta.Juros / 100) / 30m) * diasAtraso2;
+                txtJurosValor.Text = jurosCalc.ToString("C2");
             }
 
             labelCriacao.Text = conta.DataCriacao.ToString("dd/MM/yyyy HH:mm");
             lblAtualizacao.Text = conta.DataAtualizacao.ToString("dd/MM/yyyy HH:mm");
 
-            // Só atualiza total se estiver realmente baixando
-            if (!ModoVisualizacao)
-                AtualizarValorRecebido();
+            AtualizarValorRecebido();
         }
-
-
-        // --------------------------------------------------------------
-        // CÁLCULOS
-        // --------------------------------------------------------------
         private void RecalcularValores(ContasAReceber conta)
         {
             decimal baseValor = conta.ValorParcela;
@@ -263,7 +221,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtMultaValor.Text = multaR.ToString("C2");
             txtJurosValor.Text = jurosR.ToString("C2");
-            labelDescoto.Text = descontoR.ToString("C2");
+            txtDesc.Text = descontoR.ToString("C2");
 
             AtualizarValorRecebido();
         }
@@ -275,7 +233,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             decimal baseVal = Converter(txtValorParcela.Text);
             decimal multa = Converter(txtMultaValor.Text);
             decimal juros = Converter(txtJurosValor.Text);
-            decimal desc = Converter(labelDescoto.Text);
+            decimal desc = Converter(txtDesc.Text);
 
             decimal total = baseVal + multa + juros - desc;
             if (total < 0) total = 0;
@@ -290,9 +248,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             valorEditadoManualmente = true;
         }
 
-        // --------------------------------------------------------------
-        // FORMATAÇÕES
-        // --------------------------------------------------------------
         private decimal Converter(string texto)
         {
             if (string.IsNullOrWhiteSpace(texto)) return 0;
@@ -344,7 +299,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
                     MultaValor = Converter(txtMultaValor.Text),
                     JurosValor = Converter(txtJurosValor.Text),
-                    DescontoValor = Converter(labelDescoto.Text),
+                    DescontoValor = Converter(txtDesc.Text),
 
                     DataPagamento = datePagamento.Value,
                     Situacao = "Recebida",

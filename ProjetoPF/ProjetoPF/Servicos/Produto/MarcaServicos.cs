@@ -11,25 +11,5 @@ namespace ProjetoPF.Servicos.Produto
     public class MarcaServicos : BaseServicos<Marca>
     {
         public MarcaServicos() : base(new MarcaDAO()) { }
-
-        public void CadastrarMarca(Marca marca)
-        {
-            if (string.IsNullOrWhiteSpace(marca.Descricao))
-                throw new Exception("Descrição é obrigatória!");
-
-            marca.DataCriacao = DateTime.Now;
-            marca.DataAtualizacao = DateTime.Now;
-            Criar(marca);
-        }
-
-        public void AtualizarMarca(Marca marca)
-        {
-            if (marca.Id == 0)
-            {
-                throw new Exception("ID inválido. Não é possível atualizar o registro.");
-            }
-
-            Atualizar(marca);
-        }
     }
 }

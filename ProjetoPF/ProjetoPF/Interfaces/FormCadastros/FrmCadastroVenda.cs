@@ -1,4 +1,5 @@
 ﻿using ProjetoPF.Dao;
+using ProjetoPF.Dao.Item;
 using ProjetoPF.Dao.Vendas;
 using ProjetoPF.Interfaces.FormConsultas;
 using ProjetoPF.Modelos;
@@ -7,15 +8,11 @@ using ProjetoPF.Modelos.Pessoa;
 using ProjetoPF.Modelos.Produto;
 using ProjetoPF.Modelos.Venda;
 using ProjetoPF.Servicos;
-using ProjetoPF.Servicos.Venda;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ProjetoPF.Interfaces.FormCadastros
@@ -29,13 +26,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
         private List<ContasAReceber> parcelas = new List<ContasAReceber>();
 
         private readonly VendaKey? _key;
-        private bool carregandoDuplicada = false;
         private bool notaDuplicada = false;
 
         public bool ModoSomenteLeitura { get; set; } = false;
+
         public FrmCadastroVenda()
         {
             InitializeComponent();
+
             txtCodigo.Text = "55";
             txtSerie.Text = "001";
             txtCodigo.ReadOnly = true;
@@ -43,17 +41,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             label1.Text = "Modelo:";
             checkAtivo.Visible = false;
-
-            DateEmissão.Format = DateTimePickerFormat.Custom;
-            DateEmissão.CustomFormat = " ";
-            DateEmissão.Checked = false;
-
-            DateEmissão.ValueChanged += (s, ev) =>
-            {
-                DateEmissão.CustomFormat = "dd/MM/yyyy";
-                TentarLiberarItens();
-            };
-            label18.Visible = false;
         }
 
         private void FrmCadastroVenda_Load(object sender, EventArgs e)
@@ -66,7 +53,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtValorUnitario.Leave += FormatarMoedaAoSair;
 
             checkAtivo.Visible = false;
-            txtObservacao.Enabled = true; 
+            txtObservacao.Enabled = true;
 
             txtNumNota.ReadOnly = true;
             txtNumNota.BackColor = SystemColors.ControlLight;
@@ -114,8 +101,8 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 btnRemover.Enabled = selecionado;
             };
 
-            txtCodigo.Text = "55"; 
-            txtSerie.Text = "1"; 
+            txtCodigo.Text = "55";
+            txtSerie.Text = "1";
             txtCodigo.Enabled = false;
             txtSerie.Enabled = false;
 
@@ -129,6 +116,11 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtQuantidade.KeyPress += ApenasNumerosDecimais;
             txtValorUnitario.KeyPress += ApenasNumerosDecimais;
+            DateEmissao.Format = DateTimePickerFormat.Custom;
+            DateEmissao.CustomFormat = "dd/MM/yyyy";
+            DateEmissao.Value = DateTime.Today;
+            DateEmissao.Enabled = false;
+            DateEmissao.Refresh();
         }
 
         public FrmCadastroVenda(VendaKey key)
@@ -155,10 +147,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 txtCodCliente.Text = venda.IdCliente.ToString();
                 txtCodCondicao.Text = venda.IdCondicaoPagamento.ToString();
 
-                DateEmissão.Format = DateTimePickerFormat.Custom;
-                DateEmissão.CustomFormat = "dd/MM/yyyy";
-                DateEmissão.Value = venda.DataEmissao;
-                DateEmissão.Enabled = false;
+                DateEmissao.Format = DateTimePickerFormat.Custom;
+                DateEmissao.CustomFormat = "dd/MM/yyyy";
+                DateEmissao.Value = venda.DataEmissao;
+                DateEmissao.Enabled = false;
 
                 var cliente = new BaseServicos<Cliente>(new BaseDao<Cliente>("Clientes"))
                                   .BuscarPorId(venda.IdCliente);
@@ -246,7 +238,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 if (!venda.Ativo && !string.IsNullOrWhiteSpace(venda.MotivoCancelamento))
                 {
                     label18.Text = "Motivo do Cancelamento: " + venda.MotivoCancelamento;
-                    label18.Visible = true;  
+                    label18.Visible = true;
                 }
                 else
                 {
@@ -265,7 +257,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             }
 
         }
-
 
         private void btnGerarParcelas_Click(object sender, EventArgs e)
         {
@@ -310,7 +301,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
        "Condição de Pagamento",
        MessageBoxButtons.YesNoCancel,
        MessageBoxIcon.Question,
-       MessageBoxDefaultButton.Button1 
+       MessageBoxDefaultButton.Button1
    );
 
             if (resp == DialogResult.Cancel)
@@ -399,7 +390,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 if (formConsulta.ShowDialog() == DialogResult.OK && formConsulta.FuncionarioSelecionado != null)
                 {
                     var funcionario = formConsulta.FuncionarioSelecionado;
-              
+
                     txtCodFuncionario.Text = funcionario.Id.ToString();
                     txtFuncionario.Text = funcionario.NomeRazaoSocial;
 
@@ -425,9 +416,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 txtTotal.Text = "R$ 0,00";
 
                 txtValorTotal.Text = "R$ 0,00";
-
-                DateEmissão.Format = DateTimePickerFormat.Custom;
-                DateEmissão.CustomFormat = " ";
 
                 itensVenda.Clear();
                 AtualizarListViewItens();
@@ -458,7 +446,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtNumNota.Enabled = false;
             txtCodCliente.Enabled = false;
 
-            DateEmissão.Enabled = false;
+            DateEmissao.Enabled = false;
 
             SetItensEnabled(false);
             SetCondicaoEnabled(false);
@@ -550,7 +538,23 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return;
             }
 
+            if (!ValidarEstoqueAoAdicionar(idProduto, (int)quantidade))
+            {
+                return; 
+            }
+
             var existente = itensVenda.FirstOrDefault(i => i.IdProduto == idProduto);
+            decimal quantidadeTotal = quantidade;
+
+            if (existente != null)
+            {
+                quantidadeTotal += existente.Quantidade; 
+            }
+
+            if (!ValidarEstoqueAoAdicionar(idProduto, (int)quantidadeTotal))
+            {
+                return;
+            }
             if (existente != null)
                 itensVenda.Remove(existente);
 
@@ -564,6 +568,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             itensVenda.Add(item);
             AtualizarListViewItens();
+            AtualizarBloqueioPesquisa();
 
             txtCodProduto.Text = string.Empty;
             txtProduto.Text = string.Empty;
@@ -587,6 +592,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 label21.Text = "R$ 0,00";
             }
         }
+
         private void AtualizarTotalParcelas()
         {
             decimal total = parcelas.Sum(p => p.ValorParcela);
@@ -659,26 +665,49 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 .BuscarPorId(idCondicao);
 
             var parcelasCondicao = new BaseServicos<CondicaoPagamentoParcelas>(
-                new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas"))
+                    new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas"))
                 .BuscarTodos()
                 .Where(p => p.IdCondicaoPagamento == idCondicao)
                 .OrderBy(p => p.NumParcela)
                 .ToList();
 
-            decimal totalVenda = itensVenda.Sum(i => i.Total);
-            DateTime dataBase = DateEmissão.Value;
+            decimal totalVenda = Math.Round(itensVenda.Sum(i => i.Total), 2, MidpointRounding.AwayFromZero);
+            DateTime dataBase = DateEmissao.Value;
 
             parcelas.Clear();
 
-            foreach (var p in parcelasCondicao)
+            if (parcelasCondicao.Count == 0)
             {
+                AtualizarListViewParcelas(parcelas);
+                return;
+            }
+
+            decimal somaAtribuida = 0m;
+            int ultimoIndex = parcelasCondicao.Count - 1;
+
+            for (int i = 0; i < parcelasCondicao.Count; i++)
+            {
+                var p = parcelasCondicao[i];
                 decimal porcentagem = p.Porcentagem / 100m;
+
+                decimal valorParcela;
+
+                if (i < ultimoIndex)
+                {
+                    valorParcela = Math.Round(porcentagem * totalVenda, 2, MidpointRounding.AwayFromZero);
+                    somaAtribuida += valorParcela;
+                }
+                else
+                {
+                    valorParcela = totalVenda - somaAtribuida;
+                    valorParcela = Math.Round(valorParcela, 2, MidpointRounding.AwayFromZero);
+                }
 
                 parcelas.Add(new ContasAReceber
                 {
                     NumeroParcela = p.NumParcela,
                     DataVencimento = dataBase.AddDays(p.Prazo),
-                    ValorParcela = Math.Round(porcentagem * totalVenda, 2),
+                    ValorParcela = valorParcela,
                     IdFormaPagamento = p.IdFormaPagamento,
                     FormaPagamentoDescricao = BuscarDescricaoFormaPagamento(p.IdFormaPagamento)
                 });
@@ -686,6 +715,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             AtualizarListViewParcelas(parcelas);
         }
+
         private string BuscarDescricaoFormaPagamento(int idForma)
         {
             var servicoForma = new BaseServicos<FormaPagamento>(
@@ -737,6 +767,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             SetItensEnabled(true);
 
             SetTotaisEnabled(false);
+            AtualizarBloqueioPesquisa();
         }
         private void LimparVenda(bool confirmarSeTemDados = true)
         {
@@ -885,10 +916,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     return;
                 }
 
-                if (DateEmissão.CustomFormat == " ")
+                if (DateEmissao.CustomFormat == " ")
                 {
                     MessageBox.Show("Informe a data de emissão.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    DateEmissão.Focus();
+                    DateEmissao.Focus();
                     return;
                 }
 
@@ -923,7 +954,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     Modelo = modelo.ToString(),
                     Serie = serie,
                     NumeroNota = numeroGerado,
-                    DataEmissao = DateEmissão.Value.Date,
+                    DataEmissao = DateEmissao.Value.Date,
                     IdCliente = idCliente,
                     IdCondicaoPagamento = idCond,
                     ValorTotal = TryMoeda(txtValorTotal.Text),
@@ -959,6 +990,49 @@ namespace ProjetoPF.Interfaces.FormCadastros
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private bool ValidarEstoqueAoAdicionar(int idProduto, int quantidade)
+        {
+            try
+            {
+                var produtoDao = new ProdutoDAO();
+
+                int estoqueAtual = produtoDao.ObterEstoqueAtual(idProduto);
+
+                int quantidadeJaAdicionada = itensVenda
+                    .Where(i => i.IdProduto == idProduto)
+                    .Sum(i => (int)i.Quantidade);
+
+                int estoqueDisponivel = estoqueAtual - quantidadeJaAdicionada;
+
+                if (estoqueDisponivel < quantidade)
+                {
+                    string nomeProduto = produtoDao.ObterNomeProduto(idProduto);
+
+                    string mensagem = $"Estoque insuficiente para {nomeProduto}!\n\n";
+                    mensagem += $"Quantidade solicitada: {quantidade}\n";
+                    mensagem += $"Estoque disponível: {estoqueDisponivel}";
+
+                    if (quantidadeJaAdicionada > 0)
+                    {
+                        mensagem += $"\n(Já adicionado nesta venda: {quantidadeJaAdicionada})";
+                    }
+
+                    MessageBox.Show(mensagem, "Estoque Insuficiente",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao verificar estoque: {ex.Message}",
+                               "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         private void AbrirConsultaVendas()
         {
             var frm = new FrmConsultaVenda();
@@ -979,7 +1053,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtCodigo.Enabled = false;
             txtSerie.Enabled = false;
-            DateEmissão.Enabled = enabled;
         }
 
         private void SetItensEnabled(bool enabled)
@@ -989,7 +1062,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtValorUnitario.Enabled = enabled;
             btnAdicionar.Enabled = enabled;
             btnLimpar.Enabled = enabled;
-            txtObservacao.Enabled = enabled;    
+            txtObservacao.Enabled = enabled;
             btnEditar.Enabled = enabled && listViewProdutos.Items.Count > 0;
             btnRemover.Enabled = enabled && listViewProdutos.Items.Count > 0;
             listViewProdutos.Enabled = enabled;
@@ -1028,7 +1101,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             bool cabecalhoPreenchido =
                 !string.IsNullOrWhiteSpace(txtCodCliente.Text) &&
                 !string.IsNullOrWhiteSpace(txtCodFuncionario.Text) &&
-                !DataEstaVazia(DateEmissão);
+                !DataEstaVazia(DateEmissao);
 
             if (cabecalhoPreenchido)
             {
@@ -1068,7 +1141,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
         private void SetTotaisEnabled(bool enabled)
         {
-            txtValorTotal.Enabled = false; 
+            txtValorTotal.Enabled = false;
         }
         private void AplicarSomenteLeitura()
         {
@@ -1104,7 +1177,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtCodCliente.Enabled = false;
             btnPesquisarCliente.Enabled = false;
 
-            DateEmissão.Enabled = false;
+            DateEmissao.Enabled = false;
 
             SetItensEnabled(false);
             listViewProdutos.Enabled = false;
@@ -1121,6 +1194,13 @@ namespace ProjetoPF.Interfaces.FormCadastros
             txtObservacao.Enabled = false;
 
             btnSalvar.Enabled = false;
+        }
+        private void AtualizarBloqueioPesquisa()
+        {
+            bool temItens = itensVenda.Count > 0;
+
+            btnPesquisarCliente.Enabled = !temItens;
+            btnPesquisarFuncionario.Enabled = !temItens;
         }
     }
 }

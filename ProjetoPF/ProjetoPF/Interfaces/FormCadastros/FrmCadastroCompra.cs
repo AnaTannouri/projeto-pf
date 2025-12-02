@@ -290,14 +290,12 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             var hoje = DateTime.Today;
 
-            // ✅ Corrigido: comportamento diferente para NOVA compra x VISUALIZAÇÃO
-            if (_key == null) // Nova compra
+            if (_key == null) 
             {
                 dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
                 dtpEmissao.MaxDate = hoje;
 
-                // Data de entrega pode ser entre emissão e hoje
-                dtpEntrega.MinDate = dtpEmissao.Value; // será atualizado dinamicamente
+                dtpEntrega.MinDate = dtpEmissao.Value; 
                 dtpEntrega.MaxDate = hoje;
 
                 dtpEmissao.Format = DateTimePickerFormat.Custom;
@@ -306,7 +304,7 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 dtpEntrega.Format = DateTimePickerFormat.Custom;
                 dtpEntrega.CustomFormat = " ";
             }
-            else // Compra existente (visualizar/cancelar)
+            else 
             {
                 dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
                 dtpEmissao.MaxDate = DateTimePicker.MaximumDateTime;
@@ -319,12 +317,10 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 dtpEntrega.CustomFormat = null;
             }
 
-            // Eventos dos DateTimePicker
             dtpEmissao.ValueChanged += (s, ev) =>
             {
                 if (ModoSomenteLeitura) return;
 
-                // Garante que a entrega não seja antes da emissão
                 dtpEntrega.MinDate = dtpEmissao.Value;
 
                 if (dtpEntrega.Value < dtpEmissao.Value)
@@ -372,7 +368,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
 
             txtNumeroNota.Leave += (_, __) => ValidarNotaDuplicada();
 
-            // Configuração do ListView de produtos
             listViewProduto.View = View.Details;
             listViewProduto.Columns.Clear();
             listViewProduto.Columns.Add("Cód. Produto", 100, HorizontalAlignment.Right);
@@ -391,7 +386,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     listViewProduto.Focus();
             };
 
-            // Configuração do ListView de parcelas
             listViewParcelas.View = View.Details;
             listViewParcelas.Columns.Clear();
             listViewParcelas.Columns.Add("Nº Parcela", 80, HorizontalAlignment.Right);
@@ -454,7 +448,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
             {
                 AplicarSomenteLeitura();
 
-                // ✅ Muda o texto do botão para "Cancelar Compra"
                 if (btnVoltar != null)
                     btnVoltar.Text = "Cancelar";
             }
@@ -521,17 +514,14 @@ namespace ProjetoPF.Interfaces.FormCadastros
                     ? compra.DataAtualizacao.ToString("dd/MM/yyyy HH:mm")
                     : "-";
 
-                // Preenche fornecedor
                 var fornecedor = new BaseServicos<Fornecedor>(new BaseDao<Fornecedor>("Fornecedores"))
                                     .BuscarPorId(compra.IdFornecedor);
                 txtFornecedor.Text = fornecedor?.NomeRazaoSocial ?? "Desconhecido";
 
-                // Preenche condição
                 var condicao = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"))
                                     .BuscarPorId(compra.IdCondicaoPagamento);
                 txtCondicao.Text = condicao?.Descricao ?? "Desconhecida";
 
-                // Itens da compra
                 listViewProduto.Items.Clear();
                 var itens = new ItemCompraDao().BuscarPorChave(key);
                 itensCompra = itens;
@@ -548,7 +538,6 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 AtualizarTotalProdutos();
 
 
-                // Parcelas
                 listViewParcelas.Items.Clear();
                 var parcelasLista = new ContasAPagarDao().BuscarPorChave(key);
                 parcelas = parcelasLista;
@@ -673,40 +662,65 @@ namespace ProjetoPF.Interfaces.FormCadastros
                 return;
             }
 
-            var condicao = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos")).BuscarPorId(idCondicao);
+            var condicao = new BaseServicos<CondicaoPagamento>(new BaseDao<CondicaoPagamento>("CondicaoPagamentos"))
+                .BuscarPorId(idCondicao);
+
             var parcelasCondicao = new BaseServicos<CondicaoPagamentoParcelas>(
-    new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas"))
-    .BuscarTodos()
-    .Where(p => p.IdCondicaoPagamento == idCondicao)
-    .OrderBy(p => p.NumParcela)
-    .ToList();
+                    new BaseDao<CondicaoPagamentoParcelas>("CondicaoPagamentoParcelas"))
+                .BuscarTodos()
+                .Where(p => p.IdCondicaoPagamento == idCondicao)
+                .OrderBy(p => p.NumParcela)
+                .ToList();
 
             decimal totalProdutos = itensCompra.Sum(i => i.Total);
             decimal frete = ConverterMoeda(txtValorFrete.Text);
             decimal seguro = ConverterMoeda(txtSeguro.Text);
             decimal despesas = ConverterMoeda(txtDespesas.Text);
-
-            decimal totalCompra = totalProdutos + frete + seguro + despesas;
+            decimal totalCompra = Math.Round(totalProdutos + frete + seguro + despesas, 2, MidpointRounding.AwayFromZero);
             DateTime dataBase = dtpEmissao.Value;
 
             parcelas.Clear();
 
-            foreach (var p in parcelasCondicao)
+            if (parcelasCondicao.Count == 0)
             {
+                AtualizarListViewParcelas(parcelas);
+                return;
+            }
+
+            decimal somaAtribuida = 0m;
+            int ultimoIndex = parcelasCondicao.Count - 1;
+
+            for (int i = 0; i < parcelasCondicao.Count; i++)
+            {
+                var p = parcelasCondicao[i];
                 decimal porcentagem = p.Porcentagem / 100m;
+
+                decimal valorParcela;
+
+                if (i < ultimoIndex)
+                {
+                    valorParcela = Math.Round(porcentagem * totalCompra, 2, MidpointRounding.AwayFromZero);
+                    somaAtribuida += valorParcela;
+                }
+                else
+                {
+                    valorParcela = totalCompra - somaAtribuida;
+                    valorParcela = Math.Round(valorParcela, 2, MidpointRounding.AwayFromZero);
+                }
 
                 parcelas.Add(new ContasAPagar
                 {
                     NumeroParcela = p.NumParcela,
                     DataVencimento = dataBase.AddDays(p.Prazo),
-                    ValorParcela = Math.Round(porcentagem * totalCompra, 2),
+                    ValorParcela = valorParcela,
                     IdFormaPagamento = p.IdFormaPagamento,
                     FormaPagamentoDescricao = BuscarDescricaoFormaPagamento(p.IdFormaPagamento)
                 });
-
             }
+
             AtualizarListViewParcelas(parcelas);
         }
+
         private string BuscarDescricaoFormaPagamento(int idForma)
         {
             var servicoForma = new BaseServicos<FormaPagamento>(new BaseDao<FormaPagamento>("FormaPagamentos"));

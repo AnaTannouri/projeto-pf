@@ -17,7 +17,6 @@ namespace ProjetoPF.Interfaces.FormConsultas
     {
         private FrmCadastroMarca frmCadastroMarca;
         private BaseServicos<Marca> marcaServices = new BaseServicos<Marca>(new BaseDao<Marca>("Marcas"));
-        public Marca MarcaSelecionada { get; private set; }
         public FrmConsultaMarca()
         {
             InitializeComponent();

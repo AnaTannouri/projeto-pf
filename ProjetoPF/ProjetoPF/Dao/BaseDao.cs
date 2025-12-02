@@ -239,7 +239,6 @@ namespace ProjetoPF.Dao
                     var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
                     var propsByName = props.ToDictionary(p => p.Name, p => p, StringComparer.OrdinalIgnoreCase);
 
-                    // ===== 1) Filtro modo key=value (exato, ideal p/ PK composta) =====
                     if (!string.IsNullOrWhiteSpace(filtro) && filtro.Contains('='))
                     {
                         var pairs = filtro.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -260,7 +259,6 @@ namespace ProjetoPF.Dao
                             whereConditions.Add($"[{prop.Name}] = {paramName}");
                         }
                     }
-                    // ===== 2) Filtro amplo (sem '=') =====
                     else if (!string.IsNullOrWhiteSpace(filtro))
                     {
                         var propsTexto = props.Where(p => p.PropertyType == typeof(string));
@@ -347,7 +345,6 @@ namespace ProjetoPF.Dao
             }
             return lista;
         }
-
         private static object ConvertTo(string input, Type targetType)
         {
             var t = Nullable.GetUnderlyingType(targetType) ?? targetType;
@@ -379,7 +376,6 @@ namespace ProjetoPF.Dao
             }
             return System.Convert.ChangeType(input, t, CultureInfo.InvariantCulture);
         }
-
         private static bool TryParseDecimalFlexible(string s, out decimal value)
         {
             if (decimal.TryParse(s, NumberStyles.Number, CultureInfo.GetCultureInfo("pt-BR"), out value)) return true;

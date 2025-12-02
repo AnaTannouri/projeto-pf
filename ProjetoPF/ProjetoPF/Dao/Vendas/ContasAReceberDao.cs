@@ -231,27 +231,7 @@ VALUES
 
             return BuscarPorChaveVenda(key.Modelo, key.Serie, key.NumeroNota, key.IdCliente);
         }
-        public bool VendaJaExiste(string modelo, string serie, string numeroNota, int idCliente)
-        {
-            using (var cn = new SqlConnection(_connectionString))
-            using (var cmd = new SqlCommand(@"
-        SELECT COUNT(*) 
-        FROM ContasAReceber
-        WHERE Modelo = @Modelo
-          AND Serie = @Serie
-          AND NumeroNota = @NumeroNota
-          AND IdCliente = @IdCliente
-          AND Ativo = 1;", cn))
-            {
-                cmd.Parameters.AddWithValue("@Modelo", modelo);
-                cmd.Parameters.AddWithValue("@Serie", serie);
-                cmd.Parameters.AddWithValue("@NumeroNota", numeroNota);
-                cmd.Parameters.AddWithValue("@IdCliente", idCliente);
 
-                cn.Open();
-                return (int)cmd.ExecuteScalar() > 0;
-            }
-        }
         private DateTime CorrigirDataSql(DateTime data)
         {
             if (data < new DateTime(1753, 1, 1))
@@ -341,12 +321,10 @@ WHERE c.Modelo = @Modelo
                             DataVencimento = reader["DataVencimento"] != DBNull.Value ? Convert.ToDateTime(reader["DataVencimento"]) : DateTime.MinValue,
                             ValorParcela = reader["ValorParcela"] != DBNull.Value ? Convert.ToDecimal(reader["ValorParcela"]) : 0m,
 
-                            // Percentuais
                             Multa = reader["MultaParcela"] != DBNull.Value ? Convert.ToDecimal(reader["MultaParcela"]) : 0m,
                             Juros = reader["JurosParcela"] != DBNull.Value ? Convert.ToDecimal(reader["JurosParcela"]) : 0m,
                             Desconto = reader["DescontoParcela"] != DBNull.Value ? Convert.ToDecimal(reader["DescontoParcela"]) : 0m,
 
-                            // Campos da baixa
                             MultaValor = reader["MultaValor"] != DBNull.Value ? Convert.ToDecimal(reader["MultaValor"]) : 0,
                             JurosValor = reader["JurosValor"] != DBNull.Value ? Convert.ToDecimal(reader["JurosValor"]) : 0,
                             DescontoValor = reader["DescontoValor"] != DBNull.Value ? Convert.ToDecimal(reader["DescontoValor"]) : 0,
@@ -366,7 +344,6 @@ WHERE c.Modelo = @Modelo
                                    (reader["Ativo"] is bool b ? b : Convert.ToInt32(reader["Ativo"]) == 1)
                         };
 
-                        // Se a parcela NÃO tinha valores percentuais → usa os da condição
                         if (conta.Multa == 0 && reader["MultaCondicao"] != DBNull.Value)
                             conta.Multa = Convert.ToDecimal(reader["MultaCondicao"]);
 
